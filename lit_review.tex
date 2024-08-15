@@ -1,1 +1,54 @@
 \chapter{Literature Review}
+
+This chapter aims to critically analyze the existing literature on cloud computing and OpenID Connect (OIDC) protocols, focusing on identifying security risks and highlighting gaps in current research. By examining these areas, the chapter will provide a foundation for understanding the complexities and challenges of securing cloud applications using OIDC. It will also offer an overview of cloud computing and OIDC to contextualize their interrelated roles in modern technology environments.
+
+\section{Overview of Cloud Computing}
+Cloud computing is a service model that provides on-demand access to a wide range of computing resources via the internet, including servers, storage, databases, networking, software, and analytics \citep{rashid2019cloud}. These services are designed to be easily manageable and deployable, often requiring minimal effort from the user. For example, users can quickly launch servers using a web browser through Cloud Service Providers (CSPs) such as AWS, Google Cloud and Microsoft Azure. 
+
+Beyond simply running applications, cloud computing is evolving with new concepts like mobile cloud computing. One such concept is mobile cloud computing (MCC), a popular architectural model that integrates cloud computing with mobile technology. This model allows mobile devices to leverage the extra power and storage capacity of cloud-based resources, helping to overcome mobile hardware limitations \citep{mcc}. However, such models also pose challenges to latency, data security, and network dependency. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
+
+\section{Deployment Models}
+The cloud offers different deployment models, each with varying levels of complexity and control, allowing consumers to choose the best fit for their needs, typically classified into public, private, hybrid, and community clouds. Security is a critical aspect that influences the choice of a deployment model, see Table \ref{table:cloud_comp} for a comparison. 
+\begin{itemize}
+    \item  \textbf{Public Cloud} - This model is the most used method to deploy applications in the cloud, preferred for running web applications, file sharing, and non-critical systems needed top-level privacy \citep{cloudmodel}. Public cloud services are also considered more cost-effective as the consumers can pay as they go. Public cloud providers often have multiple data centres worldwide, offering redundancy and high availability. This ensures that services remain available even if one data centre experiences issues. Public cloud providers also offer a range of managed services, such as databases, machine learning tools, and analytics platforms, which allow organizations to leverage advanced technologies without maintaining the underlying infrastructure. 
+    
+    While public clouds offer numerous benefits, security remains a primary concern. Key security considerations include data privacy and ensuring that sensitive data is encrypted and managed securely. Organizations must also ensure that their use of the public cloud complies with industry regulations and standards. Properly managing access controls and user permissions is essential to protect resources. Businesses should also consider strategies to avoid vendor lock-in to maintain flexibility and control  \citep{cloudmodel}.
+    
+    \item  \textbf{Private Cloud} - A Private cloud is a deployment model dedicated to a single consumer who does not share resources with multiple users to maintain a high level of privacy. The organization manages its resources and who has access to it. Some private clouds are also hosted in a local data centre to have greater infrastructure separation \citep{cloudmodel}. The principal characteristic of this model is to provide exclusive access to the resources only to the organisation, ensuring more significant levels of privacy and security. 
+    
+    However, the greater flexibility to customize the private cloud environment to meet specific business needs and performance comes with its challenges. Building and maintaining a private cloud can be more expensive than public cloud services due to the need for dedicated hardware and skilled IT staff. Managing a private cloud environment requires expertise and can be complex, particularly for organizations with limited IT resources. Additionally, private clouds may have limitations in scalability, depending on the organization's infrastructure and resources \citep{private_cloud}. \newline
+    \item  \textbf{Hybrid Cloud} - As the name suggests, the hybrid cloud model combines both public and private clouds to achieve the best of both worlds and create a flexible, scalable computing infrastructure with the desired amount of control for critical assets. This model allows organizations to leverage the benefits of both cloud types while addressing specific business needs related to security, performance, and cost efficiency. By integrating public and private clouds, organizations can dynamically manage workloads, optimize resource usage, and improve business agility \citep{cloudmodel}.
+
+    While the hybrid cloud offers numerous advantages, it also presents particular challenges. Managing and integrating multiple cloud environments can be complex and require robust IT expertise and tools. Ensuring seamless connectivity and interoperability between public and private clouds is critical to achieving the desired benefits. Organizations must also address security and compliance issues across both environments, implementing consistent policies and procedures to protect data and maintain regulatory compliance that requires additional tools and expertise, increasing the costs for running such a model \citep{hybrid_model}.
+   
+    \item  \textbf{Community Cloud} - A community cloud is a cloud deployment model where several organizations share the infrastructure with common interests, goals, or regulatory requirements. This model is designed to meet the specific needs of a particular community, such as industry groups, government agencies, or academic institutions. The community cloud offers a balanced approach, combining the shared resource benefits of a public cloud with the enhanced security and compliance controls of a private cloud. Organizations within the community share the costs, making it a cost-effective solution \citep{cloudmodel}.
+\end{itemize}
+
+\begingroup
+\centering
+\setlength{\tabcolsep}{6.5pt} % Default value: 6pt
+\renewcommand{\arraystretch}{1.8} % Default value: 1
+\begin{longtable}{ |p{3cm}| p{4cm} |p{3cm} |p{5cm} |}
+\caption{Cloud Deployment model comparison}
+    \label{table:cloud_comp}
+\hline
+\rowcolor{grey!15}
+\textbf{Deployment Model}  & \textbf{Security} & \textbf{Scalability}& \textbf{Cost}\\
+\hline
+Private Cloud &  
+\vspace{-\baselineskip}
+Very secure & Not as Scalable & Costly\\
+\hline
+Public Cloud &  
+Moderate (Share infrastructure with others) & Flexible & Cheapest\\
+\hline
+Hybrid Cloud &  
+\vspace{-\baselineskip}
+Secure & Scalable & Costly\\
+\hline
+Community Cloud &  
+\vspace{-\baselineskip}
+Secure & Scalable & Costly\\
+\hline
+\end{longtable}
+\endgroup
