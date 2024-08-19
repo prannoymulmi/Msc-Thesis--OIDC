@@ -24,31 +24,55 @@ The cloud offers different deployment models, each with varying levels of comple
     \item  \textbf{Community Cloud} - A community cloud is a cloud deployment model where several organizations share the infrastructure with common interests, goals, or regulatory requirements. This model is designed to meet the specific needs of a particular community, such as industry groups, government agencies, or academic institutions. The community cloud offers a balanced approach, combining the shared resource benefits of a public cloud with the enhanced security and compliance controls of a private cloud. Organizations within the community share the costs, making it a cost-effective solution \citep{cloudmodel}.
 \end{itemize}
 
-\begingroup
 \centering
 \setlength{\tabcolsep}{6.5pt} % Default value: 6pt
-\renewcommand{\arraystretch}{1.8} % Default value: 1
-\begin{longtable}{ |p{3cm}| p{4cm} |p{3cm} |p{5cm} |}
+\begin{longtable}{|p{2cm}| p{3cm} |p{3cm} |p{3cm}|p{3cm}|}
 \caption{Cloud Deployment model comparison}
     \label{table:cloud_comp}
 \hline
 \rowcolor{grey!15}
-\textbf{Deployment Model}  & \textbf{Security} & \textbf{Scalability}& \textbf{Cost}\\
+\textbf{Feature} & \textbf{Private Cloud} & \textbf{Public Cloud} & \textbf{Hybrid Cloud} & \textbf{Community Cloud} \\
 \hline
-Private Cloud &  
-\vspace{-\baselineskip}
-Very secure & Not as Scalable & Costly\\
+\endfirsthead
 \hline
-Public Cloud &  
-Moderate (Share infrastructure with others) & Flexible & Cheapest\\
+\rowcolor{grey!15}
+\textbf{Feature} & \textbf{Private Cloud} & \textbf{Public Cloud} & \textbf{Hybrid Cloud} & \textbf{Community Cloud} \\
 \hline
-Hybrid Cloud &  
-\vspace{-\baselineskip}
-Secure & Scalable & Costly\\
+\endhead
 \hline
-Community Cloud &  
-\vspace{-\baselineskip}
-Secure & Scalable & Costly\\
+\endfoot
 \hline
+\endlastfoot
+
+Cost & Higher initial investment; lower ongoing costs if managed well. & Typically lower initial investment; pay-as-you-go model. & Mix of both; can be cost-effective if managed properly. & Costs shared among organizations; generally lower than private cloud. \\
+\hline
+Security & High; dedicated infrastructure, more control. & Variable; depends on provider’s security measures. & Variable; depends on integration and management. & Moderate; shared infrastructure with similar organizations. \\
+\hline
+Compliance & Easier to meet specific regulatory requirements due to dedicated resources. & May meet general compliance standards; might require additional controls for specific needs. & Can meet compliance if managed properly with both environments. & Often easier to meet compliance for shared needs of community members. \\
+\hline
+Scalability & Limited by physical resources; scaling can be expensive. & Highly scalable; can quickly adjust resources based on demand. & Highly scalable; combines public cloud's scalability with private cloud’s control. & Limited scalability; constrained by shared resources within the community. \\
+\hline
+Ownership & Owned and operated by the organization or a third-party dedicated to the organization. & Owned and operated by the cloud service provider. & Ownership is shared between private and public components. & Owned and operated by the community or a third-party dedicated to the community. \\
+\hline
+Use Cases & Suitable for sensitive data and mission-critical applications. & Ideal for general-purpose applications, web hosting, and businesses with variable needs. & Good for organizations needing a mix of private and public resources, such as data privacy and scalable resources. & Best for organizations with common interests or regulatory requirements, such as government agencies or academic institutions. \\
+\hline
+Control & High; full control over infrastructure and data. & Limited; control is restricted to what the provider offers. & Variable; control over private components is high, but limited over public components. & Moderate; control is shared with other community members and governed by shared policies. \\
+\hline
+Reliability & High if well-managed; depends on infrastructure and management practices. & Generally high; providers offer redundancy and failover solutions. & High; combines the reliability of private and public cloud components. & Generally reliable; depends on the community's infrastructure and management. \\
+\hline
+
 \end{longtable}
-\endgroup
+
+\section{Risks}
+
+\begin{itemize}
+    \item \textbf{Access Control In the Cloud} - Access control in the cloud is critical to securing the system and sensitive data. However, managing the access control has risks, especially when the controls are misconfigured, as the cloud follows a shared responsibility for securing the systems between the customer and the cloud provider \citep{cloud_shared_resp}. Such misconfiguration of identity and access management (IAM) policies, weak authentication practices, and poor management for storing and rotating secret keys can lead to unauthorised access.  
+
+    \item \textbf{Network Security } - Network security in cloud computing faces unique challenges that can compromise data and service integrity. One of the primary risks is insecure API endpoints, where attackers can exploit vulnerable APIs lacking proper authentication and encryption to gain unauthorized access to cloud resources, leading to data breaches and service disruption. Network security issues have a lot of commonalities with the traditional, like DDoS, Man-in-the-Middle (MitM)  and VM vulnerabilities, especially with cloud sharing infrastructure where the infrastructure is shared amongst many clients \citep{network_cloud}. If proper measures and configurations are not in place, attackers could move laterally across the cloud to infiltrate many systems and organisations simultaneously. 
+    
+    \item \textbf{Regulatory Compliance } - Cloud computing has added complexity as Cloud providers tend to be multi-regional, which presents significant challenges to organisations operating across different regions, and the areas are subject to strict requirements for data protection, security controls and data sovereignty. This risk, in particular, is not a security risk but rather a legal one, where not failure to comply with local laws and regulations such as HIPAA, GDPR, and PCI DSS could lead to financial and reputational damage \citep{legal_cloud_challenge}.
+    
+    \item \textbf{Malware on Mobile Cloud Computing } - Cloud computing has outgrown itself from the traditional web application to being used for mobile, also known as Moblie Cloud computing.
+    \item \textbf{Advanced Persistent Threat } -
+    \item \textbf{Multi-tenant and cross-domain sharing } -
+\end{itemize}
