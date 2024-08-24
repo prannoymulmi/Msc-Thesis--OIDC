@@ -5,10 +5,10 @@ This chapter aims to critically analyze the existing literature on cloud computi
 \section{Overview of Cloud Computing}
 Cloud computing is a service model that provides on-demand access to a wide range of computing resources via the internet, including servers, storage, databases, networking, software, and analytics \citep{rashid2019cloud}. These services are designed to be easily manageable and deployable, often requiring minimal effort from the user. For example, users can quickly launch servers using a web browser through Cloud Service Providers (CSPs) such as AWS, Google Cloud and Microsoft Azure. 
 
-Beyond simply running applications, cloud computing is evolving with new concepts like mobile cloud computing. One such concept is mobile cloud computing (MCC), a popular architectural model that integrates cloud computing with mobile technology. This model allows mobile devices to leverage the extra power and storage capacity of cloud-based resources, helping to overcome mobile hardware limitations \citep{mcc}. However, such models also pose challenges to latency, data security, and network dependency. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
+Beyond simply running applications, cloud computing is evolving with new concepts like mobile cloud computing. One such concept is mobile cloud computing (MCC), a popular architectural model that integrates cloud computing with mobile technology. This model allows mobile devices to leverage the extra power and storage capacity of cloud-based resources, helping to overcome mobile hardware limitations \citep{mcc}. However, such models also pose latency, data security, and network dependency challenges. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
 
 \section{Deployment Models}
-The cloud offers different deployment models, each with varying levels of complexity and control, allowing consumers to choose the best fit for their needs, typically classified into public, private, hybrid, and community clouds. Security is a critical aspect that influences the choice of a deployment model, see Table \ref{table:cloud_comp} for a comparison. 
+The cloud offers different deployment models, each with varying levels of complexity and control, allowing consumers to choose the best fit for their needs, typically classified into public, private, hybrid, and community clouds. Security is a critical aspect that influences the choice of a deployment model; see Table \ref{table:cloud_comp} for a comparison. 
 \begin{itemize}
     \item  \textbf{Public Cloud} - This model is the most used method to deploy applications in the cloud, preferred for running web applications, file sharing, and non-critical systems needed top-level privacy \citep{cloudmodel}. Public cloud services are also considered more cost-effective as the consumers can pay as they go. Public cloud providers often have multiple data centres worldwide, offering redundancy and high availability. This ensures that services remain available even if one data centre experiences issues. Public cloud providers also offer a range of managed services, such as databases, machine learning tools, and analytics platforms, which allow organizations to leverage advanced technologies without maintaining the underlying infrastructure. 
     
@@ -24,6 +24,7 @@ The cloud offers different deployment models, each with varying levels of comple
     \item  \textbf{Community Cloud} - A community cloud is a cloud deployment model where several organizations share the infrastructure with common interests, goals, or regulatory requirements. This model is designed to meet the specific needs of a particular community, such as industry groups, government agencies, or academic institutions. The community cloud offers a balanced approach, combining the shared resource benefits of a public cloud with the enhanced security and compliance controls of a private cloud. Organizations within the community share the costs, making it a cost-effective solution \citep{cloudmodel}.
 \end{itemize}
 
+\begingroup
 \centering
 \setlength{\tabcolsep}{6.5pt} % Default value: 6pt
 \begin{longtable}{|p{2cm}| p{3cm} |p{3cm} |p{3cm}|p{3cm}|}
@@ -46,25 +47,24 @@ The cloud offers different deployment models, each with varying levels of comple
 
 Cost & Higher initial investment; lower ongoing costs if managed well. & Typically lower initial investment; pay-as-you-go model. & Mix of both; can be cost-effective if managed properly. & Costs shared among organizations; generally lower than private cloud. \\
 \hline
-Security & High; dedicated infrastructure, more control. & Variable; depends on provider’s security measures. & Variable; depends on integration and management. & Moderate; shared infrastructure with similar organizations. \\
+Security & High; dedicated infrastructure, more control. & Variable; depends on the provider’s security measures. & Variable; depends on integration and management. & Moderate; shared infrastructure with similar organizations. \\
 \hline
 Compliance & Easier to meet specific regulatory requirements due to dedicated resources. & May meet general compliance standards; might require additional controls for specific needs. & Can meet compliance if managed properly with both environments. & Often easier to meet compliance for shared needs of community members. \\
 \hline
 Scalability & Limited by physical resources; scaling can be expensive. & Highly scalable; can quickly adjust resources based on demand. & Highly scalable; combines public cloud's scalability with private cloud’s control. & Limited scalability; constrained by shared resources within the community. \\
 \hline
-Ownership & Owned and operated by the organization or a third-party dedicated to the organization. & Owned and operated by the cloud service provider. & Ownership is shared between private and public components. & Owned and operated by the community or a third-party dedicated to the community. \\
+Ownership & Owned and operated by the organization or a third party dedicated to the organization. & Owned and operated by the cloud service provider. & Ownership is shared between private and public components. & Owned and operated by the community or a third party dedicated to the community. \\
 \hline
 Use Cases & Suitable for sensitive data and mission-critical applications. & Ideal for general-purpose applications, web hosting, and businesses with variable needs. & Good for organizations needing a mix of private and public resources, such as data privacy and scalable resources. & Best for organizations with common interests or regulatory requirements, such as government agencies or academic institutions. \\
 \hline
-Control & High; full control over infrastructure and data. & Limited; control is restricted to what the provider offers. & Variable; control over private components is high, but limited over public components. & Moderate; control is shared with other community members and governed by shared policies. \\
+Control & High; full control over infrastructure and data. & Limited; control is restricted to what the provider offers. & Variable; control over private components is high but limited over public components. & Moderate; control is shared with other community members and governed by shared policies. \\
 \hline
 Reliability & High if well-managed; depends on infrastructure and management practices. & Generally high; providers offer redundancy and failover solutions. & High; combines the reliability of private and public cloud components. & Generally reliable; depends on the community's infrastructure and management. \\
 \hline
-
 \end{longtable}
+\endgroup
 
 \section{Risks}
-
 \begin{itemize}
     \item \textbf{Access Control In the Cloud} - Access control in the cloud is critical to securing the system and sensitive data. However, managing the access control has risks, especially when the controls are misconfigured, as the cloud follows a shared responsibility for securing the systems between the customer and the cloud provider \citep{cloud_shared_resp}. Such misconfiguration of identity and access management (IAM) policies, weak authentication practices, and poor management for storing and rotating secret keys can lead to unauthorised access.  
 
@@ -72,7 +72,13 @@ Reliability & High if well-managed; depends on infrastructure and management pra
     
     \item \textbf{Regulatory Compliance } - Cloud computing has added complexity as Cloud providers tend to be multi-regional, which presents significant challenges to organisations operating across different regions, and the areas are subject to strict requirements for data protection, security controls and data sovereignty. This risk, in particular, is not a security risk but rather a legal one, where not failure to comply with local laws and regulations such as HIPAA, GDPR, and PCI DSS could lead to financial and reputational damage \citep{legal_cloud_challenge}.
     
-    \item \textbf{Malware on Mobile Cloud Computing } - Cloud computing has outgrown itself from the traditional web application to being used for mobile, also known as Moblie Cloud computing.
-    \item \textbf{Advanced Persistent Threat } -
-    \item \textbf{Multi-tenant and cross-domain sharing } -
+    \item \textbf{Malware on Mobile Cloud Computing } - Cloud computing has evolved from the traditional web application to being used for mobile, also known as Mobile Cloud Computing. Malware injection is a significant threat to MCC. Attackers can embed malicious code into legitimate mobile applications, leading to harmful activities such as stealing sensitive data or using cloud computing power for tasks like crypto mining, also known as cryptojacking \citep{cryptojacking}. The interconnected nature of cloud computing means that malware introduced into one device can potentially spread to other devices or services within the same cloud environment. For instance, if a cloud-based application becomes infected, all users accessing that application are at risk of having their data compromised. Once malware is injected, it can persistently attack the mobile device, extract valuable information, and send it back to the attacker, often without the user's knowledge.
+    
+    \item \textbf{Multi-tenancy} - Multi-tenancy security risks are very similar to the ones discussed in network security, as in a multi-tenant system, an organisation could use the same physical hardware as in a private deployment model. Such a system can lead to data leakages or unauthorised access if it is improperly configured or there are vulnerabilities in the cloud provider's software.   According to \citep{multi_tenancy_cloud_risk}, an attacker has a 40\% chance of allocating his VM besides the victims using tactics like side-channel attacks, which can be done with a moderate budget, making such attacks more probable.
+
 \end{itemize}
+
+\section{OpenID Connect Protocol}
+OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0 protocol that provides a standardized way of authenticating and authorizing users across web applications and apps \citep{oidc_intro}. OIDC enables a secure sign-in experience and simplifies verifying user identities across various applications and platforms. This protocol allows applications to request and receive information about authenticated users from identity providers (IDPs), such as Google, Microsoft, and Facebook. The authentication process involves exchanging different types of tokens, usually in JSON Web Token (JWT) format, a widely adopted industry standard for exchanging information between two parties \citep{jwt}. These JWT tokens are then used as different kinds of Tokens, such as ID tokens, access tokens, and refresh tokens that contain claims or information about the user and the permissions they are allowed in the application and carry information about their sessions.
+
+
