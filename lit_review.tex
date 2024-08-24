@@ -79,6 +79,12 @@ Reliability & High if well-managed; depends on infrastructure and management pra
 \end{itemize}
 
 \section{OpenID Connect Protocol}
-OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0 protocol that provides a standardized way of authenticating and authorizing users across web applications and apps \citep{oidc_intro}. OIDC enables a secure sign-in experience and simplifies verifying user identities across various applications and platforms. This protocol allows applications to request and receive information about authenticated users from identity providers (IDPs), such as Google, Microsoft, and Facebook. The authentication process involves exchanging different types of tokens, usually in JSON Web Token (JWT) format, a widely adopted industry standard for exchanging information between two parties \citep{jwt}. These JWT tokens are then used as different kinds of Tokens, such as ID tokens, access tokens, and refresh tokens that contain claims or information about the user and the permissions they are allowed in the application and carry information about their sessions.
+OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0 protocol that provides a standardised way of authenticating and authorising users across web applications and apps \citep{oidc_intro}. OIDC enables a secure sign-in experience and simplifies verifying user identities across various applications and platforms. This protocol allows applications to request and receive information about authenticated users from identity providers (IDPs), such as Google, Microsoft, and Facebook. The authentication process involves exchanging different types of tokens, usually in JSON Web Token (JWT) format, a widely adopted industry standard for exchanging information between two parties \citep{jwt}. These JWT tokens are then used as different kinds of Tokens, such as ID tokens, access tokens, and refresh tokens that contain claims or information about the user and the permissions they are allowed in the application and carry information about their sessions. Using these tokens, an application can authenticate and authorise users (Access Tokens), identify authenticated users (ID tokens) and provide a way to re-authenticate automatically without explicit login (Refresh tokens) \citep{oidc_tokens}. See Figure \ref{fig:oidc_simple} that depicts the usage of the different types of tokens.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth, height=320px]{pics/oidc_simple.png}
+\caption{OIDC Tokens Exchange Example}\label{fig:oidc_simple}
+\end{figure}
+
 
 
