@@ -1,23 +1,24 @@
 \chapter{Introduction}
 \section{Background}
-In the era of digitalisation, an immense transformation is commencing where day-to-day services such as shopping, communicating with people, visiting university courses, and also critical services like accessing financial services, accessing health services, running powerplants, managing traffic, and managing public services are moving digital \citep{intro_cloud_critical_infra}. This transformation is fundamentally changing the traditional analogue methods and replacing them with continual innovations, enhancing efficiency and improving user experience by providing a digital platform in the form of different applications/software hosted in the Cloud. For example, in 2023, the German administration created a cloud strategy plan with the German Administration Cloud Strategy (DVS) to incorporate, strengthen and improve the status quo of digitalisation in the public sector \citep{german_gov_cloud_plan}. Such moves are not isolated to a single country and signals a move towards cloud and digitalisation to shape the new world. \newline
+In the era of digitalisation, an immense transformation is commencing where day-to-day services such as shopping, communicating with people, visiting university courses, and also critical services like accessing financial services, accessing health services, running powerplants, managing traffic, and managing public services are moving digital \citep{intro_cloud_critical_infra}. This transformation is fundamentally changing the traditional analogue methods and replacing them with continual innovations, enhancing efficiency and improving user experience by providing a digital platform in the form of different applications/software hosted in the Cloud. For example, in 2023, the German administration created a cloud strategy plan with the German Administration Cloud Strategy (DVS) to incorporate, strengthen and improve the status quo of digitalisation in the public sector \citep{german_gov_cloud_plan}. Such moves are not isolated to a single country and signal a move towards cloud and digitalisation to shape the new world. \newline
 
 As this modernization reshapes the business landscape, there is a need to ensure that only legitimate users gain access to sensitive data and systems to safeguard personal data as well as unauthorized breaches, which can lead to loss of intellectual property, violation of laws and regulations and disruption to public services \citep{critical_infra_reason}. Therefore, authentication and authorisation are fundamental concepts in cybersecurity, crucial for safeguarding digital resources and ensuring proper access control. \newline
 
-Authentication is the process of verifying the identity of a user or an online service using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorization determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid sensitive information and unauthorised access is important. Especially now, where the cloud-computing industry is booming, many services are easily accessible to a larger group of people, as it is easier to run and create different applications and simultaneously give attackers more systems to compromise.\newline
+Authentication is the process of verifying the identity of a user or an online service using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorization determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid sensitive information and unauthorised access is essential. Especially now, where the cloud-computing industry is booming, many services are easily accessible to a larger group of people, as it is easier to run and create different applications and simultaneously give attackers more systems to compromise.\newline
 
 In addition to the benefits that cloud computing provides, such as easy accessibility and quicker setup of applications, it has also introduced new challenges. In particular, the shared responsibility model of the Cloud, where the cloud provider and the client both have specific responsibilities to secure the system \citep{shared_principal}. This complication increases the attack surfaces to exploit as different errors and misconfiguration could make the system more vulnerable. Therefore, the combination of authentication and authorization for applications running in the cloud has gained significance. 
 
 
 \section{Problem Statement}
-Cloud computing and applications needing authorisation and authentication capabilities are synonymous, as many systems are rapidly moving to this environment. This way of operating business has been revolutionary, as it leverages a group of distributed systems located on remote servers hosted on the internet. The main benefit of using such a distributed network of readily available systems is also the main challenge for securing the system \citep{Alouffi2021-yh}. Especially when it comes to authentication and authorisation, it can be very critical as the vulnerabilities in this area will lead to unauthorised access and data leaks, which can be very costly; Statista reported in 2023 that the average cost of such a data breach is about 4.45 million US dollars \citep{statista_data_breach}. Therefore, this thesis will investigate the security risks associated with authentication and authorisation protocols in a cloud-based application using the Open ID connect protocol (OIDC) in the cloud, as OIDC is one of the most widely used protocols for Identity Management (IdM), which supports different modes such as mobile applications, machine-to-machine, and Single Sign-On (SSO) \citep{oidc_popular}.
+Cloud computing and applications needing authorisation and authentication capabilities are synonymous, as many systems are rapidly moving to this environment. This way of operating business has been revolutionary, as it leverages a group of distributed systems located on remote servers hosted on the internet. The main benefit of using such a distributed network of readily available systems is the main challenge for securing the system \citep{Alouffi2021-yh}. Especially when it comes to authentication and authorisation, it can be very critical as the vulnerabilities in this area will lead to unauthorised access and data leaks, which can be very costly; Statista reported in 2023 that the average cost of such a data breach is about 4.45 million US dollars \citep{statista_data_breach}. Therefore, this thesis will investigate the security risks associated with authentication and authorisation protocols in a cloud-based application using the Open ID connect protocol (OIDC) in the cloud, as OIDC is one of the most widely used protocols for Identity Management (IdM), which supports different modes such as mobile applications, machine-to-machine, and Single Sign-On (SSO) \citep{oidc_popular}.
 
 \section{Research Question}\label{sec:objectives}
+This section presents the research question that this master's thesis is focused on. This main research question is:
 \textbf{\textit{RQ1: What are the primary security concerns of the OpenID Connect protocol when used in a cloud-based application?}.}
 
 
 \section{Aims and Objectives}
-The primary aim of the RQ1 is to systematically analyse the security risks associated with implementing and using the OIDC protocol in cloud-based applications by identifying common vulnerabilities, assessing their impact on the overall security of these applications, and proposing effective mitigation strategies.Pursuing this aim, the thesis has the following objectives and goals:
+The primary aim of the RQ1 is to systematically analyse the security risks associated with implementing and using the OIDC protocol in cloud-based applications by identifying common vulnerabilities, assessing their impact on the overall security of these applications, and proposing effective mitigation strategies. Pursuing this aim, the thesis has the following objectives and goals:
 
 \begin{enumerate}
   \item Identify Common Security Risks - Describe the most prevalent security risks of OIDC Connect protocols when used with cloud applications.
@@ -42,5 +43,21 @@ By adhering to this structured methodology, the research addresses the immediate
 \includegraphics[width=\textwidth, height=320px]{pics/dsrm.png}
 \end{figure}
 
-
 \section{Thesis Outline}
+
+This master thesis project outlines six chapters that are as follows:
+
+\begin{itemize}
+    \item \textbf{Chapter 1} - The introduction chapter presents the background and the problem statement of this project and defines the research problems, research methodology, aim and objectives of this dissertation.
+
+    \item \textbf{Chapter 2} - This chapter analyses existing work from research papers, journals, documentation, books, conference papers, theses and other scholarly sources concerning Cloud application and OpenID Connect. In addition to analysing and summarising the theories, a discussion identifies gaps in the existing literature for the applications using OpenID Connect in the Cloud environment.
+
+    \item \textbf{Chapter 3} - Chapter 3 collects data from different case studies, academic journals, industry reports, and white papers on OpenID Connect and the cloud. This data creates a threat model, including the mitigations for the modelled risks. 
+    
+    \item \textbf{Chapter 4} - This chapter is the design chapter where different UML diagrams are created, which would be used to implement the prototype. In addition to UML diagrams, the application's setup methodology is depicted.
+    
+    \item \textbf{Chapter 5} - Chapter 5 is a continuation of the design, where the prototype is implemented, and to prove the mitigations applied for work, different kinds of tests are carried out, and the results are presented here.
+    
+    \item \textbf{Chapter 6} - Chapter 6 is the final section of this report, where the conclusions from the investigations and the future work that can be done to this research are presented.
+
+\end{itemize}
