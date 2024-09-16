@@ -97,7 +97,7 @@ OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0
 \textbf{Resource owner} & The data owner on the server. \\ \hline
 \textbf{Authorisation server} & The main server which issues the tokens after successful authentication.\\ \hline
 \textbf{Grant Type} & This is an authorisation given to the client to access the data on the resource server, which represents the specific permission the client is allowed to have. Grant types include Authorisation Code, Implict, and Client Credentials \citep{adv_api_sec}.  \\ \hline
-\textbf{Access token} & The token issued by the authorization server to get the resources from the resource server. \\ \hline
+\textbf{Access token} & The token issued by the authorisation server to get the resources from the resource server. \\ \hline
 \textbf{Refresh token} & A token that is used to retrieve a new access token after expiry. \\ \hline
 \textbf{ID token} & A token that contains user identity information which can verify the identity of the user. \\ \hline
 \end{longtable}
@@ -143,7 +143,7 @@ Proof Key for Code Exchange (PKCE) flow is an improvement to the authorisation c
 \includegraphics[width=\textwidth, height=320px]{pics/pkce.png}
 \end{figure}
 
-PKCE mitigates this risk by adding two additional steps: creating a "code verifier" and the "code challenge." When a client initiates the authorization request, it generates a random string called the "code verifier." This verifier is hashed using a secure method (such as SHA-256) to create the "code challenge" sent with the authorization request. The original code verifier must be provided when the client requests the access token. The authorization server hashes this verifier and compares it with the original code challenge. If they match, the server issues the access token (See Figure \ref{fig:pkce_flow}). This method ensures that the access token cannot be obtained without the authorisation code and the original code verifier. 
+PKCE mitigates this risk by adding two additional steps: creating a "code verifier" and the "code challenge." When a client initiates the authorisation request, it generates a random string called the "code verifier." This verifier is hashed using a secure method (such as SHA-256) to create the "code challenge" sent with the authorisation request. The original code verifier must be provided when the client requests the access token. The authorisation server hashes this verifier and compares it with the original code challenge. If they match, the server issues the access token (See Figure \ref{fig:pkce_flow}). This method ensures that the access token cannot be obtained without the authorisation code and the original code verifier. 
 
 Like the other flows, PKCE also has potential risks, especially when the implementation of this method is not done correctly. The code verifier is an integral part of this process, and if the attacker can access it, it would make this flow vulnerable. The attackers have a few ways to obtain or even guess the code verifier. Since the code verifier has to be sent to the server and an insecure transmission is used, the code verifier can be intercepted. In addition, using random generators that are cryptographically secure can make the code guessable. On the one hand, the client has to implement all the steps correctly; on the other hand, the authorisation server also needs to validate the code, and if this is not done perfectly, then attackers could bypass PKCE.   
 
@@ -156,11 +156,11 @@ Like the other flows, PKCE also has potential risks, especially when the impleme
     \label{table:oauth_terms}
 \hline
 \rowcolor{grey!15}
-\textbf{Feature} & \textbf{Implicit Flow} & \textbf{Authorization Code Flow} & \textbf{PKCE Flow} \\ \hline
+\textbf{Feature} & \textbf{Implicit Flow} & \textbf{Authorisation Code Flow} & \textbf{PKCE Flow} \\ \hline
 \endfirsthead
 \hline
 \rowcolor{grey!15}
-\textbf{Feature} & \textbf{Implicit Flow} & \textbf{Authorization Code Flow} & \textbf{PKCE Flow} 
+\textbf{Feature} & \textbf{Implicit Flow} & \textbf{Authorisation Code Flow} & \textbf{PKCE Flow} 
 \endhead
 \hline
 \endfoot
@@ -168,12 +168,12 @@ Like the other flows, PKCE also has potential risks, especially when the impleme
 \endlastfoot
 
 \textbf{Flow Type} & Direct token retrieval from the authorisation server. & Two-step process: The authorisation code is retrieved first and then exchanged for an access token. & It is the same as Authorisation Code Flow but adds a code verifier and code challenge for enhanced security. \\ \hline
-\textbf{Security Level} & Lower security; tokens are exposed in URLs, making them vulnerable to interception. & More secure than Implicit Flow; tokens are kept server-side and retrieved via a back-channel. & Highest security; mitigates the risk of authorization code interception by adding PKCE parameters. \\ \hline
+\textbf{Security Level} & Lower security; tokens are exposed in URLs, making them vulnerable to interception. & More secure than Implicit Flow; tokens are kept server-side and retrieved via a back-channel. & Highest security; mitigates the risk of authorisation code interception by adding PKCE parameters. \\ \hline
 \textbf{Recommended For} & Single-page applications or Web applications that cannot store secrets securely. & Web and mobile applications with a secure backend. & Public clients, including SPAs and mobile apps, require enhanced security. \\ \hline
-\textbf{Tokens Exposed in URL} & Yes, the access token is exposed in the URL fragment. & No, only the authorization code is in the URL and exchanged server-side. & No, only the authorization code is in the URL, with PKCE parameters providing additional security. \\ \hline
-\textbf{Exchange of Authorization Code} & Not applicable; token is issued directly. & Yes, via a secure server-side request. & Yes, with the inclusion of a code verifier to ensure integrity. \\ \hline
+\textbf{Tokens Exposed in URL} & Yes, the access token is exposed in the URL fragment. & No, only the authorisation code is in the URL and exchanged server-side. & No, only the authorisation code is in the URL, with PKCE parameters providing additional security. \\ \hline
+\textbf{Exchange of Authorisation Code} & Not applicable; token is issued directly. & Yes, via a secure server-side request. & Yes, with the inclusion of a code verifier to ensure integrity. \\ \hline
 \textbf{Vulnerability to Attacks} & Prone to interception attacks and token leakage. & Less vulnerable; however, the code could still be intercepted if not protected. & Minimizes risks, including code interception, through PKCE parameters. \\ \hline
-\textbf{Token Storage} & Tokens are typically stored in browser storage, which may not be secure. & Tokens can be securely stored server-side. & Same as Authorization Code Flow; tokens are typically stored securely server-side. \\ \hline
+\textbf{Token Storage} & Tokens are typically stored in browser storage, which may not be secure. & Tokens can be securely stored server-side. & Same as Authorisation Code Flow; tokens are typically stored securely server-side. \\ \hline
 \end{longtable}
 \endgroup
 
@@ -227,55 +227,32 @@ The flows mentioned above are some industry-standard methods in OpenID Connect t
 
 \section{Discussion}
 
-While existing research provides valuable insights into the security of OIDC and Cloud applications separately, more studies need to be conducted specifically to address the security risks of OIDC in cloud environments. Cloud-based applications introduce unique challenges that are not fully covered by current research:
+While existing research provides valuable insights into the security of OIDC and Cloud applications separately, more studies need to be conducted specifically to address the security risks of OIDC in cloud environments. 
 
-\begin{itemize}
-    \item  \textbf{Multi-Tenancy Risks:} Cloud environments often host multiple tenants on shared infrastructure, increasing the risk of data leakage and unauthorised access between tenants.
+Cloud environments often host multiple tenants on shared infrastructure, increasing the risk of data leakage and unauthorised access between tenants. Although authors like \citep{multi_tenancy_cloud_risk} and \citep{cloud_shared_resp} have focused on multi-tenancy for cloud computing but not in conjunction with OpenID Connect. OpenID Connect Protocol can also be configured to allow multi-tenancy; for example, a Company owns two sub Companies, A and B, but does not want to spend money on duplicating the infrastructure twice. In this case, the tenant's data should be logically isolated. In such cases, ensuring logical isolation of each tenant's data becomes critical to prevent cross-tenant access. Each subsidiary must maintain distinct access controls and role-based permissions to protect against unauthorized data access, even though they share the same underlying resources. 
 
-    \item \textbf{Third-Party Integrations:} Cloud applications frequently integrate with numerous third-party services, amplifying the potential attack surface. Also, using External IDP providers like Auth0, which offers a managed OIDC connect user management service \citep{auth0-main}.
+The existing research can be complemented by analysing the risks that OpenID Connect protocols bring when also used in a multi-tenant environment. Understanding the risks involved in multi-tenancy with OIDC would also give a broader picture of the possible security risks and the implication of data protection laws like the General Data Protection Regulation (GDPR) EU's data privacy law \citep{gdpr} when security breaches in such environment occur. In addition, \citep{oidc_attacks} highlights how attackers gain access to sensitive data using replay attacks and OIDC misconfiguration. The attack surfaces increase drastically when multiple tenants share the same Identity Provider. Therefore, further analysis of this topic would provide a better understanding of the multi-tenancy of OIDC in the cloud, the regulatory implications when there is data loss and the various other attacks that revolve around the issue.
 
-    \item \textbf{Configuration Management:} Misconfigurations in implementing OpenID connect with improper cloud access management could also cause unauthorised access and damage. Having an insight on what configurations on both sides the cloud configurations and OpenID Connect will help prevent certain attacks.
+\begin{comment}
+    \subsection {O}
+    Cloud-based applications introduce unique challenges that are not fully covered by current research:
+    \begin{itemize}
+    
+    
+        \item \textbf{Third-Party Integrations:} Cloud applications frequently integrate with numerous third-party services, amplifying the potential attack surface. Also, using External IDP providers like Auth0, which offers a managed OIDC connect user management service \citep{auth0-main}.
+    
+        \item \textbf{Configuration Management:} Misconfigurations in implementing OpenID connect with improper cloud access management could also cause unauthorised access and damage. Having an insight on what configurations on both sides the cloud configurations and OpenID Connect will help prevent certain attacks.
+    
+    \end{itemize}
+\end{comment}
 
-\end{itemize}
+\section{Conclusion}
+OpenID Connect plays a critical role in securing cloud-based applications, but the existing body of research needs to address the specific security challenges cloud environments pose. While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the Cloud, is not fully addressed. In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants. Such breaches would undermine the confidentiality and integrity of the tenants, which have severe economic and reputation consequences for the company.
 
-OpenID Connect plays a critical role in securing cloud-based applications, but the existing body of research needs to address the specific security challenges cloud environments pose. By focusing on the identified gaps and proposed areas for future research, the security of OIDC in cloud applications can be significantly enhanced. This will protect sensitive user data and bolster the trust and reliability of cloud-based services. This review does not focus on many other security risks and the mitigations that could be done in order to understand and prevent these risks. For a more comprehensive understanding, further reading is recommended (See Table \ref{table:further_reading}).
+Furthermore, the regulatory implications of such breaches cannot be ignored, especially in regions like the EU, where the GDPR directive plays a crucial role in data protection. Similar to the GDPR, comparable laws impose stringent requirements on an organization. In the event of a security breach, there will be significant penalties. Compliance with data protection laws is challenging in cloud environments and OIDC protocol. 
 
-\begingroup
-\centering
-\setlength{\tabcolsep}{6.5pt} % Default value: 6pt)
-\begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{12cm}|>}
-    \caption{Further Reading}
-    \label{table:further_reading}
-\hline
-\rowcolor{grey!15}
-\textbf{Author(s)} & \textbf{Title} \\ \hline
-\endfirsthead
-\hline
-\rowcolor{grey!15}
-\textbf{Author(s)} & \textbf{Title} \\ 
-\endhead
-\hline
-\endfoot
-\hline
-\endlastfoot
+Focusing on the identified gaps and proposed areas for future research can significantly enhance the security of OIDC in cloud applications. This will protect sensitive user data and bolster the trust and reliability of cloud-based services. In addition to trust, it would also provide us with an understanding of the regulatory implications of failing to comply with the laws.
 
-
-% Begin the actual content
-\cite{cloud_shared_resp} & \textit{Cloud computing security for multi-cloud service providers: Controls and techniques in our modern threat landscape} \\ \hline
-\cite{Alouffi2021-yh} & \textit{A systematic literature review on cloud computing security:
-               Threats and mitigation strategies}  \\ \hline
-\cite{oidc_attacks} & \textit{Security Analysis of Real-Life OpenID Connect Implementations} \\ \hline
-\cite{Mishra2019-uh} & \textit{Analysis of security issues in cloud environment} \\ \hline
-\cite{openid_docs} & \textit{OpenID Official Documentation} \\ \hline
-\cite{oidc_popular} & \textit{Best Current practices for Oauth/OIDC} \\ \hline
-\cite{sec_privacy_cloud} & \textit{Security and privacy protection in cloud computing:
-                  Discussions and challenges} \\ \hline
-\cite{blockchain_oidc} & \textit{A novel secure and privacy-preserving model for {OpenID}
-                  connect based on blockchain} \\ \hline
-
-% Add more rows as needed
-
-\end{longtable}
 
 
 
