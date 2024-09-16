@@ -6,13 +6,15 @@ Threat modelling is an act of security analysis which aids in discovering potent
 \section{Application Information}
 To answer the first question about \textit{what are we working on}, this section will describe the application and the different dependencies that this application contains.
 \begin{itemize}
-    \item \textbf{Application Name:} OIDC App in Cloud
+    \item \textbf{Application Name:} Multi-tenant App
     \item \textbf{Application Version:} v1.0
-    \item \textbf{Description:} This generic authentication and authorisation application utilises OpenID Connect protocols PKCE flow (See Figure \ref{fig:pkce_flow}) in a public cloud environment. This application will be based on multitenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application. 
+    \item \textbf{Description:} This generic authentication and authorisation application utilises OpenID Connect protocols PKCE flow (See Figure \ref{fig:pkce_flow}) in a public cloud environment. This application will be based on multitenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application. This is a general API which would provide the capabilities mentioned in Table \ref{table:threat_model_entry_points}.
   \end{itemize}
 
 \subsection{Entry Points}
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|p{4cm}|}
+\caption{Threat modeling: Entry Points}
+\label{table:threat_model_entry_points}
 \hline
 \rowcolor{grey!15}
 \textbf{Entry Point} & \textbf{Description} & \textbf{Request Parameters} & \textbf{Response Data} \\
@@ -29,7 +31,7 @@ To answer the first question about \textit{what are we working on}, this section
 
 /login & Entry point for user authentication.  & 
 - client\_id: The client ID of the application \newline 
-- redirect\_uri: URI where the response will be sent \newline
+%- redirect\_uri: URI where the response will be sent \newline
 - scope: Scopes for requested authentication (e.g., OpenID, email) \newline 
 - response\_type: Indicates the desired authorization flow (e.g., code) & 
 - The authorisation code is to be exchanged for tokens. \newline 
@@ -39,7 +41,7 @@ To answer the first question about \textit{what are we working on}, this section
 /token & Entry point for exchanging authorization code for tokens (access token, ID token, refresh token). & 
 - grant\_type: Must be "authorization\_code" \newline 
 - code: Authorization code received from /login \newline
-- redirect\_uri: Must match the original redirect URI used in /login \newline 
+%- redirect\_uri: Must match the original redirect URI used in /login \newline 
 - client\_id: The client ID of the application & 
 - access\_token: Token for accessing protected resources \newline 
 - id\_token: Token containing user identity information \newline 
@@ -65,6 +67,11 @@ To answer the first question about \textit{what are we working on}, this section
 \section{Data Flow Diagram}
 As a first step to identify what is the intention of the project, a data flow diagram (See Figure XX)
 
+\begin{figure}[h!]
+\centering
+\caption{Data Flow Diagram Level 1 OIDC App}\label{fig:dfd_app}
+\includegraphics[width=\textwidth, height=320px]{pics/DFD_APP.png}
+\end{figure}
 
 \section{STRIDE Model}
 
