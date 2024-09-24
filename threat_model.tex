@@ -1,6 +1,6 @@
-\chapter{Threat Modelling}
+\chapter{Chapter: Threat Modelling}
 \label{chap:threat_model}
-Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}. This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied. Similarly, threat modelling will also be conducted for this project, where an authentication server using OIDC protocol is operated in a cloud environment. The approach that this project will apply to threat modelling is based on Shostack's Four Question Framework \citep{shostack}. The questions focus on the project objectives, what could go wrong there, what mitigations could be applied, and whether it can be improved. Using Shostacks questions in conjunction with the OWASP threat modelling process, the application, using OpenID Connect in Cloud, can be analysed \citep{owasp_threat_model}. The objective of threat modelling is to identify as many possible risks that are present in the Open ID Connect application running on a cloud. To add further, the modelling performed will be cloud agnostic meaning these identified mitigations can be applied anywhere irrespective to the cloud provider.
+Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}. This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied. Similarly, threat modelling will also be conducted for this project, where an authentication server using OIDC protocol is operated in a cloud environment. The approach that this project will apply to threat modelling is based on Shostack's Four Question Framework \citep{shostack}. The questions focus on the project objectives, what could go wrong there, what mitigations could be applied, and whether it can be improved. Using Shostacks questions in conjunction with the OWASP threat modelling process, the application, using OpenID Connect in Cloud, can be analysed \citep{owasp_threat_model}. The objective of threat modelling is to identify as many possible risks present in the Open ID Connect application running on a cloud. Furthermore, the modelling will be cloud agnostic, meaning these identified mitigations can be applied anywhere, irrespective of the cloud provider.
 
 
 \section{Application Information}
@@ -13,7 +13,7 @@ To answer the first question about \textit{what are we working on}, this section
 
 \subsection{Entry Points}
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|p{4cm}|}
-\caption{Threat modelling: Entry Points}
+\caption{Entry Points}
 \label{table:threat_model_entry_points}
 \hline
 \rowcolor{grey!15}
@@ -66,7 +66,7 @@ To answer the first question about \textit{what are we working on}, this section
 \end{longtable}
 
 \begin{longtable}{|p{8cm}|p{8cm}|}
-\caption{Threat modelling: Asset Descriptions}
+\caption{Asset Descriptions}
 \label{table:threat_model_assets}
 \hline
 \rowcolor{grey!15}
@@ -98,7 +98,7 @@ API Endpoints & Points of interaction where the application exposes functionalit
 
 
 \section{STRIDE Model}
-Using the given entry points and assets that the application uses, we can create a level zero Data Flow Diagram (DFD) (See Figure \ref{fig:dfd_app}). This diagram depicts the overview of the entire system with its significant processes, data flow and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, and Elevation of privilege. The threat categories will be analyzed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
+Using the given entry points and assets that the application uses, we can create a level zero Data Flow Diagram (DFD) (See Figure \ref{fig:dfd_app}). This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, and Elevation of privilege. The threat categories will be analyzed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
 
 
 
@@ -109,7 +109,7 @@ Using the given entry points and assets that the application uses, we can create
 \end{figure}
 
 
-
+\label{subsec:stride}
 \subsection*{1. Spoofing}
 \begin{itemize}
     \item \textbf{Threat}: An attacker attempts to impersonate a legitimate user or tenant to gain unauthorised access.
@@ -197,7 +197,7 @@ Using the given entry points and assets that the application uses, we can create
     \end{itemize}
     \item \textbf{Mitigation}:
     \begin{itemize}
-        \item Implement API rate limiting and token request throttling to prevent token bombing.
+        \item Implement API rate limiting and token request throttling to prevent a token bombing.
         \item Use distributed denial of service (DDoS) protection services, such as AWS Shield \citep{aws_shield}.
         \item Ensure each tenant has isolated resource pools to avoid one tenant's traffic affecting others.
         \item Implement service quotas for resource consumption per tenant.
@@ -219,3 +219,98 @@ Using the given entry points and assets that the application uses, we can create
         \item Implement tenant-aware access control to ensure that users can only interact with resources belonging to their tenant.
     \end{itemize}
 \end{itemize}
+
+
+\section{Risk Assessment}
+Risk assessment is integral to keeping a system safe as it helps identify, analyse and evaluate the potential risks that could negatively impact an organization. Cyber breaches have an enormous impact on an organizations value and reputation; for example, in 2024 \citep{ibm} estimated the average cost of a cyberattack on a company in the US is about 4.88M USD. In addition, such data breaches also could cost firms penalties due to non-compliance, especially in the EU. Organisations face hefty fines of up to 10 Million Euros or 2\% of their worldwide revenue under GDPR Article 83 \citep{gdpr_fine}. Therefore, carrying out a risk assessment helps understand the impact of these risks and determine how to manage and address the potential issues before they occur. 
+
+In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a recognized standard for establishing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being assessed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
+
+
+\subsection{Scope}
+The first step in this risk assessment process is to define the scope of the ISMS, as it plays a crucial role in identifying, analyzing, and evaluating the risk effectively. Using the scopes, one can limit the analysis to a particular subject and focus on the priorities. The scope is constrained to a small prototype implementing a multi-tenant authentication application using PKCE flow in a Cloud application, which resembles a small business. The IT assets are listed in Table \ref{table:threat_model_assets}, and the physical usage of this application is located in the European Union, meaning the regulatory measures that need to be followed are based in this region, especially GDPR. The key elements that are part of the scope are as follows:
+\begin{itemize}
+    \item Cloud Security
+    \item Multi-tenancy Issues
+    \item PKCE Implementation
+    \item Data Security and Privacy
+    \item Regulatory and Compliance Requirements
+    \item Identity and Access Management (IAM)
+\end{itemize}
+
+
+\subsection{Limitations}
+Legend:
+    \begin{itemize}
+        \item  \textbf{Likelihood (1-5)}: Likelihood of the attack happening based on the current environment, known vulnerabilities, and ease of exploitation. \newline
+        1: Very unlikely \newline
+        5: Very likely
+        \item \textbf{Impact (1-5)}: Impact of the attack on the system, focusing on data breaches, financial loss, service downtime, and customer trust. \newline
+         1: Minimal impact \newline
+         5: Severe impact
+       \item  \textbf{Risk Level (1-25)}: Calculated as Likelihood × Impact. High values indicate higher overall risk.
+    \end{itemize}
+
+    
+    
+
+
+\begin{longtable}{|p{5cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\rowcolor{grey!15}
+\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} \\
+\hline
+\endfirsthead
+
+\hline
+\rowcolor{grey!15}
+\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+ID Spoofing & 4 & 4 & 16 \\
+\hline
+Credential Stuffing & 4 & 3 & 12 \\
+\hline
+Phishing & 5 & 4 & 20  \\
+\hline
+Man-in-the-Middle (MITM) & 3 & 5 & 15 \\
+\hline
+Token Tampering & 3 & 5 & 15 \\
+\hline
+Code Injection (XSS, SQLi) & 3 & 4 & 12 \\
+\hline
+Malicious Endpoint & 2 & 5 & 10 \\
+\hline
+Ransomware & 2 & 5 & 10 \\
+\hline
+Action Denial (Denial of Service) & 4 & 3 & 12\\
+\hline
+Tenant Switching & 2 & 5 & 10 \\
+\hline
+Cross-tenant data Leakage & 3 & 5 & 15 \\
+\hline
+Token Exposure (Logging) & 3 & 4 & 12 \\
+\hline
+Cloud Misconfigurations & 4 & 5 & 20 \\
+\hline
+Token Bombing & 3 & 3 & 9 \\
+\hline
+API Rate Limiting Attack & 4 & 3 & 12 \\
+\hline
+Resource Starvation & 3 & 4 & 12\\
+\hline
+PKCE Downgrade Attack & 2 & 4 & 8 \\
+\hline
+Insecure Multi-Tenant Access Control & 3 & 5 & 15 \\
+\hline
+
+\end{longtable}
+
+\subsection{Compliance Risk}
