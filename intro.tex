@@ -4,9 +4,9 @@ In the era of digitalisation, an immense transformation is commencing where day-
 
 As this modernization reshapes the business landscape, there is a need to ensure that only legitimate users gain access to sensitive data and systems to safeguard personal data as well as unauthorized breaches, which can lead to loss of intellectual property, violation of laws and regulations and disruption to public services \citep{critical_infra_reason}. Therefore, authentication and authorisation are fundamental concepts in cybersecurity, crucial for safeguarding digital resources and ensuring proper access control. \newline
 
-Authentication is the process of verifying the identity of a user or an online service using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorization determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid sensitive information and unauthorised access is essential. Especially now, where the cloud-computing industry is booming, many services are easily accessible to a larger group of people, as it is easier to run and create different applications and simultaneously give attackers more systems to compromise.\newline
+Authentication is the process of verifying the identity of a user or an online service using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorization determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid sensitive information and unauthorised access is important. Especially now, where the cloud-computing industry is booming, many services are easily accessible to a larger group of people, as it is easier to run and create different applications and simultaneously give attackers more systems to compromise.\newline
 
-In addition to the benefits that cloud computing provides, such as easy accessibility and quicker setup of applications, it has also introduced new challenges. In particular, the shared responsibility model of the Cloud, where the cloud provider and the client both have specific responsibilities to secure the system \citep{shared_principal}. This complication increases the attack surfaces to exploit as different errors and misconfiguration could make the system more vulnerable. Therefore, the combination of authentication and authorization for applications running in the cloud has gained significance. 
+In addition to the benefits that cloud computing provides, such as easy accessibility and quicker setup of applications, it has also introduced new challenges. In particular, the shared responsibility model of the Cloud, where the cloud provider and the client both have specific responsibilities to secure the system \citep{shared_principal}. The shared responsibility model means that any misconfiguration or oversight on either side could leave the system vulnerable to attack. For instance, if the cloud provider maintains a secure infrastructure but the client misconfigures their application or leaves storage buckets open to the public, this could lead to data breaches or exploitation. This complication increases the attack surfaces to exploit as different errors and misconfiguration could make the system more vulnerable. Therefore, the combination of authentication and authorisation for applications running in the cloud has gained significance. 
 
 
 \section{Problem Statement}
@@ -42,49 +42,6 @@ By adhering to this structured methodology, the research addresses the immediate
 \caption{DSRM Methodology}\label{fig:dsrm}
 \includegraphics[width=\textwidth, height=320px]{pics/dsrm.png}
 \end{figure}
-
-\section{Related Work}
-
-Some work has been related to Cloud security risks and OpenID Connect (See Table \ref{table:further_reading}).  
-
-
-
-\begingroup
-\centering
-\setlength{\tabcolsep}{6.5pt} % Default value: 6pt)
-\begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{12cm}|>}
-    \caption{Related Work}
-    \label{table:further_reading}
-\hline
-\rowcolor{grey!15}
-\textbf{Author(s)} & \textbf{Title} \\ \hline
-\endfirsthead
-\hline
-\rowcolor{grey!15}
-\textbf{Author(s)} & \textbf{Title} \\ 
-\endhead
-\hline
-\endfoot
-\hline
-\endlastfoot
-
-% Begin the actual content
-\cite{cloud_shared_resp} & \textit{Cloud computing security for multi-cloud service providers: Controls and techniques in our modern threat landscape} \\ \hline
-\cite{Alouffi2021-yh} & \textit{A systematic literature review on cloud computing security:
-               Threats and mitigation strategies}  \\ \hline
-\cite{oidc_attacks} & \textit{Security Analysis of Real-Life OpenID Connect Implementations} \\ \hline
-\cite{Mishra2019-uh} & \textit{Analysis of security issues in cloud environment} \\ \hline
-\cite{openid_docs} & \textit{OpenID Official Documentation} \\ \hline
-\cite{oidc_popular} & \textit{Best Current practices for Oauth/OIDC} \\ \hline
-\cite{sec_privacy_cloud} & \textit{Security and privacy protection in cloud computing:
-                  Discussions and challenges} \\ \hline
-\cite{blockchain_oidc} & \textit{A novel secure and privacy-preserving model for {OpenID}
-                  connect based on blockchain} \\ \hline
-
-% Add more rows as needed
-
-\end{longtable}
-\endgroup
 
 \section{Thesis Outline}
 

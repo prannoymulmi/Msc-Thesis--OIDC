@@ -246,6 +246,48 @@ The existing research can be complemented by analysing the risks that OpenID Con
     \end{itemize}
 \end{comment}
 
+\section{Related Work}
+
+Some work has been related to Cloud security risks and OpenID Connect (See Table \ref{table:further_reading}).  
+
+
+
+\begingroup
+\centering
+\setlength{\tabcolsep}{6.5pt} % Default value: 6pt)
+\begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{12cm}|>}
+    \caption{Related Work}
+    \label{table:further_reading}
+\hline
+\rowcolor{grey!15}
+\textbf{Author(s)} & \textbf{Title} \\ \hline
+\endfirsthead
+\hline
+\rowcolor{grey!15}
+\textbf{Author(s)} & \textbf{Title} \\ 
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+% Begin the actual content
+\cite{cloud_shared_resp} & \textit{Cloud computing security for multi-cloud service providers: Controls and techniques in our modern threat landscape} \\ \hline
+\cite{Alouffi2021-yh} & \textit{A systematic literature review on cloud computing security:
+               Threats and mitigation strategies}  \\ \hline
+\cite{oidc_attacks} & \textit{Security Analysis of Real-Life OpenID Connect Implementations} \\ \hline
+\cite{Mishra2019-uh} & \textit{Analysis of security issues in cloud environment} \\ \hline
+\cite{openid_docs} & \textit{OpenID Official Documentation} \\ \hline
+\cite{oidc_popular} & \textit{Best Current practices for Oauth/OIDC} \\ \hline
+\cite{sec_privacy_cloud} & \textit{Security and privacy protection in cloud computing:
+                  Discussions and challenges} \\ \hline
+\cite{blockchain_oidc} & \textit{A novel secure and privacy-preserving model for {OpenID}
+                  connect based on blockchain} \\ \hline
+
+% Add more rows as needed
+
+\end{longtable}
+\endgroup
+
 \section{Conclusion}
 OpenID Connect plays a critical role in securing cloud-based applications, but the existing body of research needs to address the specific security challenges cloud environments pose. While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the Cloud, is not fully addressed. In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants. Such breaches would undermine the confidentiality and integrity of the tenants, which have severe economic and reputation consequences for the company.
 

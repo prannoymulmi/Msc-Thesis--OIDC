@@ -224,7 +224,7 @@ Using the given entry points and assets that the application uses, we can create
 \section{Risk Assessment}
 Risk assessment is integral to keeping a system safe as it helps identify, analyse and evaluate the potential risks that could negatively impact an organization. Cyber breaches have an enormous impact on an organizations value and reputation; for example, in 2024 \citep{ibm} estimated the average cost of a cyberattack on a company in the US is about 4.88M USD. In addition, such data breaches also could cost firms penalties due to non-compliance, especially in the EU. Organisations face hefty fines of up to 10 Million Euros or 2\% of their worldwide revenue under GDPR Article 83 \citep{gdpr_fine}. Therefore, carrying out a risk assessment helps understand the impact of these risks and determine how to manage and address the potential issues before they occur. 
 
-In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a recognized standard for establishing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being assessed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
+In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a recognized standard for establishing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being analysed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
 
 
 \subsection{Scope}
@@ -232,39 +232,73 @@ The first step in this risk assessment process is to define the scope of the ISM
 \begin{itemize}
     \item Cloud Security
     \item Multi-tenancy Issues
-    \item PKCE Implementation
+    \item PKCE Implementation Issues
     \item Data Security and Privacy
     \item Regulatory and Compliance Requirements
     \item Identity and Access Management (IAM)
 \end{itemize}
 
+\subsection{Methodology}
+One of the benefits of using risk assessment from the ISO/IEC 27000 group is that it does not prescribe a specific methodology for quantitative or qualitative analysis. In contrast to FAIR, which is a quantitative method, qualitative, quantitative, or a mix of both can be applied here. 
 
-\subsection{Limitations}
-Legend:
+The assessment of this project is based on subjective judgment or qualitative analysis rather than quantitative analysis due to the complexity and nature of the risks. For instance, risks identified during threat modelling, such as data isolation, cloud misconfiguration, and shared resource vulnerabilities, are difficult to quantify because they involve unknown factors. Using subjective analysis simplifies the decision-making process and is faster to conduct. To assess the risks meaningfully, we use the Common Attack Pattern Enumeration and Classification (CAPEC) as a reference. CAPEC provides a comprehensive database for the technical exploits used by adversaries and focuses on application security. CAPEC categorizes the general likelihood and severity into five levels, ranging from very low to very high. These levels are then converted to a number from 1-5 for each to determine the risk level for a specific threat (CAPEC). (See Figure \ref{fig:ris_assessment_method}). 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{pics/risk_assessment_method.png}
+\caption{Risk Assessment Methodology}\label{fig:ris_assessment_method}
+\end{figure}
+
+\newpage
+\textbf{Definitions}:
     \begin{itemize}
-        \item  \textbf{Likelihood (1-5)}: Likelihood of the attack happening based on the current environment, known vulnerabilities, and ease of exploitation. \newline
-        1: Very unlikely \newline
-        5: Very likely
-        \item \textbf{Impact (1-5)}: Impact of the attack on the system, focusing on data breaches, financial loss, service downtime, and customer trust. \newline
-         1: Minimal impact \newline
-         5: Severe impact
-       \item  \textbf{Risk Level (1-25)}: Calculated as Likelihood × Impact. High values indicate higher overall risk.
+        \item  \textbf{Likelihood (1-5)}: Likelihood of the attack happening based on the current environment, known vulnerabilities, and ease of exploitation.          \begin{itemize}
+            \item \textbf{1}: Very unlikely
+            \item \textbf{5}: Very likely
+         \end{itemize}
+        \item \textbf{Impact (1-5)}: Impact of the attack on the system, focusing on data breaches, financial loss, service downtime, and customer trust.
+         \begin{itemize}
+            \item \textbf{1}: Very Low
+            \item \textbf{5}: Very High
+         \end{itemize}
+         
+       \item  \textbf{Risk Level (1-25)}: Calculated as Likelihood × Impact. High values indicate higher overall risk. 
+       \begin{itemize}
+           \item \textbf{1-5}: Very Low Risk
+           \item \textbf{5-10}: Low Risk
+           \item \textbf{10-15}: Medium Risk
+           \item \textbf{15-20}: High Risk
+           \item \textbf{20-25}: Very High Risk
+       \end{itemize}
     \end{itemize}
 
     
-    
+\subsection{Limitations}  
+Although ISO/IEC 20071:2022 is an internationally recognized standard for risk assessment, the framework and scope of this project have some limitations. The limitations of using this methodology for this project are listed below:
 
+\begin{itemize}
+    \item Given the timeframe of this project and the limited resources, not all aspects of this framework can be implemented and documented. Instead, only the scope, methodology, and risk assessment.
+    \item It is very resource intensive, and the assessment result is based on a specialist doing the analysis, which could lead to subjective arguments.
+    \item The project's scope is narrow, mainly focusing on the technical risks of this implementation. This could leave some specific systems not being covered. For example, the amount of financial loss that would occur with different risks is not covered.
+    \item The data used from CAPEC to derive the likelihood and impact is a generic value and can differ from the actual case, which could cause some deviation from the analysis.
+    \item Some attacks are not listed in the CAPEC database, which then is assessed subjectively according to their complexity and impact. 
+\end{itemize}
 
-\begin{longtable}{|p{5cm}|p{3cm}|p{3cm}|p{3cm}|}
+\subsection{Analysis}
+ The analysis section is one of the most critical components, forming the backbone of the research findings. It consists of data on the threats that affect the OpenID Connect application in a cloud environment. The data for the analysis are gathered using various methods, e.g., research papers, journals, and theses.  
+
+\begin{longtable}{|p{4cm}|p{2cm}|p{2cm}|p{2cm}|p{3cm}|}
+\caption{Table: Risk Assessment}
+\label{table:risk_assessment}
 \hline
 \rowcolor{grey!15}
-\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} \\
+\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} & \textbf{CAPEC ID}\\
 \hline
 \endfirsthead
 
 \hline
 \rowcolor{grey!15}
-\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} \\
+\textbf{Threat} & \textbf{Likelihood (1-5)} & \textbf{Impact (1-5)} & \textbf{Risk Level (1-25)} & \textbf{CAPEC ID}\\
 \hline
 \endhead
 
@@ -273,42 +307,30 @@ Legend:
 
 \hline
 \endlastfoot
+Cloud Misconfigurations & 4 & 5 & \cellcolor{red!90} 20 & - \\
+\hline
+Phishing & 4 & 5 & \cellcolor{red!90} 20 & CAPEC-98  \\
+\hline
+Man-in-the-Middle (MITM) & 4 & 5 & \cellcolor{red!90} 20 &  CAPEC-94\\
+\hline
+Credential Stuffing & 4 & 4 & \cellcolor{red!60} 16 & CAPEC-600 \\
+\hline
+Code Injection (XSS, SQLi) & 4 & 4 & \cellcolor{red!60} 16 & CAPEC-242 \\
+\hline
+Token Tampering & 4 & 3 &  \cellcolor{yellow!90} 12 &CAPEC-39 \\
+\hline
+Ransomware & 3 & 4 &  \cellcolor{yellow!90} 12 & CAPEC-549 \\
+\hline
+Insecure Multi-Tenant Access Control & 3 & 4 &  \cellcolor{yellow!90} 12 & - \\
+\hline
+Action Denial (Denial of Service) & 4 & 3 &  \cellcolor{yellow!90} 12 & CAPEC-125\\
+\hline
+ID Spoofing & 3 & 3 &  \cellcolor{green!20} 9 & CAPEC-151\\
+\hline
 
-ID Spoofing & 4 & 4 & 16 \\
+PKCE Downgrade Attack & 2 & 4 & \cellcolor{green!20} 8 & -\\
 \hline
-Credential Stuffing & 4 & 3 & 12 \\
-\hline
-Phishing & 5 & 4 & 20  \\
-\hline
-Man-in-the-Middle (MITM) & 3 & 5 & 15 \\
-\hline
-Token Tampering & 3 & 5 & 15 \\
-\hline
-Code Injection (XSS, SQLi) & 3 & 4 & 12 \\
-\hline
-Malicious Endpoint & 2 & 5 & 10 \\
-\hline
-Ransomware & 2 & 5 & 10 \\
-\hline
-Action Denial (Denial of Service) & 4 & 3 & 12\\
-\hline
-Tenant Switching & 2 & 5 & 10 \\
-\hline
-Cross-tenant data Leakage & 3 & 5 & 15 \\
-\hline
-Token Exposure (Logging) & 3 & 4 & 12 \\
-\hline
-Cloud Misconfigurations & 4 & 5 & 20 \\
-\hline
-Token Bombing & 3 & 3 & 9 \\
-\hline
-API Rate Limiting Attack & 4 & 3 & 12 \\
-\hline
-Resource Starvation & 3 & 4 & 12\\
-\hline
-PKCE Downgrade Attack & 2 & 4 & 8 \\
-\hline
-Insecure Multi-Tenant Access Control & 3 & 5 & 15 \\
+Cross-tenant data Leakage & 1 & 4 &  \cellcolor{green!80} 4 & CAPEC-546 \\
 \hline
 
 \end{longtable}
