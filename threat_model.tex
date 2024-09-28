@@ -183,6 +183,7 @@ Using the given entry points and assets that the application uses, we can create
         \item Use end-to-end encryption and enforce HTTPS for all communications.
         \item Conduct regular security audits to identify cloud misconfigurations.
         \item Manage whitelisted redirect URIs and limit callback URLs to trusted domains.
+        \item Use automated tools to scan for and fix misconfigurations like OWASP Zap \citep{owasp_zap}.
     \end{itemize}
 \end{itemize}
 
@@ -264,11 +265,12 @@ The assessment of this project is based on subjective judgment or qualitative an
          
        \item  \textbf{Risk Level (1-25)}: Calculated as Likelihood × Impact. High values indicate higher overall risk. 
        \begin{itemize}
-           \item \textbf{1-5}: Very Low Risk
-           \item \textbf{5-10}: Low Risk
-           \item \textbf{10-15}: Medium Risk
-           \item \textbf{15-20}: High Risk
-           \item \textbf{20-25}: Very High Risk
+           \item \textbf{1-5}: Very Low Risk = Requires minimal attention.
+           \item \textbf{5-10}: Low Risk = Requires minimal attention.
+           \item \textbf{10-15}: Medium Risk = Needs monitoring and potentially preventive measures.
+           \item \textbf{15-20}: High Risk = Immediate action required to mitigate the risk.
+           \item \textbf{20-25}: Very High Risk = Immediate action required to mitigate the risk.
+
        \end{itemize}
     \end{itemize}
 
@@ -285,7 +287,7 @@ Although ISO/IEC 20071:2022 is an internationally recognized standard for risk a
 \end{itemize}
 
 \subsection{Analysis}
- The analysis section is one of the most critical components, forming the backbone of the research findings. It consists of data on the threats that affect the OpenID Connect application in a cloud environment. The data for the analysis are gathered using various methods, e.g., research papers, journals, and theses.  
+ The analysis section is one of the most critical components, forming the backbone of the research findings. It consists of data on the threats that affect the OpenID Connect application in a cloud environment. The data for the analysis are gathered using various methods, e.g., research papers, journals, and theses. To answer the research question (See \ref{sec:objectives}) mentioned in Chapter 1, the different technical threats and risks that occur due to non-compliance to regulations are analysed. As the methodology mentions, the collected threats are compared against the CAPEC database and are qualitatively assessed. Table \ref{table:risk_assessment} shows the threats analysed, and the risk level is ordered from highest to lowest. 
 
 \begin{longtable}{|p{4cm}|p{2cm}|p{2cm}|p{2cm}|p{3cm}|}
 \caption{Table: Risk Assessment}
@@ -334,5 +336,13 @@ Cross-tenant data Leakage & 1 & 4 &  \cellcolor{green!80} 4 & CAPEC-546 \\
 \hline
 
 \end{longtable}
+ In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organization. The very high and high-rated risks have to be mitigated before the application is published. 
 
-\subsection{Compliance Risk}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{pics/risk_level_vs_count.png}
+\caption{Risk Assessment Methodology}\label{fig:Risk Level Counts}
+\end{figure}
+
+\subsection{Non-Compliance Risk}
+Non-compliance is a failure to adhere to established laws, regulations, and standards, especially in today's digital age, where vast amounts of sensitive data are also called personally identifiable information (PII). Such personal data are stored, processed, and transferred among different firms. Therefore, it is of significant priority to protect private data, and hence, various laws and rules bind companies and organisations to protect sensitive data. One of the most stringent data protection frameworks globally is the GDPR act, concerned with data processing of EU residents \citep{gdpr_stringent}. 
