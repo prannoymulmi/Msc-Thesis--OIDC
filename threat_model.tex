@@ -289,6 +289,8 @@ Although ISO/IEC 20071:2022 is an internationally recognized standard for risk a
 \subsection{Analysis}
  The analysis section is one of the most critical components, forming the backbone of the research findings. It consists of data on the threats that affect the OpenID Connect application in a cloud environment. The data for the analysis are gathered using various methods, e.g., research papers, journals, and theses. To answer the research question (See \ref{sec:objectives}) mentioned in Chapter 1, the different technical threats and risks that occur due to non-compliance to regulations are analysed. As the methodology mentions, the collected threats are compared against the CAPEC database and are qualitatively assessed. Table \ref{table:risk_assessment} shows the threats analysed, and the risk level is ordered from highest to lowest. 
 
+\definecolor{ForestGreen}{rgb}{0.13, 0.55, 0.13}
+
 \begin{longtable}{|p{4cm}|p{2cm}|p{2cm}|p{2cm}|p{3cm}|}
 \caption{Table: Risk Assessment}
 \label{table:risk_assessment}
@@ -332,11 +334,11 @@ ID Spoofing & 3 & 3 &  \cellcolor{green!20} 9 & CAPEC-151\\
 
 PKCE Downgrade Attack & 2 & 4 & \cellcolor{green!20} 8 & -\\
 \hline
-Cross-tenant data Leakage & 1 & 4 &  \cellcolor{green!80} 4 & CAPEC-546 \\
+Cross-tenant data Leakage & 1 & 4 &  \cellcolor{ForestGreen} 4 & CAPEC-546 \\
 \hline
 
 \end{longtable}
- In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organization. The very high and high-rated risks have to be mitigated before the application is published. 
+ In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organization. The high and high risks must be mitigated before the application is published. 
 
 \begin{figure}[h!]
 \centering
@@ -345,4 +347,33 @@ Cross-tenant data Leakage & 1 & 4 &  \cellcolor{green!80} 4 & CAPEC-546 \\
 \end{figure}
 
 \subsection{Non-Compliance Risk}
-Non-compliance is a failure to adhere to established laws, regulations, and standards, especially in today's digital age, where vast amounts of sensitive data are also called personally identifiable information (PII). Such personal data are stored, processed, and transferred among different firms. Therefore, it is of significant priority to protect private data, and hence, various laws and rules bind companies and organisations to protect sensitive data. One of the most stringent data protection frameworks globally is the GDPR act, concerned with data processing of EU residents \citep{gdpr_stringent}. 
+Non-compliance is a failure to adhere to established laws, regulations, and standards, especially in today's digital age, where vast amounts of sensitive data are also called personally identifiable information (PII). Such personal data are stored, processed, and transferred among different firms. Therefore, protecting private data is a significant priority; hence, various laws and rules bind companies and organisations to protect sensitive data. One of the most stringent data protection frameworks globally is the GDPR act, concerned with data processing of EU residents \citep{gdpr_stringent}. 
+
+Operating an OpenID Connect application in the cloud carries a high risk if it does not comply with GDPR laws. OpenID Connect involves handling personal data, such as user information, so ensuring compliance with GDPR is crucial when working with such an application. To avoid the risk of non-compliance with GDPR, potential financial loss, and damage to reputation, specific key mitigations need to be implemented before publishing the applications. The following are the key provisions from \citep{gdpr_law} that present potential risks according to the GDPR law:
+
+
+\begin{itemize}
+    \item \textbf{Article 6 GDPR}: There should be a lawful basis for processing personal data to fulfil a contractual obligation for the data controller. Organizations must document the lawful basis for processing personal data and ensure transparency in informing users about why their data is being processed. In addition, this article also states the requirement of consent with concise text without vague legal jargon and the functionality to withdraw consent.
+    
+    \item \textbf{Articles 15-22 GDPR}: Data subject rights: proper access, rectification, erasure, and portability. These rights should be able to exercised by the users. 
+
+    \item \textbf{Article 32 GDPR }: Appropriate Security measures must be taken to protect sensitive data, such as encrypting data, maintaining access control lists, regular audits, and security checks. Failure to implement these measures can result in security breaches, leading to unauthorized access to personal data and violations of GDPR’s security requirements.
+    
+    
+    \item \textbf{Chapter V GDPR }: Cloud based applications often operate across borders. This makes it more important to consider where sensitive data such as PII are stored. GDPR imposes strict rules on transferring personal data to countries outside the European Economic Area (EEA) unless those countries have been deemed to provide adequate data protection. This chapter of GDPR stipulates that providers that are also located outside the EEA must be compliant with GDPR rules. As popular cloud providers such as AWS, Google, and Microsoft operate outside the EEA, this law plays a big role with cloud providers.  
+.
+\end{itemize}
+
+\section{Conclusion}
+
+Conducting a thorough risk assessment for an OpenID Connect application deployed in the cloud is crucial to identify potential security vulnerabilities and ensure GDPR compliance. OIDC applications handle sensitive personal data during user authentication and authorization, making them susceptible to threats such as cloud misconfigurations, phishing, man-in-the-middle (MITM) attacks, token tampering, and cross-tenant data leakage. These threats can significantly impact personal data's confidentiality, integrity, and availability. 
+
+Therefore, using the threat modelling results, we identified the threats and their mitigations, and the qualitative risk analysis helped us rank these threats according to their risk level. By arranging the threats according to their perceived risk, they can be prioritized to be more efficient. In addition to the threats, the consequence of not following GDPR will also cost the organisation a lot of money, which is a high risk. Based on these results, the high-risk threats have to be applied with the GDPR measures to ensure regulatory adherence. 
+
+
+
+
+
+
+
+
