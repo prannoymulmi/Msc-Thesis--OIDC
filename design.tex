@@ -1,6 +1,16 @@
 \chapter{Design}
 
-In Chapter \ref{chap:threat_model}, we discussed the threat modelling of an OpenID Connect application implemented using PKCE on a cloud environment. The threat modelling provided an in-depth understanding of potential attack vectors and risks that could compromise the cloud-based application using the OpenID Connect Protocol. Building upon the insights gathered from the threat modelling exercise (See \ref{subsec:stride}), this chapter will focus on the design of a prototype that would address some of the threats identified. We will describe the implementation decisions and design choices made to mitigate identified risks and establish a secure, scalable, and efficient cloud-based authentication system using PKCE on AWS.
+In Chapter \ref{chap:threat_model}, we discussed the threat modelling and risk analysis of an OpenID Connect application implemented using PKCE on a cloud environment. The threat modelling provided an in-depth understanding of potential attack vectors and risks that could compromise the cloud-based application using the OpenID Connect Protocol. Building upon the insights gathered from the threat modelling exercise (See \ref{subsec:stride}), this chapter will focus on designing a prototype that would address some of the identified threats. In particular, the very high and high threats will be mitigated. See Table \ref{table:risk_assessment}. 
+
+This chapter will outline the implementation decisions and design choices undertaken to address identified risks. The objective is to establish a secure, scalable, and efficient cloud-based authentication system utilising Proof Key for Code Exchange (PKCE) on Amazon Web Services (AWS).
+
+\section{Cloud Provider}
+Designing and deploying a cloud-based application requires us to choose one of the many providers that offer such services as Microsoft Azure, Google Cloud Platform (GCP), and Amazon Web Services (AWS). Each of these popular platforms offers unique advantages and different service offerings. 
+
+However, for this project, AWS is the preferred platform as it is the leader in the cloud services industry, with a vast global infrastructure that ensures reliability and scalability. \citep{aws_leader} stating that it holds the most shares as a popular vendor with 31 per cent in the first quarter of 2024. Not only is AWS a widely adopted cloud platform, but it is also compliant with ISO 27001 and GDPR \citep{aws_iso}. In addition, to the compliance advantages, AWS offers extensive tools that are helpful for prototyping and testing, namely Localstack.
+
+\subsection{LocalStack for AWS Simulation}
+LocalStack is a tool that allows developers to simulate AWS services locally, making it an excellent choice for rapid development and testing. With LocalStack, developers can build applications locally using AWS-like services such as Lambda, API Gateway, and more without needing to deploy code to the cloud \citep{localstack}. By mimicking the AWS environment, LocalStack provides a way for developers to work on cloud-native applications locally, reducing development costs and the need to register for an AWS account, which is cost-intensive. Such a simulation tool does not exist yet for Azure and GCP and therefore created a strong argument to use AWS because of this.
 
 
 \section{Limitations}
