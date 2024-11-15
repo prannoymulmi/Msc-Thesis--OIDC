@@ -899,3 +899,81 @@ howpublished = "\url{https://www.statista.com/statistics/967365/worldwide-cloud-
   author={Niemel{\"a}, Niklas},
   year={2023}
 }
+
+@ARTICLE{lambda_vm_firecracker,
+  title        = {Microarchitectural Security of {AWS} Firecracker {VMM} for
+                  Serverless Cloud Platforms},
+  author       = {Weissman, Zane and Tiemann, Thore and Eisenbarth, Thomas and
+                  Sunar, Berk},
+  journaltitle = {arXiv [cs.CR]},
+  date         = {2023-11-27},
+  eprintclass  = {cs.CR},
+    year={2023},
+  abstract     = {Firecracker is a virtual machine manager (VMM) built by Amazon
+                  Web Services (AWS) for serverless cloud platforms, services
+                  that run code for end users on a per-task basis, automatically
+                  managing server infrastructure. Firecracker provides fast and
+                  lightweight VMs and promises a combination of the speed of
+                  containers, typically used to isolate small tasks, and the
+                  security of VMs, which tend to provide greater isolation at
+                  the cost of performance. This combination of security and
+                  efficiency, AWS claims, makes it not only possible but safe to
+                  run thousands of user tasks from different users on the same
+                  hardware, with the host system frequently switching between
+                  active tasks. Though AWS states that microarchitectural
+                  attacks are included in their threat model, this class of
+                  attacks directly relies on shared hardware, just as the
+                  scalability of serverless computing relies on sharing hardware
+                  between unprecedented numbers of users. In this work, we
+                  investigate how secure Firecracker is against
+                  microarchitectural attacks. First, we review Firecracker's
+                  stated isolation model and recommended best practices for
+                  deployment, identify potential threat models for serverless
+                  platforms, and analyze potential weak points. Then, we use
+                  microarchitectural attack proof-of-concepts to test the
+                  isolation provided by Firecracker and find that it offers
+                  little protection against Spectre or MDS attacks. We discover
+                  two particularly concerning cases: 1) a Medusa variant that
+                  threatens Firecracker VMs but not processes running outside
+                  them, and is not mitigated by defenses recommended by AWS, and
+                  2) a Spectre-PHT variant that remains exploitable even if
+                  recommended countermeasures are in place and SMT is disabled
+                  in the system. In summary, we show that AWS overstates the
+                  security inherent to the Firecracker VMM and provides
+                  incomplete guidance for properly securing cloud systems that
+                  use Firecracker.}
+}
+
+@ARTICLE{dynamodb,
+  title        = {Creating serverless web applications with {AWS}},
+  author       = {Singh, Varun},
+  journaltitle = {Int. J. Res. Appl. Sci. Eng. Technol.},
+  publisher    = {International Journal for Research in Applied Science and
+                  Engineering Technology (IJRASET)},
+  volume       = {11},
+  issue        = {11},
+  pages        = {2008--2011},
+  date         = {2023-11-30},
+  year = {2023},  
+  abstract     = {Abstract: Serverless computing has emerged as a groundbreaking
+                  innovation, allowing organizations to alleviate the
+                  complexities associated with provisioning, scaling, and
+                  managing infrastructure. The surge in serverless adoption
+                  poses challenges in choosing optimal solutions amid a myriad
+                  of proposed designs by experts. This paper categorizes
+                  serverless patterns using a multivocal literature review,
+                  highlighting benefits and challenges in coordination,
+                  aggregation, event management, availability, communication,
+                  and validation. To illustrate the practical application of
+                  serverless computing, we present a case study involving the
+                  use of AWS Lambda, Amazon DynamoDB, and other services to
+                  process real-time data streams for a fictional ride-sharing
+                  company. The study showcases the advantages of serverless
+                  computing, emphasizing its ability to free developers from
+                  server-related concerns, enabling them to focus on building
+                  scalable and reliable applications. This paper contributes to
+                  the understanding of serverless computing's role in the
+                  broader context of cloud technologies and its application in
+                  real-world scenarios},
+  note         = {Dynamodb why}
+}

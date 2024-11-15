@@ -1,0 +1,63 @@
+\chapter{Implementation}
+
+This chapter extends the design presented in Chapter \ref{chap:design}, focusing on implementing the Proof Key for Code Exchange (PKCE) authorization flow for a dual-tenant environment. Using the multi-database architecture proposed in the design (refer to Figure \ref{fig:deployment_diagram_dual}), this implementation builds a foundational prototype of the OAuth 2.0 Authorization Code flow with PKCE, adapted for a multi-tenant, serverless infrastructure. By leveraging modern, cloud-native technologies—including Node.js, TypeScript, and LocalStack—this prototype demonstrates a secure, efficient, and scalable user authorization approach in a serverless multi-tenant application. The implementation focuses on the two critical endpoints: the authorization endpoint \textbf{/authorize} and the token endpoint \textbf{/token} deployed in a cloud infrastructure, which forms the cornerstone of the OAuth 2.0 PKCE flow. The following sections discuss the implementation details and the tests conducted for the project.
+
+
+\section{Technical Stack}
+
+The implementation leverages the following technology stack:
+\begin{itemize}
+    \item \textbf{Runtime Environment:} Node.js 18.x
+    \item \textbf{Programming Language:} Javascript with TypeScript 5.6
+    \item \textbf{Cloud Infrastructure:} AWS (simulated locally using LocalStack)
+    \item \textbf{Database:} Amazon DynamoDB
+    \item \textbf{Framework:} Serverless Framework
+    \item \textbf{Infrastructure as Code:} Terraform and Terraform Local for localstack
+
+\end{itemize}
+
+\subsection{Development Dependencies}
+A carefully selected set of dependencies was chosen to develop the prototype, enhancing the project's security, maintainability, testing, operability, logging, and performance. Each dependency was selected for a specific purpose, ensuring the system remains robust, efficient, and scalable throughout the development lifecycle. Table \ref{table:dev_dependencies} lists the dependencies used with its description. 
+
+\begin{longtable}{|l|l|p{8cm}|}
+    \caption{Project Dependencies}
+    \label{table:dev_dependencies}
+\hline
+\rowcolor{grey!15}
+\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\ \hline
+\endfirsthead
+\hline
+\rowcolor{grey!15}
+\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\ \hline
+\endhead
+\endfoot
+\hline
+\endlastfoot
+argon2 & \textasciicircum 0.41.1 & A password hashing library implementing the Argon2 algorithm, designed for secure password storage. \\ \hline
+axios & \textasciicircum 1.7.7 & A promise-based HTTP client for making HTTP requests in both Node.js and browsers. \\ \hline
+esbuild & \textasciicircum 0.24.0 & A fast JavaScript and TypeScript bundler and minifier optimized for development and production builds. \\ \hline
+fast-check & \textasciicircum 3.23.1 & A property-based testing library for generating random test cases and checking properties of your code. \\ \hline
+hash-wasm & \textasciicircum 4.11.0 & A fast cryptographic hashing library using WebAssembly for efficiency. \\ \hline
+jest-fuzz & \textasciicircum 0.1.2 & A fuzz testing library for Jest, used to test for unexpected edge cases. \\ \hline
+jsonwebtoken & \textasciicircum 9.0.2 & A library to sign, verify, and decode JSON Web Tokens (JWT), commonly used for authentication and authorization. \\ \hline
+uuidv4 & \textasciicircum 6.2.13 & A library to generate UUID (Universally Unique Identifier) version 4, primarily used for creating unique identifiers. \\ \hline
+winston & \textasciicircum 3.15.0 & A flexible and popular logging library for Node.js, supporting multiple log transports. \\ \hline
+winston-cloudwatch & \textasciicircum 6.3.0 & A transport for Winston that allows logging to AWS CloudWatch for centralized logging and monitoring. \\ \hline
+zod & \textasciicircum 3.23.8 & A TypeScript-first schema validation library for parsing and validating inputs. \\ \hline
+@aws-sdk/client-dynamodb & \textasciicircum 3.675.0 & AWS SDK Client for DynamoDB, used for interacting with Amazon DynamoDB from Node.js applications. \\ \hline
+@eslint/js & \textasciicircum 9.14.0 & ESLint's core JavaScript configuration, used to enforce coding standards and best practices. \\ \hline
+@types/aws-lambda & \textasciicircum 8.10.145 & TypeScript type definitions for AWS Lambda, providing type support for AWS Lambda functions. \\ \hline
+@types/jest & \textasciicircum 29.5.14 & TypeScript type definitions for Jest, enabling type safety in Jest test cases. \\ \hline
+@types/jsonwebtoken & \textasciicircum 9.0.7 & TypeScript type definitions for `jsonwebtoken`, helping with type safety when using JWTs in TypeScript code. \\ \hline
+@types/node & \textasciicircum 22.7.7 & TypeScript type definitions for Node.js, providing type support for Node.js APIs in TypeScript projects. \\ \hline
+@typescript-eslint/eslint-plugin & \textasciicircum 8.13.0 & ESLint plugin that provides TypeScript-specific linting rules. \\ \hline
+aws-sdk-client-mock & \textasciicircum 4.1.0 & A mocking library for the AWS SDK, used in unit tests to mock AWS services like DynamoDB. \\ \hline
+eslint & \textasciicircum 9.14.0 & A powerful linter for JavaScript and TypeScript that helps identify and fix coding issues. \\ \hline
+eslint-plugin-security-node & \textasciicircum 1.1.4 & An ESLint plugin that identifies potential security vulnerabilities in Node.js code. \\ \hline
+jest & \textasciicircum 29.7.0 & A JavaScript testing framework that supports unit tests, integration tests, and snapshot testing. \\ \hline
+ts-jest & \textasciicircum 29.2.5 & A Jest transformer that allows Jest to run TypeScript code directly. \\ \hline
+typescript & \textasciicircum 5.6.3 & The TypeScript programming language, which adds static types to JavaScript to improve developer productivity and code quality. \\ \hline
+typescript-eslint & \textasciicircum 8.13.0 & A set of tools that allow ESLint to analyze TypeScript code and enforce best practices. \\ \hline
+\end{longtable}
+ 
+ 
