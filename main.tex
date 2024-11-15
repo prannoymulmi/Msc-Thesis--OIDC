@@ -57,6 +57,38 @@
 \usepackage{amssymb}
 \usepackage{listings}
 \usepackage{xcolor}
+
+% Define Terraform syntax highlighting
+\lstdefinelanguage{terraform}{
+  keywords={resource, provider, variable, output, module, data, terraform},
+  keywordstyle=\color{blue}\bfseries,
+  sensitive=false,
+  comment=[l]{\#},
+  commentstyle=\color{green!60!black},
+  string=[b]",
+  stringstyle=\color{red},
+  morestring=[b]',
+  morecomment=[l]{//},
+}
+
+% Define the style for Terraform code blocks
+\lstset{
+  language=terraform,
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  keepspaces=true,
+  belowskip=2em,
+  aboveskip=2em,
+  tabsize=2,
+  captionpos=b,
+  backgroundcolor=\color{gray!10}
+}
+
 \usepackage[dvipsnames]{xcolor} % Colors see https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX#Named_colors_provided_by_the_xcolor_package
 \usepackage{tcolorbox}
 

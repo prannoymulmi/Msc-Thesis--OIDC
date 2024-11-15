@@ -4,8 +4,8 @@ This chapter extends the design presented in Chapter \ref{chap:design}, focusing
 
 
 \section{Technical Stack}
+The technical stack forms the foundations of any software development project, comprising a carefully selected combination of programming languages, frameworks, libraries, and tools that enable the creation of robust applications. During the prototyping phase, selecting an appropriate technical stack is particularly crucial, as it significantly influences development velocity, code quality, and the project's overall success. Moreover, security considerations are vital in stack selection, as well-established technologies often incorporate proven security practices and help mitigate potential vulnerabilities. To address these requirements and ensure a solid foundation for the prototype, the implementation leverages the following technology stack:
 
-The implementation leverages the following technology stack:
 \begin{itemize}
     \item \textbf{Runtime Environment:} Node.js 18.x
     \item \textbf{Programming Language:} Javascript with TypeScript 5.6
@@ -59,5 +59,24 @@ ts-jest & \textasciicircum 29.2.5 & A Jest transformer that allows Jest to run T
 typescript & \textasciicircum 5.6.3 & The TypeScript programming language, which adds static types to JavaScript to improve developer productivity and code quality. \\ \hline
 typescript-eslint & \textasciicircum 8.13.0 & A set of tools that allow ESLint to analyze TypeScript code and enforce best practices. \\ \hline
 \end{longtable}
- 
- 
+
+\subsection{Infrastructure as Code}
+Infrastructure as Code (IaC) is an approach to managing IT infrastructures, like infrastructure or services created by AWS, using configuration and machine-readable definition files \citep{iac}. This method replaces the manual process of creating infrastructure and allows automation to provision different components like databases, servers, and networking components. One of the main advantages of IaC is that it provides consistency in provisioning infrastructure as a code-like script, leading to more reliable deployments. In addition, IaC also helps in faster deployments, and as the infrastructure is written in code, static analysis tools to check vulnerabilities are possible.
+
+IaC is widely used in the industry to practice DevOps and continuously deploy. Many tools, such as AWS CloudFormation, AWS Cloud Development Kit (CDK), Ansible, and Terraform, are available to manage complex infrastructure. For this project, Terraform was chosen due to its status as one of the most widely used IaC tools, backed by a robust community and reusable modules \citep{terraform}.
+
+Additionally, an essential aspect of this project is integrating the IaC tool with LocalStack, a platform that simulates AWS services locally for testing purposes. Terraform's compatibility with LocalStack is well-documented through tflocal, which allows developers to run Terraform configurations against LocalStack environments. This integration enables efficient local development and testing of infrastructure changes without needing access to actual AWS resources, further enhancing productivity and reducing costs during the development cycle. Refer to Listing \ref{lst:terraform_snippet} for an example where terraform is used in the project to create an API gateway resource.
+
+\begin{lstlisting}[caption={Terraform Code Snippet for API Gateway}, label={lst:terraform_snippet}]
+resource "aws_api_gateway_rest_api" "oidc_api" {
+  name        = "oidc-apigw"
+  description = "API Gateway for invoking Lambda"
+  body = templatefile("${path.root}/../configurations/openapi.yml.tpl", {
+    lambda_invoke_arn_authorize = module.pkce_authorize_lambda.aws_lambda_function.arn
+    lambda_invoke_arn_token     = module.pkce_token_lambda.aws_lambda_function.arn
+  })
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+\end{lstlisting}
