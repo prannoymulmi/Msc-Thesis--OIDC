@@ -91,7 +91,7 @@
 
 \usepackage[dvipsnames]{xcolor} % Colors see https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX#Named_colors_provided_by_the_xcolor_package
 \usepackage{tcolorbox}
-
+\usepackage{seqsplit}
 \usepackage[hidelinks]{hyperref} %https://tex.stackexchange.com/questions/823/remove-ugly-borders-around-clickable-cross-references-and-hyperlinks
 
 \newcolumntype{P}[1]{>{\endgraf\vspace*{-\baselineskip}}p{#1}}
@@ -130,7 +130,6 @@
 \include{threat_model}
 \include{design}
 \include{impl.tex}
-\appendix 
 
 % ---- Bibliography ----
 %
@@ -141,7 +140,8 @@
 \renewcommand{\bibname}{References}
 \bibliographystyle{agsm}
 \bibliography{biblio}
-
+\include{appendix}
+\include{appendix_build}
 % formatting taken from http://tex.stackexchange.com/questions/149708/simple-list-of-abbreviations-manually
 % sorting taken from http://www.latex-community.org/forum/viewtopic.php?f=44&t=16419
 
