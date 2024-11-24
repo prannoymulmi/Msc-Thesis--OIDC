@@ -123,6 +123,8 @@ Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
 \hline
 Denial of Service (DoS) & Apply rate limiting of the lambdas by using reserved concurrency, which ensures no more than the specified number of instances can run at the same time, helping to protect downstream services from being overwhelmed by traffic spikes or malicious activity \citep{lamda_reserved}.\\
 \hline
+ Unauthorised Access & Least Privilidge Principle is where the lambdas are allowed only specific roles and policies. For example the authorize lambda has read write to the database whereas the token lambda only has write. This is achieveddby using IAM policies (Refer to Appendix \ref{apendix:least_privilidge}). \\
+\hline
 PKCE Downgrade Attack & PKCE flows are validated, requests for \textbf{/authorize} without code challenge are not accepted, and code challenge is only accepted in SHA-256 encoded hash. \\
 \hline
 Token Tampering & Use of Signed tokens to avoid tampering with access tokens issued after successful authentication.  \\
@@ -136,7 +138,7 @@ Timing Attacks & To mitigate timing attacks, which could lead to the reveal of t
 \subsection{Manual Testing}
 As a pre-condition for testing the two PKCE endpoints, a build script (refer to Appendix \ref{apendix:build_and_run_script}) is executed. This build script creates the required infrastructure by running the terraform, like the lambdas and API gateways. In addition to providing the infrastructure, the database will be seeded with two tenants and some users. In this section, manual tests of the two endpoints implemented are documented.
 
-\newpage
+
 \subsubsection{Authorize Endpoint}
 Manual tests were conducted on the \textbf{/authorize} endpoint to assess its functionality and security measures. The testing process included the following scenarios:
 
@@ -174,7 +176,7 @@ Manual tests were conducted on the \textbf{/authorize} endpoint to assess its fu
             \label{fig:authorize_tenant_1_wrong_pass}
         \end{figure}
 
-        \newpage
+       
         \item \textbf{Unknown Client ID:} Tested requests with an unregistered or invalid client ID to confirm the endpoint rejects such requests without further processing.
 
         \begin{figure}[!htbp]
@@ -252,7 +254,119 @@ Manual tests were also conducted on the \textbf{/token} endpoint to verify its f
 
 These tests validated the \textbf{/token} endpoint's ability to securely handle both successful and invalid requests, ensuring proper error handling for edge cases and enforcement of PKCE requirements.
 
+\subsection{Automated Tests And Scans}
+In addition to manual tests, various automated tests and security scans were conducted to ensure the application's robustness, security, and maintainability. The automated testing process included:
 
-       
+\begin{enumerate}
+    \item \textbf{Unit Tests:} 
+    Automated unit tests were implemented to validate the functionality of individual components of the \textbf{/authorize} and \textbf{/token} endpoints. These tests ensure that each component operates as intended, providing confidence in the correctness and reliability of the code. 
 
-       
+    The unit tests covered both the positive and negative scenarios for the business logic of the endpoints, verifying that:
+    \begin{itemize}
+        \item The \textbf{/authorize} endpoint correctly handles authentication requests, validates input parameters and securely generates authorization codes.
+        \item The \textbf{/token} endpoint properly exchanges authorization codes for access tokens, enforces PKCE compliance and handles edge cases, such as expired or invalid codes.
+    \end{itemize}
+    
+    As illustrated in Figure~\ref{fig:Unit Test}, the unit tests achieved a code coverage of approximately 97\%. This high level of coverage indicates that nearly all the application's critical paths and edge cases were thoroughly tested, ensuring both functional correctness and robustness.
+
+        \begin{figure}[!htbp]
+         \centering
+         {\setlength{\fboxrule}{2pt} % Border thickness
+         \setlength{\fboxsep}{1pt}  % Space between image and border
+         \fbox{\includegraphics[width=\textwidth, height=200px]{pics/unit_test.png}} % Image with border
+        \caption{Unit Test}
+        \label{fig:Unit Test}
+    \end{figure}
+
+    \item \textbf{Fuzz Tests:} 
+    Fuzz testing was conducted by sending random or malformed input to the \textbf{/token} endpoint to identify potential vulnerabilities, such as crashes, unexpected behaviour, or unhandled exceptions. This helps ensure the endpoint is resilient to invalid or malicious inputs.
+
+    \item \textbf{Security Scans:}
+    Security scans were employed to identify potential vulnerabilities and maintain best practices:
+    \begin{itemize}
+        \item \textbf{Code Linting with ESLint:} 
+        ESLint was utilized to identify code smells and ensure the codebase adhered to clean coding principles and established security best practices. Linting is crucial in minimizing the risk of introducing vulnerabilities by enforcing consistent code quality. The eslint-plugin-security-node plugin was used to enhance this process, which proved to be highly effective in detecting common security issues and code smells. Its integration ensured a more robust and secure codebase by proactively addressing potential weaknesses. Figure \ref{fig:lint_results} depicts the results of some code smells detected using the linter. 
+
+                \begin{figure}[!htbp]
+                     \centering
+                     {\setlength{\fboxrule}{2pt} % Border thickness
+                     \setlength{\fboxsep}{1pt}  % Space between image and border
+                     \fbox{\includegraphics[width=\textwidth, height=200px]{pics/linting.png}} % Image with border
+                    \caption{Lint results}
+                    \label{fig:lint_results}
+                \end{figure}
+
+
+        \item \textbf{Cloud Infrastructure Scanning with Prowler:} 
+        Prowler is a versatile open-source tool designed to scan cloud providers like AWS, helping identify potential misconfigurations in cloud infrastructure. It provides critical insights into security risks, such as overly permissive IAM roles, improper or missing logging configurations, and inadequate encryption settings. One of the key strengths of Prowler is its ability to not only detect these issues but also provide actionable recommendations and remedies to address the identified misconfigurations. For example, as shown in Figure \ref{fig:prowler_results}, the tool detected 14 medium-level misconfigurations, each accompanied by specific remediation steps to mitigate the associated risks.
+
+                \begin{figure}[!htbp]
+                     \centering
+                     {\setlength{\fboxrule}{2pt} % Border thickness
+                     \setlength{\fboxsep}{1pt}  % Space between image and border
+                     \fbox{\includegraphics[width=\textwidth, height=120px]{pics/prowler.png}} % Image with border
+                    \caption{Prowler Scan result}
+                    \label{fig:prowler_results}
+                \end{figure}
+
+        \newpage
+        In addition to the standard security checks, Prowler extends its functionality to compliance auditing. It supports testing against various industry standards, offering organizations a way to assess and strengthen their compliance posture. In this context, Prowler was utilized to perform both cloud infrastructure scans and compliance checks for ISO 27001:2013 (refer to Figure \ref{fig:prowler_iso_results}) and GDPR (refer to Figure \ref{fig:prowler_gdpr_results}). These compliance scans are particularly valuable for organizations that adhere to regulatory requirements or maintain certifications, as they provide a comprehensive view of potential gaps and actionable insights for achieving compliance.
+        
+                \begin{figure}[!htbp]
+                     \centering
+                     {\setlength{\fboxrule}{2pt} % Border thickness
+                     \setlength{\fboxsep}{1pt}  % Space between image and border
+                     \fbox{\includegraphics[width=\textwidth, height=150px]{pics/prowler_iso.png}} % Image with border
+                    \caption{Prowler ISO:27001:2013 Scan result}
+                    \label{fig:prowler_iso_results}
+                \end{figure}
+
+                \begin{figure}[!htbp]
+                     \centering
+                     {\setlength{\fboxrule}{2pt} % Border thickness
+                     \setlength{\fboxsep}{1pt}  % Space between image and border
+                     \fbox{\includegraphics[width=\textwidth, height=150px]{pics/prowler_gpdr.png}} % Image with border
+                    \caption{Prowler GDPR Scan result}
+                    \label{fig:prowler_gdpr_results}
+                \end{figure}
+        By integrating security scanning with compliance testing, Prowler is a powerful tool for proactively securing cloud environments and aligning with best practices.        
+    \end{itemize}
+    \item \textbf{Static Code Analysis with Snyk:} Snyk is utilized in this project as a static analysis tool to detect vulnerabilities, improve code quality, and ensure secure development practices. It complements \texttt{ESLint} by focusing on security flaws in business logic and Infrastructure-as-Code (IaC). While \texttt{ESLint} enforces coding standards and detects bugs in JavaScript, Snyk extends the scope by scanning for vulnerabilities in dependencies, IaC configurations, and container images. This integration ensures both high-quality code and robust security measures. Figure \ref{fig:snyk_results} illustrates the results of Snyk's analysis.
+    
+
+    \begin{figure}[!htbp]
+                     \centering
+                     {\setlength{\fboxrule}{2pt} % Border thickness
+                     \setlength{\fboxsep}{1pt}  % Space between image and border
+                     \fbox{\includegraphics[width=\textwidth]{pics/snyk.png}} % Image with border
+                    \caption{Static Code Analysis with Snyk}
+                    \label{fig:snyk_results}
+                \end{figure}
+\end{enumerate}
+
+\section{Results} 
+IDEAS 
+-> Cloud Configuration is one of the top issues detected, Prowler detected few, Snyk (Find total and make a graph?)
+-> 
+
+
+\begin{lstlisting}[caption={Added a Bad IAM Policy that allows all actions}, label={lst:bad_policy_iam}]
+# IAM Policy for Lambda to log to CloudWatch
+resource "aws_iam_policy" "test_bad_policy" {
+  name        = "lambda_cloudwatch_logs_policy"
+  description = "IAM policy to allow Lambda to write logs to CloudWatch"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "*:*"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+}
+\end{lstlisting}       

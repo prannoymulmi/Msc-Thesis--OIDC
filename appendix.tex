@@ -118,6 +118,92 @@ const token = jwt.sign(
 
 \end{lstlisting}
 
+
+\begin{lstlisting}[caption={Terraform For Least Privilidge}, label={apendix:least_privilidge}]
+# IAM Policy for Lambda to log to CloudWatch
+resource "aws_iam_policy" "private_key_read_policy" {
+  name        = "private_key_read_policy"
+  description = "IAM policy to allow Lambda to read private key from secret manager"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ],
+        Resource = aws_secretsmanager_secret.private_key.arn
+      }
+    ]
+  })
+}
+
+module "pkce_authorize_lambda" {
+  source               = "./module/lambda"
+  lambda_function_name = "authorizePKCE"
+  source_dir           = "deployment/authorizePKCE"
+  policies = [
+    aws_iam_policy.lambda_dynamodb_policy.arn,
+    aws_iam_policy.lambda_cloudwatch_policy.arn
+  ]
+}
+
+module "pkce_token_lambda" {
+  source               = "./module/lambda"
+  lambda_function_name = "tokenPKCE"
+  source_dir           = "deployment/tokenPKCE"
+  policies = [
+    aws_iam_policy.lambda_dynamodb_policy.arn,
+    aws_iam_policy.lambda_cloudwatch_policy.arn,
+    aws_iam_policy.private_key_read_policy.arn
+  ]
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=typescript,caption=Fuzz Test,label=apendix:fuzz_test]
+    test('should handle fuzzed payloads for codeChallenge', async () => {
+        for (let i = 0; i < 10; i++) {
+            const username = fc.sample(fc.string(), 1)[0];
+            const password = fc.sample(fc.string(), 1)[0];
+            const codeChallenge = fc.sample(fc.string(), 1)[0];
+            console.log(`Fuzzing iteration ${i} with username: ${username}, password: ${password}, codeChallenge: ${codeChallenge}`);
+            await fc.assert(
+                fc.asyncProperty(
+                    fc.record({
+                        username: fc.constant(username),
+                        password: fc.constant(password),
+                        codeChallenge: fc.constant(codeChallenge),
+                        client_id: fc.constant("tenant1-client-id-1"),
+                    }),
+                    async (payload) => {
+                        console.log("Sending request with payload:", payload);
+                        try {
+                            const response = await axios.post(url, payload, {headers, timeout: 30000});
+                            console.log("Received response:", response.status);
+                            expect(response.status).toBe(200);
+                        } catch (error) {
+                            console.log("Error occurred:", error);
+                            // Handle expected errors
+                            if (axios.isAxiosError(error) && error.response) {
+                                console.log("Axios error response:", error.response);
+                                if (error.response.status === 401) {
+                                    console.log("Received 401 Unauthorized");
+                                    expect(error.response.status).toBe(401);
+                                } else {
+                                    expect(error.response.status).toBeGreaterThanOrEqual(400);
+                                    expect(error.response.status).toBeLessThan(500);
+                                }
+                            } else {
+                                throw error;
+                            }
+                        }
+                    }
+                )
+            );
+        }
+    }, 300000); // Increase timeout to 5 Minutes
+\end{lstlisting}
 \begin{figure}[h!]
 \label{fig:argon2id_hash}
 \centering
