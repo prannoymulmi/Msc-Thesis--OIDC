@@ -123,7 +123,7 @@ Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
 \hline
 Denial of Service (DoS) & Apply rate limiting of the lambdas by using reserved concurrency, which ensures no more than the specified number of instances can run at the same time, helping to protect downstream services from being overwhelmed by traffic spikes or malicious activity \citep{lamda_reserved}.\\
 \hline
- Unauthorised Access & Least Privilidge Principle is where the lambdas are allowed only specific roles and policies. For example the authorize lambda has read write to the database whereas the token lambda only has write. This is achieveddby using IAM policies (Refer to Appendix \ref{apendix:least_privilidge}). \\
+ Unauthorised Access & Least Privilege Principle is where the lambdas are allowed only specific roles and policies. For example, the authorize lambda has read-write to the database, whereas the token lambda only has write. This is achieved by using IAM policies (Refer to Appendix \ref{apendix:least_privilidge}). Also access logs are saved using Cloudtrail giving a possibility to audit different accesses.\\
 \hline
 PKCE Downgrade Attack & PKCE flows are validated, requests for \textbf{/authorize} without code challenge are not accepted, and code challenge is only accepted in SHA-256 encoded hash. \\
 \hline
@@ -267,7 +267,7 @@ In addition to manual tests, various automated tests and security scans were con
         \item The \textbf{/token} endpoint properly exchanges authorization codes for access tokens, enforces PKCE compliance and handles edge cases, such as expired or invalid codes.
     \end{itemize}
     
-    As illustrated in Figure~\ref{fig:Unit Test}, the unit tests achieved a code coverage of approximately 97\%. This high level of coverage indicates that nearly all the application's critical paths and edge cases were thoroughly tested, ensuring both functional correctness and robustness.
+    As illustrated in Figure~\ref{fig:Unit Test}, the unit tests achieved a code coverage of approximately 97\%. This high level of coverage indicates that nearly all the application's critical paths and edge cases were thoroughly tested, ensuring functional correctness and robustness.
 
         \begin{figure}[!htbp]
          \centering
@@ -298,7 +298,7 @@ In addition to manual tests, various automated tests and security scans were con
 
 
         \item \textbf{Cloud Infrastructure Scanning with Prowler:} 
-        Prowler is a versatile open-source tool designed to scan cloud providers like AWS, helping identify potential misconfigurations in cloud infrastructure. It provides critical insights into security risks, such as overly permissive IAM roles, improper or missing logging configurations, and inadequate encryption settings. One of the key strengths of Prowler is its ability to not only detect these issues but also provide actionable recommendations and remedies to address the identified misconfigurations. For example, as shown in Figure \ref{fig:prowler_results}, the tool detected 14 medium-level misconfigurations, each accompanied by specific remediation steps to mitigate the associated risks.
+        Prowler is a versatile open-source tool designed to scan cloud providers like AWS, helping identify potential misconfigurations in cloud infrastructure. It provides critical insights into security risks, such as overly permissive IAM roles, improper or missing logging configurations, and inadequate encryption settings. One of the critical strengths of Prowler is its ability to not only detect these issues but also provide actionable recommendations and remedies to address the identified misconfigurations. For example, as shown in Figure \ref{fig:prowler_results}, the tool detected 14 medium-level misconfigurations, each accompanied by specific remediation steps to mitigate the associated risks.
 
                 \begin{figure}[!htbp]
                      \centering
@@ -345,16 +345,40 @@ In addition to manual tests, various automated tests and security scans were con
 \end{enumerate}
 
 \section{Results} 
-IDEAS 
--> Cloud Configuration is one of the top issues detected, Prowler detected few, Snyk (Find total and make a graph?)
--> 
+
+\subsection{Cloud Configuration: A Top Security Concern}
+
+In this analysis, the misconfiguration of cloud services emerged as one of the most significant issues. This finding was supported by vulnerability scans conducted using \textbf{Prowler} and \textbf{Snyk}, which identified multiple configuration-related warnings and vulnerabilities across the actively used cloud services: \textbf{Amazon DynamoDB}, \textbf{Amazon API Gateway (APIGW)}, and \textbf{AWS Lambda}.
+
+\paragraph{Security Scan Results}
+\begin{itemize}
+    \item \textbf{Prowler}: Prowler flagged \textbf{14 medium-severity warnings} and \textbf{1 high-severity warning} within the scanned cloud configurations. These issues highlight potential risks that could expose the environment to unauthorized access or reduce its resilience to attacks.
+    \item \textbf{Snyk}: Snyk detected \textbf{1 high-severity issue}, \textbf{4 medium-severity vulnerabilities}, and \textbf{1 low-severity issue}. These findings further corroborate the need for a robust approach to managing cloud configuration risks.
+\end{itemize}
+
+\paragraph{Complexity and Scaling Risks}
+The scans were conducted for only three actively used AWS services: \textbf{DynamoDB}, \textbf{APIGW}, and \textbf{Lambda}, which represent a subset of a typical cloud environment. Despite the limited scope, the results already highlight significant concerns about misconfiguration. As the number of services grows and their interdependencies increase, the complexity of managing cloud configurations will scale significantly. This growth will likely lead to an even greater risk of misconfigurations, amplifying the potential attack surface.
+
+Following the finding, it is necessary to emphasize that \textbf{cloud configurations represent a critical security threat}. This aligns with the assessment outlined in \ref{table:threat_model_assets}, where misconfiguration was identified as one of the top-ranked threats to the cloud environment. Misconfigured resources can lead to data breaches, service disruptions, and compliance violations, underscoring the importance of proactive configuration management and continuous monitoring.
 
 
-\begin{lstlisting}[caption={Added a Bad IAM Policy that allows all actions}, label={lst:bad_policy_iam}]
+\subsection{Security Tools: Useful but Not Sufficient}
+
+Security tools such as \textbf{Prowler} and \textbf{Snyk} provide valuable insights into potential vulnerabilities and misconfigurations within cloud environments. However, while these tools are effective for identifying numerous issues, they cannot be solely relied upon for ensuring a secure setup. Several limitations and shortcomings were observed during the analysis, highlighting the importance of complementing automated tools with reviews from an expert and adherence to security best practices.
+
+\paragraph{Undetected Security Issues}
+
+Despite their advantages, the tools failed to detect certain critical issues deliberately introduced into the environment for testing purposes. These include:
+
+\begin{itemize}
+    \item \textbf{IAM Policy Not Following the Principle of Least Privilege}: 
+    A deliberately misconfigured IAM policy that violated the principle of least privilege (refer to Listing \ref{lst:bad_policy_iam}) was created as part of the test. Such a policy, if accessed by a malicious actor, could be exploited to gain elevated privileges and compromise the environment. However, this misconfiguration or bad practice was not flagged by any of the tools used in this study.
+
+    \begin{lstlisting}[caption={Added a Bad IAM Policy that allows all actions}, label={lst:bad_policy_iam}]
 # IAM Policy for Lambda to log to CloudWatch
 resource "aws_iam_policy" "test_bad_policy" {
-  name        = "lambda_cloudwatch_logs_policy"
-  description = "IAM policy to allow Lambda to write logs to CloudWatch"
+  name        = "bad policy"
+  description = "IAM policy test for bad example"
 
   policy = jsonencode({
     Version = "2012-10-17",
@@ -369,4 +393,17 @@ resource "aws_iam_policy" "test_bad_policy" {
     ]
   })
 }
-\end{lstlisting}       
+\end{lstlisting} 
+
+\item \textbf{False Positives and Contextual Irrelevance}: Besides undetected issues, the tools occasionally generated \textbf{false positives} or flagged findings irrelevant to the specific use case. For instance, Prowler flagged the absence of a \texttt{support\_role} as a medium-severity issue. However, no support role was required for the use case tested, and this finding was irrelevant. Such false positives can create unnecessary noise in the results. An increase of noise in such tools could train teams to treat warnings from the tools as noise, and this could lead to an overlook of critical issues.
+\end{itemize}
+
+\subsection{Threats in OIDC and Cloud Integration}
+Several well-documented threats, such as token-related risks, replay attacks, and phishing, remain critical to access in OIDC as they pose significant risks if not taken care of. Furthermore, these threats become even more significant when integrated with cloud environments, where additional complexities arise.
+
+The complexities increase as many cloud providers offer vast services like databases, networking solutions, and application hosting. This flexibility increases the chance of choosing the wrong service and requires good knowledge of the different services. A poorly informed choice of infrastructure or security settings can inadvertently expose sensitive data, including Personally Identifiable Information (PII), to unauthorized access.
+
+These scenarios can have severe consequences, including data leaks and regulatory violations. For example, mismanagement of access controls or insecure handling of tokens in cloud services could lead to unauthorized access. Such vulnerabilities compromise data protection and violate the regulatory framework. Namely, GDPR Article 25 and GDPR Article 32 (Refer to Section \ref{section:gdpr}) mandate "data protection by design and by default," emphasizing the importance of embedding robust safeguards into systems from the outset and proper security measures that should be taken to protect sensitive data. The risks associated with OIDC-specific and cloud-specific vulnerabilities highlight the need for heightened oversight to prevent breaches and ensure compliance with legal and regulatory standards.
+
+
+      
