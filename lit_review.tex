@@ -263,7 +263,7 @@ Some work has been related to Cloud security risks and OpenID Connect (See Table
 \begingroup
 \centering
 \setlength{\tabcolsep}{6.5pt} % Default value: 6pt)
-\begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{6cm}|>{\raggedright\arraybackslash}p{6cm}|>}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{3cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{8cm}|>}
     \caption{Related Work}
     \label{table:further_reading}
 \hline
@@ -284,12 +284,9 @@ Some work has been related to Cloud security risks and OpenID Connect (See Table
                Threats and mitigation strategies} &  Introduction to cloud computing and some prevalent threats in cloud computing, in areas including commercial usage and consumer concerns with some mitigation strategies.  \\ \hline
 \cite{oidc_attacks} & \textit{Security Analysis of Real-Life OpenID Connect Implementations} & A master thesis outlining the threats surrounding OIDC in detail containing various angles of attacks issues surrounding tokens, OIDC provider threats and other common vulnerabilities. \\ \hline
 \cite{Mishra2019-uh} & \textit{Analysis of security issues in cloud environment}& This book chapter describes the possible security challenges in the different cloud models. Refer to Section \ref{sec:cloud_model} for the different models.\\ \hline
-\cite{openid_docs} & \textit{OpenID Official Documentation} & Official documentation of the OIDC 1.0, containing the definition of all the flows, security considerations, privacy considerations and security best practices. \\ \hline
-\cite{oidc_popular} & \textit{Best Current practices for Oauth/OIDC} & \\ \hline
+\cite{openid_docs} & \textit{OpenID Official Documentation} & Official documentation of the OIDC 1.0, containing the definition of all the flows, security considerations, privacy considerations and security best practices.\\ \hline
 \cite{sec_privacy_cloud} & \textit{Security and privacy protection in cloud computing:
-                  Discussions and challenges} &\\ \hline
-\cite{blockchain_oidc} & \textit{A novel secure and privacy-preserving model for {OpenID}
-                  connect based on blockchain} &\\ \hline
+                  Discussions and challenges} &  This paper presents the security risks related to privacy issues and the specific technologies in cloud computing to mitigate them. For instance, topics like attribute-based encryption, access control, and multi-tenant setup are discussed and analysed.\\ \hline
 
 % Add more rows as needed
 
@@ -297,7 +294,7 @@ Some work has been related to Cloud security risks and OpenID Connect (See Table
 \endgroup
 
 \section{Conclusion}
-OpenID Connect plays a critical role in securing cloud-based applications, but the existing body of research needs to address the specific security challenges cloud environments pose. While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the Cloud, is not fully addressed. In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants. Such breaches would undermine the confidentiality and integrity of the tenants, which have severe economic and reputation consequences for the company.
+The existing body of research needs to address the specific security challenges cloud environments pose. While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the Cloud, is not fully addressed. In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants. Such breaches would undermine the confidentiality and integrity of the tenants, which have severe economic and reputation consequences for the company.
 
 Furthermore, the regulatory implications of such breaches cannot be ignored, especially in regions like the EU, where the GDPR directive plays a crucial role in data protection. Similar to the GDPR, comparable laws impose stringent requirements on an organisation. In the event of a security breach, there will be significant penalties. Compliance with data protection laws is challenging in cloud environments and OIDC protocol. Focusing on the identified gaps and proposed areas for future research can significantly enhance the security of OIDC in cloud applications. This will protect sensitive user data and bolster the trust and reliability of cloud-based services. In addition to trust, it would also provide us with an understanding of the regulatory implications of failing to comply with the laws.
 
