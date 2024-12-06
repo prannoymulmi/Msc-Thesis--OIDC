@@ -15,8 +15,8 @@ sequenceDiagram
 
     Client->>Client: Validate ID Token (User Authentication)
     Client->>ResourceServer: Request Resource with Access Token
-    ResourceServer-->>Client: Resource Data
-
+    ResourceServer-->>Client: Resource 
+    Client-->>User: Access Resource
     Note over Client,ResourceServer: Access Token expires
 
     Client->>AuthServer: Use Refresh Token to get New Access Token

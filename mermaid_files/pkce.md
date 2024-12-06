@@ -1,9 +1,11 @@
 ```mermaid
 sequenceDiagram
+    participant User as User
     participant Client
     participant AuthorizationServer
     participant ResourceServer
 
+    User->>Client:Credentials for Authentication
     Note over Client: Step 1: Client creates Code Verifier & Code Challenge
     Client->>Client: Generate Code Verifier
     Client->>Client: Hash Code Verifier to create Code Challenge
@@ -29,4 +31,5 @@ sequenceDiagram
     Note over Client,ResourceServer: Step 8: Client requests resource with Access Token
     Client->>ResourceServer: Resource Request with Access Token
     ResourceServer-->>Client: Resource
+    Client-->>User: Access Resource
 ```
