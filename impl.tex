@@ -285,7 +285,7 @@ In addition to manual tests, various automated tests and security scans were con
     Security scans were employed to identify potential vulnerabilities and maintain best practices:
     \begin{itemize}
         \item \textbf{Code Linting with ESLint:} 
-        ESLint was utilized to identify code smells and ensure the codebase adhered to clean coding principles and established security best practices. Linting is crucial in minimizing the risk of introducing vulnerabilities by enforcing consistent code quality. The eslint-plugin-security-node plugin was used to enhance this process, which proved to be highly effective in detecting common security issues and code smells. Its integration ensured a more robust and secure codebase by proactively addressing potential weaknesses. Figure \ref{fig:lint_results} depicts the results of some code smells detected using the linter. 
+        ESLint was utlised to identify code smells and ensure the codebase adhered to clean coding principles and established security best practices. Linting is crucial in minimizing the risk of introducing vulnerabilities by enforcing consistent code quality. The eslint-plugin-security-node plugin was used to enhance this process, which proved to be highly effective in detecting common security issues and code smells. Its integration ensured a more robust and secure codebase by proactively addressing potential weaknesses. Figure \ref{fig:lint_results} depicts the results of some code smells detected using the linter. 
 
                 \begin{figure}[!htbp]
                      \centering
@@ -310,7 +310,7 @@ In addition to manual tests, various automated tests and security scans were con
                 \end{figure}
 
         \newpage
-        In addition to the standard security checks, Prowler extends its functionality to compliance auditing. It supports testing against various industry standards, offering organizations a way to assess and strengthen their compliance posture. In this context, Prowler was utilized to perform both cloud infrastructure scans and compliance checks for ISO 27001:2013 (refer to Figure \ref{fig:prowler_iso_results}) and GDPR (refer to Figure \ref{fig:prowler_gdpr_results}). These compliance scans are particularly valuable for organizations that adhere to regulatory requirements or maintain certifications, as they provide a comprehensive view of potential gaps and actionable insights for achieving compliance.
+        In addition to the standard security checks, Prowler extends its functionality to compliance auditing. It supports testing against various industry standards, offering organisations a way to assess and strengthen their compliance posture. In this context, Prowler was utlised to perform both cloud infrastructure scans and compliance checks for ISO 27001:2013 (refer to Figure \ref{fig:prowler_iso_results}) and GDPR (refer to Figure \ref{fig:prowler_gdpr_results}). These compliance scans are particularly valuable for organisations that adhere to regulatory requirements or maintain certifications, as they provide a comprehensive view of potential gaps and actionable insights for achieving compliance.
         
                 \begin{figure}[!htbp]
                      \centering
@@ -331,7 +331,7 @@ In addition to manual tests, various automated tests and security scans were con
                 \end{figure}
         By integrating security scanning with compliance testing, Prowler is a powerful tool for proactively securing cloud environments and aligning with best practices.        
     \end{itemize}
-    \item \textbf{Static Code Analysis with Snyk:} Snyk is utilized in this project as a static analysis tool to detect vulnerabilities, improve code quality, and ensure secure development practices. It complements \texttt{ESLint} by focusing on security flaws in business logic and Infrastructure-as-Code (IaC). While \texttt{ESLint} enforces coding standards and detects bugs in JavaScript, Snyk extends the scope by scanning for vulnerabilities in dependencies, IaC configurations, and container images. This integration ensures both high-quality code and robust security measures. Figure \ref{fig:snyk_results} illustrates the results of Snyk's analysis.
+    \item \textbf{Static Code Analysis with Snyk:} Snyk is utlised in this project as a static analysis tool to detect vulnerabilities, improve code quality, and ensure secure development practices. It complements \texttt{ESLint} by focusing on security flaws in business logic and Infrastructure-as-Code (IaC). While \texttt{ESLint} enforces coding standards and detects bugs in JavaScript, Snyk extends the scope by scanning for vulnerabilities in dependencies, IaC configurations, and container images. This integration ensures both high-quality code and robust security measures. Figure \ref{fig:snyk_results} illustrates the results of Snyk's analysis.
     
 
     \begin{figure}[!htbp]

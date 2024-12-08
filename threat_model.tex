@@ -29,11 +29,11 @@ To answer the first question about \textit{what are we working on}, this section
 \hline
 \endlastfoot
 
-/authorize & Entry point for user authentication.  & 
+/authorize & Entry point for user authentication by the Authrorisation server.  & 
 - client\_id: The client ID of the application \newline 
-%- redirect\_uri: URI where the response will be sent \newline
+- redirect\_uri: URI where the response will be sent \newline
 - scope: Scopes for requested authentication (e.g., OpenID, email) \newline 
-- response\_type: Indicates the desired authorization flow (e.g., code) & 
+- response\_type: Indicates the desired authorization flow (e.g., code) \citep{openid_docs} & 
 - The authorisation code is to be exchanged for tokens. \newline 
 - Error in case of invalid request \\
 \hline
@@ -43,24 +43,10 @@ To answer the first question about \textit{what are we working on}, this section
 - code: Authorization code received from /authorize \newline
 - redirect\_uri: Must match the original redirect URI used in /login \newline 
 - client\_id: The client ID of the application
-- code\_verifier: Code used to validate code\_challenge& 
+- code\_verifier: Code used to validate code\_challenge \citep{openid_docs}& 
 - access\_token: Token for accessing protected resources \newline 
 - id\_token: Token containing user identity information \newline 
 - Error in case of invalid request \\
-\hline
-
-/userinfo & Entry point to retrieve user information using an access token. & 
-- access\_token: Token obtained from /token endpoint & 
-- id: Unique identifier of the user \newline 
-- email: User's email address \newline 
-- name: User's full name \newline 
-- Error in case of invalid token or request \\
-\hline
-
-/logout & Entry point for logging out the user and invalidating tokens. & 
-- post\_logout\_redirect\_uri: URI to redirect after successful logout & 
-- Redirect to post\_logout\_redirect\_uri \newline 
-- Error in case of invalid token or request \\
 \hline
 
 \end{longtable}
@@ -98,7 +84,7 @@ API Endpoints & Points of interaction where the application exposes functionalit
 
 
 \section{STRIDE Model}
-Using the given entry points and assets that the application uses, we can create a level zero Data Flow Diagram (DFD) (See Figure \ref{fig:dfd_app}). This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, and Elevation of privilege. The threat categories will be analyzed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
+Using the given entry points and assets that the application uses, a level zero Data Flow Diagram (DFD) (refer to Figure \ref{fig:dfd_app}) is created. This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, and Elevation of privilege. The threat categories will be analyzed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
 
 
 
@@ -224,7 +210,7 @@ Using the given entry points and assets that the application uses, we can create
 
 
 \section{Risk Assessment}
-Risk assessment is integral to keeping a system safe as it helps identify, analyse and evaluate the potential risks that could negatively impact an organization. Cyber breaches have an enormous impact on an organizations value and reputation; for example, in 2024 \citep{ibm} estimated the average cost of a cyberattack on a company in the US is about 4.88M USD. In addition, such data breaches also could cost firms penalties due to non-compliance, especially in the EU. Organisations face hefty fines of up to 10 Million Euros or 2\% of their worldwide revenue under GDPR Article 83 \citep{gdpr_fine}. Therefore, carrying out a risk assessment helps understand the impact of these risks and determine how to manage and address the potential issues before they occur. 
+Risk assessment is integral to keeping a system safe as it helps identify, analyse and evaluate the potential risks that could negatively impact an organisation. Cyber breaches have an enormous impact on an organisations value and reputation; for example, in 2024 \citep{ibm} estimated the average cost of a cyberattack on a company in the US is about 4.88M USD. In addition, such data breaches also could cost firms penalties due to non-compliance, especially in the EU. Organisations face hefty fines of up to 10 Million Euros or 2\% of their worldwide revenue under GDPR Article 83 \citep{gdpr_fine}. Therefore, carrying out a risk assessment helps understand the impact of these risks and determine how to manage and address the potential issues before they occur. 
 
 In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a recognized standard for establishing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being analysed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
 
@@ -243,7 +229,7 @@ The first step in this risk assessment process is to define the scope of the ISM
 \subsection{Methodology}
 One of the benefits of using risk assessment from the ISO/IEC 27000 group is that it does not prescribe a specific methodology for quantitative or qualitative analysis. In contrast to FAIR, which is a quantitative method, qualitative, quantitative, or a mix of both can be applied here. 
 
-The assessment of this project is based on subjective judgment or qualitative analysis rather than quantitative analysis due to the complexity and nature of the risks. For instance, risks identified during threat modelling, such as data isolation, cloud misconfiguration, and shared resource vulnerabilities, are difficult to quantify because they involve unknown factors. Using subjective analysis simplifies the decision-making process and is faster to conduct. To assess the risks meaningfully, we use the Common Attack Pattern Enumeration and Classification (CAPEC) as a reference. CAPEC provides a comprehensive database for the technical exploits used by adversaries and focuses on application security. CAPEC categorizes the general likelihood and severity into five levels, ranging from very low to very high. These levels are then converted to a number from 1-5 for each to determine the risk level for a specific threat (CAPEC). (See Figure \ref{fig:ris_assessment_method}). 
+The assessment of this project is based on subjective judgment or qualitative analysis rather than quantitative analysis due to the complexity and nature of the risks. For instance, risks identified during threat modelling, such as data isolation, cloud misconfiguration, and shared resource vulnerabilities, are difficult to quantify because they involve unknown factors. Using subjective analysis simplifies the decision-making process and is faster to conduct. To assess the risks meaningfully, the Common Attack Pattern Enumeration and Classification (CAPEC) is used as a reference. CAPEC provides a comprehensive database for the technical exploits used by adversaries and focuses on application security. CAPEC categorizes the general likelihood and severity into five levels, ranging from very low to very high. These levels are then converted to a number from 1-5 for each to determine the risk level for a specific threat (CAPEC). (See Figure \ref{fig:ris_assessment_method}). 
 
 \begin{figure}[h!]
 \centering
@@ -339,7 +325,7 @@ Cross-tenant data Leakage & 1 & 4 &  \cellcolor{ForestGreen} 4 & CAPEC-546 \\
 \hline
 
 \end{longtable}
- In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organization. The high and high risks must be mitigated before the application is published. 
+ In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organisation. The high and high risks must be mitigated before the application is published. 
 
 \begin{figure}[h!]
 \centering
@@ -355,11 +341,11 @@ Operating an OpenID Connect application in the cloud carries a high risk if it d
 
 \begin{itemize}
     \label{section:gdpr}
-    \item \textbf{Article 6 GDPR}: There should be a lawful basis for processing personal data to fulfil a contractual obligation for the data controller. Organizations must document the lawful basis for processing personal data and ensure transparency in informing users about why their data is being processed. In addition, this article also states the requirement of consent with concise text without vague legal jargon and the functionality to withdraw consent.
+    \item \textbf{Article 6 GDPR}: There should be a lawful basis for processing personal data to fulfil a contractual obligation for the data controller. Organisations must document the lawful basis for processing personal data and ensure transparency in informing users about why their data is being processed. In addition, this article also states the requirement of consent with concise text without vague legal jargon and the functionality to withdraw consent.
     
     \item \textbf{Articles 15-22 GDPR}: "Data subject rights": proper access, rectification, erasure, and portability. These rights should be able to exercised by the users. 
 
-    \item \textbf{Article 25 GDPR}: "Data Protection by Design and by Default": This article requires organizations to embed safeguards into their systems and processes, such as data minimization and encryption, are integrated into system development, reducing risks proactively and ensuring privacy. 
+    \item \textbf{Article 25 GDPR}: "Data Protection by Design and by Default": This article requires organisations to embed safeguards into their systems and processes, such as data minimization and encryption, are integrated into system development, reducing risks proactively and ensuring privacy. 
 
     \item \textbf{Article 32 GDPR }: Appropriate Security measures must be taken to protect sensitive data, such as encrypting data, maintaining access control lists, regular audits, and security checks. Failure to implement these measures can result in security breaches, leading to unauthorized access to personal data and violations of GDPR’s security requirements.
     
