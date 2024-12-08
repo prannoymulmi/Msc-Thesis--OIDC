@@ -1,16 +1,20 @@
 \chapter{Introduction}
 \section{Background}
-In the era of digitalisation, an immense transformation is commencing where day-to-day services such as shopping, communicating with people, visiting university courses, and also critical services like accessing financial services, accessing health services, running powerplants, managing traffic, and managing public services are moving digital \citep{intro_cloud_critical_infra}. This transformation is fundamentally changing the traditional analogue methods and replacing them with continual innovations, enhancing efficiency and improving user experience by providing a digital platform in the form of different applications/software hosted in the Cloud. For example, in 2023, the German administration created a cloud strategy plan with the German Administration Cloud Strategy (DVS) to incorporate, strengthen and improve the status quo of digitalisation in the public sector \citep{german_gov_cloud_plan}. Such moves are not isolated to a single country and signal a move towards cloud and digitalisation to shape the new world. \newline
+Cloud computing has undergone a significant transformation, especially for businesses, allowing them to create scalable, on-demand resources and easily accessible distributed systems for their applications. Services like accessing financial services, accessing health services, running powerplants, managing traffic, and managing public services are a few examples of where cloud technologies are in use \citep{intro_cloud_critical_infra}. This transformation is fundamentally changing the traditional analogue methods of self hosting infrastucture and replacing them with continual innovations, enhancing efficiency and improving user experience by providing a digital platform in the form of different applications/software hosted in the cloud. For example, in 2023, the German administration created a cloud strategy plan with the German Administration Cloud Strategy (DVS) to incorporate, strengthen and improve the status quo of digitalisation in the public sector \citep{german_gov_cloud_plan}. Such moves are not isolated to a single country and signal a move towards cloud and digitalisation to shape the new world. \newline
 
-As this modernization reshapes the business landscape, there is a need to ensure that only legitimate users gain access to sensitive data and systems to safeguard personal data as well as unauthorised breaches, which can lead to loss of intellectual property, violation of laws and regulations and disruption to public services \citep{critical_infra_reason}. Therefore, authentication and authorisation are fundamental concepts in cybersecurity, crucial for safeguarding digital resources and ensuring proper access control. \newline
+As this modernization reshapes the business landscape, there is a need to ensure that
+only legitimate users gain access to sensitive data. Systems need to protect personal
+data, and unauthorised breaches, to prevent loss of intellectual property,
+violation of laws and regulations and disruption to public services \citep{critical_infra_reason}. Therefore, authentication and authorisation are fundamental concepts in cybersecurity, crucial for safeguarding digital resources and ensuring proper access control. \newline
 
-Authentication is the process of verifying the identity of a user or an online service using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorization determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid sensitive information and unauthorised access is important. Especially now, where the cloud-computing industry is booming, many services are easily accessible to a larger group of people, as it is easier to run and create different applications and simultaneously give attackers more systems to compromise.\newline
+Authentication is the process of verifying the identity of a user or an application using credentials like passwords, biometrics, or tokens \citep{authetication_intro}. On the other hand, authorisation determines the permissions or defines the granular access levels a user can execute, ensuring only the actions one is entitled to are used \citep{Gollmann2021-at}. Having both mechanisms to secure systems and avoid leakage of sensitive information and unauthorised access is especially important now due to the boom of the cloud-computing industry. Many services are easily accessible to a larger group of people, as running and creating different applications is easier, which simultaneously gives attackers more systems to compromise.\newline
 
-In addition to the benefits that cloud computing provides, such as easy accessibility and quicker setup of applications, it has also introduced new challenges. In particular, the shared responsibility model of the Cloud, where the cloud provider and the client both have specific responsibilities to secure the system \citep{shared_principal}. The shared responsibility model means that any misconfiguration or oversight on either side could leave the system vulnerable to attack. For instance, if the cloud provider maintains a secure infrastructure but the client misconfigures their application or leaves storage buckets open to the public, this could lead to data breaches or exploitation. This complication increases the attack surfaces to exploit as different errors and misconfiguration could make the system more vulnerable. Therefore, the combination of authentication and authorisation for applications running in the cloud has gained significance. 
+In addition to the benefits that cloud computing provides, such as easy accessibility and quicker setup of applications, it has also introduced new challenges. In particular, the shared responsibility model of the cloud, where the cloud provider and the client both have specific responsibilities to secure the system \citep{shared_principal}. The shared responsibility model means that any misconfiguration or oversight on either side could leave the system vulnerable to attack. For instance, if the cloud provider maintains a secure infrastructure but the client misconfigures their application or leaves private databases open to the public, this could lead to data breaches or exploitation. This complication increases exploitable attack surfaces as different errors and misconfiguration could make the system more vulnerable. Therefore, integrating authentication and authorisation mechanisms for cloud-based applications has become increasingly vital. These processes ensure that sensitive information is protected and access is restricted solely to authorised entities who require it. \newpage
 
 
 \section{Problem Statement}
-Cloud computing and applications needing authorisation and authentication capabilities are synonymous, as many systems are rapidly moving to this environment. This way of operating business has been revolutionary, as it leverages a group of distributed systems located on remote servers hosted on the internet. The main benefit of using such a distributed network of readily available systems is the main challenge for securing the system \citep{Alouffi2021-yh}. Especially when it comes to authentication and authorisation, it can be very critical as the vulnerabilities in this area will lead to unauthorised access and data leaks, which can be very costly; Statista reported in 2023 that the average cost of such a data breach is about 4.45 million US dollars \citep{statista_data_breach}. Therefore, this thesis will investigate the security risks associated with authentication and authorisation protocols in a cloud-based application using the Open ID connect protocol (OIDC) in the cloud, as OIDC is one of the most widely used protocols for Identity Management (IdM), which supports different modes such as mobile applications, machine-to-machine, and Single Sign-On (SSO) \citep{oidc_popular}.
+Although cloud computing offers easy scalability, on-demand distributed system access and efficiency to its consumers, it presents significant security challenges, such as authentication and authorisation. Vulnerabilities in this area can lead to unauthorised access and data breaches, which are costly. Statista reported in 2023 that the average cost of a data breach is 4.45 million USD  \citep{statista_data_breach}. Given its widespread adoption, this thesis investigates the security risks of authentication and authorisation in cloud-based applications using the OpenID Connect (OIDC) protocol, a leading framework for Identity Management (IdM) supporting use cases such as mobile applications, machine-to-machine communication, and Single Sign-On (SSO)  \citep{oidc_popular}.
+
 
 \section{Research Question}\label{sec:objectives}
 This section presents the research question that this master's thesis is focused on. This main research question is:
@@ -21,9 +25,27 @@ This section presents the research question that this master's thesis is focused
 The primary aim of the RQ1 is to systematically analyse the security risks associated with implementing and using the OIDC protocol in cloud-based applications by identifying common vulnerabilities, assessing their impact on the overall security of these applications, and proposing effective mitigation strategies. Pursuing this aim, the thesis has the following objectives and goals:
 
 \begin{enumerate}
-  \item Identify Common Security Risks - Describe the most prevalent security risks of OIDC Connect protocols when used with cloud applications.
-  \item Conduct Risk assessment  - Conduct a risk assessment of an Identity provider application, using threat modelling and mitigations for identified risks.
-  \item Design and develop Prototype - A prototype containing the investigation's main findings and essential features.
+  \item Identify Common Security Risks - 
+  \begin{itemize}
+      \item Evaluate at least five security risks for the cloud and five for OIDC protocol and describe their effects.
+      \item Evaluate security risks that were researched dating from 2020-2024.
+  \end{itemize}
+
+    
+  \item Conduct Risk Assessment  - 
+  \begin{itemize}
+      \item Implement STRIDE threat modelling for the evaluated risks.
+      \item Propose specific mitigation strategies for each identified threat.
+      \item Create a risk matrix with probability and impact scores.
+      \item Assess non-compliance risks for privacy law like the General Data Protection Regulation. 
+  \end{itemize}
+  \item Prototype Development and Validation - 
+  \begin{itemize}
+      \item Develop a working proof-of-concept incorporating identified security controls.
+      \item Achieving a minimum of 90\% code coverage in unit testing.
+      \item Create a risk matrix with probability and impact scores.
+      \item Perform Manual and automated testing for the security controls implemented.
+  \end{itemize}
 \end{enumerate}
 
 \section{Research Methodology}

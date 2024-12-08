@@ -33,14 +33,14 @@ To answer the first question about \textit{what are we working on}, this section
 - client\_id: The client ID of the application \newline 
 - redirect\_uri: URI where the response will be sent \newline
 - scope: Scopes for requested authentication (e.g., OpenID, email) \newline 
-- response\_type: Indicates the desired authorization flow (e.g., code) \citep{openid_docs} & 
+- response\_type: Indicates the desired authorisation flow (e.g., code) \citep{openid_docs} & 
 - The authorisation code is to be exchanged for tokens. \newline 
 - Error in case of invalid request \\
 \hline
 
-/token & Entry point for exchanging authorization code for tokens (access token, ID token, refresh token). & 
+/token & Entry point for exchanging authorisation code for tokens (access token, ID token, refresh token). & 
 - grant\_type: "authorization\_code" \newline 
-- code: Authorization code received from /authorize \newline
+- code: Authorisation code received from /authorize \newline
 - redirect\_uri: Must match the original redirect URI used in /login \newline 
 - client\_id: The client ID of the application
 - code\_verifier: Code used to validate code\_challenge \citep{openid_docs}& 
@@ -67,11 +67,11 @@ To answer the first question about \textit{what are we working on}, this section
 \endhead
 
 % Assets for PKCE App in Cloud with Multiple Tenants
-OAuth Tokens & Used to authorize access to resources on behalf of the user. \\
+OAuth Tokens & Used to authorise access to resources on behalf of the user. \\
 \hline
 User Credentials & Sensitive information (e.g., usernames, passwords) used to authenticate users; protection. \\
 \hline
-OAuth Authorization Codes & Temporary codes exchanged during OAuth flows are essential for secure authorization in PKCE flows. \\
+OAuth Authorisation Codes & Temporary codes exchanged during OAuth flows are essential for secure authorisation in PKCE flows. \\
 \hline
 Cloud Infrastructure & The underlying infrastructure (servers, storage, networking) that supports the application in the cloud \\
 \hline
@@ -105,21 +105,21 @@ Using the given entry points and assets that the application uses, a level zero 
         \item \textbf{ID Spoofing}: The attacker tries impersonating an End user from another OpenID Provider by using spoofed tokens or changing the token's contents \citep{oidc_attacks}.
         \item \textbf{Credential Stuffing}: Using leaked credentials from other services to gain unauthorised access.
         \item \textbf{Phishing}: Tricking users into providing their credentials through fraudulent login pages. For example, the attackers can manipulate the redirect endpoints to redirect to the malicious URL \citep{open_redirect_oidc_threat}.
-        \item \textbf{Man-in-the-Middle Attack (MITM)}: Intercepting the authorization code during the OAuth2 flow.
+        \item \textbf{Man-in-the-Middle Attack (MITM)}: Intercepting the authorisation code during the OAuth2 flow.
     \end{itemize}
     \item \textbf{Mitigation}:
     \begin{itemize}
         \item Signed tokens should always be verified at the issuer's end so that a spoofed token cannot bypass the security.
         \item The client should validate the audience and issuer claims to prevent tokens from being used across different services.
         \item Enforce multi-factor authentication (MFA) to prevent credential-based attacks.
-        \item PKCE mitigates MITM attacks by tying the authorization code to a unique challenge/response.
+        \item PKCE mitigates MITM attacks by tying the authorisation code to a unique challenge/response.
         \item Use OAuth2’s \texttt{nonce} and \texttt{state} parameters to protect against replay attacks.
     \end{itemize}
 \end{itemize}
 
 \subsection*{2. Tampering}
 \begin{itemize}
-    \item \textbf{Threat}: Unauthorized modification of data or code during transmission or at rest.
+    \item \textbf{Threat}: Unauthorised modification of data or code during transmission or at rest.
     \item \textbf{Specific Attacks}:
     \begin{itemize}
         \item \textbf{Token Tampering}: This attack targets access, ID, and refresh tokens. Where the attacker manipulates the tokens to add their claims and scopes to allow authorised access \citep{oidc_attacks}.
@@ -131,7 +131,7 @@ Using the given entry points and assets that the application uses, a level zero 
     \item \textbf{Mitigation}:
     \begin{itemize}
          \item A key should always sign the tokens like ID tokens containing user information and must be verified each time with the issuer when used.
-        \item Use PKCE to prevent authorization code injection by requiring a code challenge.
+        \item Use PKCE to prevent authorisation code injection by requiring a code challenge.
         \item Sign and validate JWT tokens to ensure integrity and detect tampering.
         \item Implement token expiration and invalidation mechanisms and rotating refresh tokens to reduce token reuse.
         \item Use different tools to detect anomalies in the system and prevent malware such as ransomware from propagating deep into different services into the cloud \citep{ransomeware}.
@@ -179,7 +179,7 @@ Using the given entry points and assets that the application uses, a level zero 
     \item \textbf{Threat}: An attacker may overwhelm the service, making it unavailable for legitimate users and tenants.
     \item \textbf{Specific Attacks}:
     \begin{itemize}
-        \item \textbf{Token Bombing}: Repeatedly requesting tokens using valid credentials to overload the authorization server.
+        \item \textbf{Token Bombing}: Repeatedly requesting tokens using valid credentials to overload the authorisation server.
         \item \textbf{API Rate Limiting Attack}: Flooding API endpoints with excessive requests, leading to resource exhaustion.
         \item \textbf{Resource Starvation}: Exploiting vulnerabilities to consume cloud resources, like CPU or memory, disrupting multi-tenant services.
     \end{itemize}
@@ -347,7 +347,7 @@ Operating an OpenID Connect application in the cloud carries a high risk if it d
 
     \item \textbf{Article 25 GDPR}: "Data Protection by Design and by Default": This article requires organisations to embed safeguards into their systems and processes, such as data minimization and encryption, are integrated into system development, reducing risks proactively and ensuring privacy. 
 
-    \item \textbf{Article 32 GDPR }: Appropriate Security measures must be taken to protect sensitive data, such as encrypting data, maintaining access control lists, regular audits, and security checks. Failure to implement these measures can result in security breaches, leading to unauthorized access to personal data and violations of GDPR’s security requirements.
+    \item \textbf{Article 32 GDPR }: Appropriate Security measures must be taken to protect sensitive data, such as encrypting data, maintaining access control lists, regular audits, and security checks. Failure to implement these measures can result in security breaches, leading to unauthorised access to personal data and violations of GDPR’s security requirements.
     
     
     \item \textbf{Chapter V GDPR }: Cloud based applications often operate across borders. This makes it more important to consider where sensitive data such as PII are stored. GDPR imposes strict rules on transferring personal data to countries outside the European Economic Area (EEA) unless those countries have been deemed to provide adequate data protection. This chapter of GDPR stipulates that providers that are also located outside the EEA must be compliant with GDPR rules. As popular cloud providers such as AWS, Google, and Microsoft operate outside the EEA, this law plays a big role with cloud providers.  
@@ -356,7 +356,7 @@ Operating an OpenID Connect application in the cloud carries a high risk if it d
 
 \section{Conclusion}
 
-Conducting a thorough risk assessment for an OpenID Connect application deployed in the cloud is crucial to identify potential security vulnerabilities and ensure GDPR compliance. OIDC applications handle sensitive personal data during user authentication and authorization, making them susceptible to threats such as cloud misconfigurations, phishing, man-in-the-middle (MITM) attacks, token tampering, and cross-tenant data leakage. These threats can significantly impact personal data's confidentiality, integrity, and availability. 
+Conducting a thorough risk assessment for an OpenID Connect application deployed in the cloud is crucial to identify potential security vulnerabilities and ensure GDPR compliance. OIDC applications handle sensitive personal data during user authentication and authorisation, making them susceptible to threats such as cloud misconfigurations, phishing, man-in-the-middle (MITM) attacks, token tampering, and cross-tenant data leakage. These threats can significantly impact personal data's confidentiality, integrity, and availability. 
 
 Therefore, using the threat modelling results, we identified the threats and their mitigations, and the qualitative risk analysis helped us rank these threats according to their risk level. By prioritizing threats based on their perceived risk, we can increase efficiency. In addition to the threats, not complying with GDPR will result in significant financial costs for the organisation, making it a high-risk factor. As a result, high-risk threat mitigations must be applied to GDPR measures to ensure regulatory adherence. 
 
