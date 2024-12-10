@@ -1267,3 +1267,41 @@ year={2023},
                   OAuth 2.0 extensions and active internet drafts.},
   note         = {authorization flow}
 }
+
+@ARTICLE{openpub_key,
+  title        = {{OpenPubkey}: Augmenting {OpenID} Connect with user held
+                  signing keys},
+  author       = {Heilman, E and Mugnier, Lucien and Filippidis, Athanasios and
+                  Goldberg, S and Lipman, Sebastien and Marcus, Yuval and
+                  Milano, Mike and Premkumar, Sidhartha and Unrein, Chad},
+  journaltitle = {IACR Cryptol eprint Arch},
+  volume       = {2023},
+  pages        = {296},
+  year         = {2023},
+  abstract     = {OpenPubkey makes a client-side modification to OpenID Connect
+                  so that ID Tokens commit to a user-held public key, PK u .
+                  This transforms an ID Token into a certificate that
+                  cryp-tographically binds an OpenID Connect identity to a
+                  public key. We call such an ID Token a PK Token. Messages
+                  signed by a user with their signing key, SK u can be
+                  authenticated and attributed to the user’s OpenID Connect
+                  identity. This allows OpenPubkey to upgrade OpenID Connect
+                  from Bearer Authentication to Proof-of-Possession ,
+                  eliminating trust assumptions in OpenID Connect and defeating
+                  entire categories of attacks present in OpenID Connect.
+                  OpenPubkey was designed to satisfy a decade-long need for this
+                  functionality. Prior to OpenPubkey, OpenID Connect did not
+                  have a secure way for users to sign statements under their
+                  identity. It is transparent to users and OpenID Providers. An
+                  OpenID Provider can not even determine that OpenPubkey is
+                  being used. This makes OpenPubkey fully compatible with
+                  existing OpenID Providers. In fact a variant of OpenPubkey is
+                  currently deployed and used to authenticate signed messages
+                  and identities for users with accounts on Google, Microsoft,
+                  Okta, and Onelogin. OpenPubkey does not add new trusted
+                  parties to OpenID Connect and reduces existing trust
+                  assumptions. If used in tandem with our MFA-cosigner, it can
+                  maintain security even against a malicious OpenID Provider
+                  (the most trusted party in OpenID Connect).},
+  note         = {OpenPubKey OIDC}
+}
