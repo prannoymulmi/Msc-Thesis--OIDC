@@ -146,7 +146,7 @@ Proof Key for Code Exchange (PKCE) flow is an improvement to the authorisation c
 
 \label{fig:pkce_flow}
 \includegraphics[height=420px, center]{pics/pkce.png}
-\caption{PKCE Code Flow}
+\caption{Sequence Diagram for PKCE Code Flow}
 \end{figure}
 
 PKCE mitigates this risk by adding two additional steps: creating a code verifier and the code challenge. When a client initiates the authorisation request, it generates a random string called the code verifier. This verifier is hashed using a secure method (such as SHA-256) to create the code challenge sent with the authorisation request. The original code verifier must be provided when the client requests the access token. The authorisation server hashes this verifier and compares it with the original code challenge. If they match, the server issues the access token (refer to Figure \ref{fig:pkce_flow}). This method ensures that the access token cannot be obtained without the authorisation code and the original code verifier. 
@@ -204,8 +204,10 @@ The flows mentioned above are some industry-standard methods in OpenID Connect t
 
     \item \textbf{PKCE Downgrade Attacks} - PKCE (refer to Section \ref{sec:pkce_flow}) is a flow developed to protect native applications from interception attacks \citep{pkce}. This flow adds several security layers or requests (refer to Figure \ref{fig:pkce_flow}) to achieve a secure authentication method for applications that cannot handle storing critical secret keys. Despite these measures, PKCE is still vulnerable to many attacks if no protection measures are taken. For example, in the PKCE Downgrade Attack, where the attacker tries to remove the \textbf{code\_challenge} and the authorising server does not validate it, the attack succeeds \citep{oidc_attacks}.\newline
 
-    \textbf{Countermeasure}:
-   \end{itemize} 
+    \textbf{Countermeasure}: The OpenID Provider must ensure that when the PKCE flow is activated for the client, the \textbf{code\_challenge} is included in the authentication request and the \textbf{code\_verifier} is present in the token request \citep{oidc_attacks}. Moreover, for applications that handle sensitive data, the option for Plaintext mode, where the code\_challenge is sent in plain text, should be disabled. Not allowing the clients to skip the PKCE flows by verifying the presence of code\_verifier and code\_challenge can prevent PKCE Downgrade attacks. \newline
+
+
+    
     % OIDC ENDPOINT TABLE BEGIN
     
     \begin{longtable}{|>{\raggedright\arraybackslash}p{4cm}|>{\raggedright\arraybackslash}p{11cm}|}

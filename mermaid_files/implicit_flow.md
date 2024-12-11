@@ -2,7 +2,7 @@
 sequenceDiagram
     participant User as User
     participant Client as Client
-    participant AuthServer as Authorization Server
+    participant AuthServer as Authorisation Server
     participant ResourceServer as Resource Server
 
     User->>Client:Credentials for Authentication
@@ -13,7 +13,7 @@ sequenceDiagram
     Client->>ResourceServer: Request Resource with Access Token
     ResourceServer-->>Client: Provide Resource
     Client-->>User: Access Resource
-    Note over Client,ResourceServer: Access Token expires
+    Note over Client,ResourceServer: Access Token Expires
 
     Client->>AuthServer: Refresh Token to get New Access Token
 ```

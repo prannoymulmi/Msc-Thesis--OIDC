@@ -2,31 +2,31 @@
 sequenceDiagram
     participant User as User
     participant Client
-    participant AuthorizationServer
+    participant AuthorisationServer
     participant ResourceServer
 
     User->>Client:Credentials for Authentication
-    Note over Client: Step 1: Client creates Code Verifier & Code Challenge
-    Client->>Client: Generate Code Verifier
-    Client->>Client: Hash Code Verifier to create Code Challenge
+    Note over Client: Step 1: Client creates code_verifier & code_challenge
+    Client->>Client: Generate Code_verifier
+    Client->>Client: Hash code_verifier to create code_challenge
 
-    Note over Client,AuthorizationServer: Step 2: Client sends Authorization Request
-    Client->>AuthorizationServer: Authorization Request with Code Challenge
+    Note over Client,AuthorisationServer: Step 2: Client sends Authorisation Request.
+    Client->>AuthorisationServer: Authorisation Request with code_challenge
 
-    Note over AuthorizationServer: Step 3: Authorization Server authenticates user
-    AuthorizationServer->>AuthorizationServer: Authenticate User
+    Note over AuthorisationServer: Step 3: Authorisation Server authenticates user
+    AuthorisationServer->>AuthorisationServer: Authenticate User
 
-    Note over AuthorizationServer,Client: Step 4: Authorization Server returns Authorization Code
-    AuthorizationServer-->>Client: Authorization Code
+    Note over AuthorisationServer,Client: Step 4: Authorisation Server returns Authorisation Code.
+    AuthorisationServer-->>Client: Authorisation Code
 
-    Note over Client,AuthorizationServer: Step 5: Client exchanges Authorization Code for Access Token
-    Client->>AuthorizationServer: Access Token Request with Authorization Code & Code Verifier
+    Note over Client,AuthorisationServer: Step 5: Client exchanges Authorisation Code for Access Token
+    Client->>AuthorisationServer: Access Token Request with Authorisation Code & code_verifier
 
-    Note over AuthorizationServer: Step 6: Authorization Server validates Code Verifier
-    AuthorizationServer->>AuthorizationServer: Hash Code Verifier and compare with Code Challenge
+    Note over AuthorisationServer: Step 6: Authorisation Server validates code_verifier
+    AuthorisationServer->>AuthorisationServer: Hash code_verifier and compare with code_challenge
 
-    Note over AuthorizationServer,Client: Step 7: If valid, Authorization Server issues Access Token
-    AuthorizationServer-->>Client: Access Token
+    Note over AuthorisationServer,Client: Step 7: If valid, Authorisation Server issues Access Token
+    AuthorisationServer-->>Client: Access Token
 
     Note over Client,ResourceServer: Step 8: Client requests resource with Access Token
     Client->>ResourceServer: Resource Request with Access Token
