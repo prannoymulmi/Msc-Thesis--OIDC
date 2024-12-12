@@ -1,19 +1,19 @@
 \chapter{Chapter: Threat Modelling}
 \label{chap:threat_model}
-Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}. This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied. Similarly, threat modelling will also be conducted for this project, where an authentication server using OIDC protocol is operated in a cloud environment. The approach that this project will apply to threat modelling is based on Shostack's Four Question Framework \citep{shostack}. The questions focus on the project objectives, what could go wrong there, what mitigations could be applied, and whether it can be improved. Using Shostacks questions in conjunction with the OWASP threat modelling process, the application, using OpenID Connect in cloud, can be analysed \citep{owasp_threat_model}. The objective of threat modelling is to identify as many possible risks present in the Open ID Connect application running on a cloud. Furthermore, the modelling will be cloud agnostic, meaning these identified mitigations can be applied anywhere, irrespective of the cloud provider.
-
+Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}. This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied. Similarly, threat modelling will also be conducted for this project, where an authentication server using OIDC protocol is operated in a cloud environment. The approach that this project will apply to threat modelling is based on Shostack's Four Question Framework \citep{shostack}. The questions focus on the project objectives, what could go wrong there, what mitigations could be applied, and whether it can be improved. Using Shostacks questions in conjunction with the OWASP threat modelling process, the application can be analysed using OpenID Connect in the cloud \citep{owasp_threat_model}. The objective of threat modelling is to identify as many possible risks present in the Open ID Connect application running on a cloud. Furthermore, the modelling will be cloud agnostic, meaning these identified mitigations can be applied anywhere, irrespective of the cloud provider.
 
 \section{Application Information}
-To answer the first question about \textit{what are we working on}, this section will describe the application and the different dependencies that this application contains.
+To answer the first question from Shostacks's Four questions, \textit{what are we working on}, this section will describe the application and the different dependencies that this application contains.
+\newline
 \begin{itemize}
     \item \textbf{Application Name:} Multi-tenant App
     \item \textbf{Application Version:} v1.0
-    \item \textbf{Description:} This generic authentication and authorisation application utilises OpenID Connect protocols PKCE flow (See Figure \ref{fig:pkce_flow}) in a public cloud environment. This application will be based on multitenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application. This general API would provide the capabilities mentioned in Table \ref{table:threat_model_entry_points}.
+    \item \textbf{Description:} This generic authentication and authorisation application utilises OpenID Connect protocols PKCE flow (refer to Figure \ref{fig:pkce_flow}) in a public cloud environment. This application will be based on multi-tenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application. This general API would provide the capabilities mentioned in Table \ref{table:threat_model_entry_points}.
   \end{itemize}
 
 \subsection{Entry Points}
 \begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|p{4cm}|}
-\caption{Entry Points}
+\caption{Entry Points for the prototype}
 \label{table:threat_model_entry_points}
 \hline
 \rowcolor{grey!15}
@@ -77,14 +77,14 @@ Cloud Infrastructure & The underlying infrastructure (servers, storage, networki
 \hline
 Application Data & Data created, stored, or processed by the application, which could include user data or system configurations \\
 \hline
-API Endpoints & Points of interaction where the application exposes functionality to clients See the entry point (Table \ref{table:threat_model_entry_points}). \\
+API Endpoints & Points of interaction where the application exposes functionality to clients (Refer to Table \ref{table:threat_model_entry_points}, to see the entry-points). \\
 \hline
 
 \end{longtable}
 
 
 \section{STRIDE Model}
-Using the given entry points and assets that the application uses, a level zero Data Flow Diagram (DFD) (refer to Figure \ref{fig:dfd_app}) is created. This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, and Elevation of privilege. The threat categories will be analysed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
+Using the given entry points and assets that the application uses, a level zero Data Flow Diagram (DFD) (refer to Figure \ref{fig:dfd_app}) is created. This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege. The threat categories will be analysed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
 
 
 
@@ -102,7 +102,7 @@ Using the given entry points and assets that the application uses, a level zero 
     \item \textbf{Threat}: An attacker attempts to impersonate a legitimate user or tenant to gain unauthorised access.
     \item \textbf{Specific Attacks}:
     \begin{itemize}
-        \item \textbf{ID Spoofing}: The attacker tries impersonating an End user from another OpenID Provider by using spoofed tokens or changing the token's contents \citep{oidc_attacks}.
+        \item \textbf{ID Spoofing}: The attacker tries impersonating an end user from another OpenID Provider by using spoofed tokens or changing the token's contents \citep{oidc_attacks}.
         \item \textbf{Credential Stuffing}: Using leaked credentials from other services to gain unauthorised access.
         \item \textbf{Phishing}: Tricking users into providing their credentials through fraudulent login pages. For example, the attackers can manipulate the redirect endpoints to redirect to the malicious URL \citep{open_redirect_oidc_threat}.
         \item \textbf{Man-in-the-Middle Attack (MITM)}: Intercepting the authorisation code during the OAuth2 flow.
@@ -126,7 +126,7 @@ Using the given entry points and assets that the application uses, a level zero 
         \item \textbf{Code Injection}: Injecting malicious code or tokens into the OAuth2 flow.
         \item \textbf{OAuth Token Replay}: Reusing an old token after invalidating or expired.
         \item \textbf{Malicious Endpoint} The discovery endpoints of OIDC, such as the ./wellknown, are tampered with, and malicious endpoints are added to the public endpoint where the attacker can now get sensitive information, as the endpoints are fake \citep{oidc_attacks}.
-        \item \textbf{Ransomware}: Unlike just OIDC, cloud technologies, especially public clouds, are susceptible to ransomware attacks. In this attack, the attacker tries to misuse existing vulnerabilities and steal sensitive data or encrypt them, making them unusable \citep{ransomeware}.
+        \item \textbf{Ransomware}: Unlike just OIDC, cloud technologies, especially public clouds, are susceptible to ransomware attacks. In this attack, the attacker tries to misuse existing vulnerabilities and steal sensitive data or encrypt it, making it unusable \citep{ransomeware}.
     \end{itemize}
     \item \textbf{Mitigation}:
     \begin{itemize}
@@ -134,7 +134,7 @@ Using the given entry points and assets that the application uses, a level zero 
         \item Use PKCE to prevent authorisation code injection by requiring a code challenge.
         \item Sign and validate JWT tokens to ensure integrity and detect tampering.
         \item Implement token expiration and invalidation mechanisms and rotating refresh tokens to reduce token reuse.
-        \item Use different tools to detect anomalies in the system and prevent malware such as ransomware from propagating deep into different services into the cloud \citep{ransomeware}.
+        \item Use different tools like SIEM to detect anomalies in the system and prevent malware such as ransomware from propagating deep into different services into the cloud \citep{ransomeware}.
         \item Perform network segregation and build zero privilege systems to allow only the required actors to access the services and no more \citep{zero_trust}. 
     \end{itemize}
 \end{itemize}
@@ -266,11 +266,18 @@ The assessment of this project is based on subjective judgment or qualitative an
 Although ISO/IEC 20071:2022 is an internationally recognized standard for risk assessment, the framework and scope of this project have some limitations. The limitations of using this methodology for this project are listed below:
 
 \begin{itemize}
-    \item Given the timeframe of this project and the limited resources, not all aspects of this framework can be implemented and documented. Instead, only the scope, methodology, and risk assessment.
-    \item It is very resource intensive, and the assessment result is based on a specialist doing the analysis, which could lead to subjective arguments.
-    \item The project's scope is narrow, mainly focusing on the technical risks of this implementation. This could leave some specific systems not being covered. For example, the amount of financial loss that would occur with different risks is not covered.
+    \item The complexity of full implementation requires assessing organizational, human, physical, and technological controls as per ISO/IEC 20071:2022. However, since this is merely a prototype, only technological controls are being considered, limiting this framework's effectiveness.
+    
     \item The data used from CAPEC to derive the likelihood and impact is a generic value and can differ from the actual case, which could cause some deviation from the analysis.
+    
     \item Some attacks are not listed in the CAPEC database, which then is assessed subjectively according to their complexity and impact. 
+    
+    \item Given the timeframe of this project and the limited resources, not all aspects of this framework can be implemented and documented. Instead, only the scope, methodology, and risk assessment.
+    
+    \item It is very resource intensive, and the assessment result is based on a specialist doing the analysis, which could lead to subjective arguments.
+    
+    \item The project's scope is narrow, mainly focusing on the technical risks of this implementation. This could leave some specific systems not being covered. For example, the amount of financial loss that would occur with different risks is not covered.
+
 \end{itemize}
 
 \subsection{Analysis}
