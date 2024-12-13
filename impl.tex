@@ -33,20 +33,20 @@ A carefully selected set of dependencies was chosen to develop the prototype, en
 \endfoot
 \hline
 \endlastfoot
-argon2 & \textasciicircum 0.41.1 & A password hashing library implementing the Argon2 algorithm, designed for secure password storage. \ \hline
-axios & \textasciicircum 1.7.7 & A promise-based HTTP client for making HTTP requests in Node.js and browsers. \ \hline
-esbuild & \textasciicircum 0.24.0 & A fast JavaScript and TypeScript bundler and minified optimized for development and production builds. \ \hline
-hash-wasm & \textasciicircum 4.11.0 & A fast cryptographic hashing library using WebAssembly for efficiency. \ \hline
-jsonwebtoken & \textasciicircum 9.0.2 & A library to sign, verify, and decode JSON Web Tokens (JWT), commonly used for authentication and authorisation. \ \hline
-@types/aws-lambda & \textasciicircum 8.10.145 & TypeScript type definitions for AWS Lambda, providing type support for AWS Lambda functions. \ \hline
-@types/jsonwebtoken & \textasciicircum 9.0.7 & TypeScript type definitions for jsonwebtoken, helping with type safety when using JWTs in TypeScript code. \ \hline
-@types/node & \textasciicircum 22.7.7 & TypeScript type definitions for Node.js, providing type support for Node.js APIs in TypeScript projects. \ \hline
-typescript & \textasciicircum 5.6.3 & The TypeScript programming language, which adds static types to JavaScript to improve developer productivity and code quality. \ \hline
-uuidv4 & \textasciicircum 6.2.13 & A library to generate UUID (Universally Unique Identifier) version 4, primarily used for creating unique identifiers. \ \hline
-winston & \textasciicircum 3.15.0 & A flexible and popular logging library for Node.js, supporting multiple log transports. \ \hline
+argon2 & \textasciicircum 0.41.1 & A password hashing library implementing the Argon2 algorithm, designed for secure password storage. \\ \hline
+axios & \textasciicircum 1.7.7 & A promise-based HTTP client for making HTTP requests in Node.js and browsers. \\ \hline
+esbuild & \textasciicircum 0.24.0 & A fast JavaScript and TypeScript bundler and minified optimized for development and production builds.\\ \hline
+hash-wasm & \textasciicircum 4.11.0 & A fast cryptographic hashing library using WebAssembly for efficiency. \\ \hline
+jsonwebtoken & \textasciicircum 9.0.2 & A library to sign, verify, and decode JSON Web Tokens (JWT), commonly used for authentication and authorisation. \\ \hline
+@types/aws-lambda & \textasciicircum 8.10.145 & TypeScript type definitions for AWS Lambda, providing type support for AWS Lambda functions. \\ \hline
+@types/jsonwebtoken & \textasciicircum 9.0.7 & TypeScript type definitions for jsonwebtoken, helping with type safety when using JWTs in TypeScript code. \\ \hline
+@types/node & \textasciicircum 22.7.7 & TypeScript type definitions for Node.js, providing type support for Node.js APIs in TypeScript projects.\\ \hline
+typescript & \textasciicircum 5.6.3 & The TypeScript programming language, which adds static types to JavaScript to improve developer productivity and code quality.\\ \hline
+uuidv4 & \textasciicircum 6.2.13 & A library to generate UUID (Universally Unique Identifier) version 4, primarily used for creating unique identifiers. \\ \hline
+winston & \textasciicircum 3.15.0 & A flexible and popular logging library for Node.js, supporting multiple log transports. \\ \hline
 winston-cloudwatch & \textasciicircum 6.3.0 & A transport for Winston allows logging to AWS CloudWatch for centralized logging and monitoring. \ \hline
-zod & \textasciicircum 3.23.8 & A TypeScript-first schema validation library for parsing and validating inputs. \ \hline
-@aws-sdk/client-dynamodb & \textasciicircum 3.675.0 & AWS SDK Client for DynamoDB, used for interacting with Amazon DynamoDB from Node.js applications. \ \hline
+zod & \textasciicircum 3.23.8 & A TypeScript-first schema validation library for parsing and validating inputs. \\ \hline
+@aws-sdk/client-dynamodb & \textasciicircum 3.675.0 & AWS SDK Client for DynamoDB, used for interacting with Amazon DynamoDB from Node.js applications. \\ \hline
 \end{longtable}
 
 
@@ -55,25 +55,34 @@ zod & \textasciicircum 3.23.8 & A TypeScript-first schema validation library for
 \label{table:lint_testing_dependencies}
 \hline
 \rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \ \hline
+\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\
 \endfirsthead
 \hline
 \rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \ \hline
+\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\
 \endhead
 \endfoot
 \hline
 \endlastfoot
-fast-check & \textasciicircum 3.23.1 & A property-based testing library for generating random test cases and checking properties of your code. \ \hline
-jest-fuzz & \textasciicircum 0.1.2 & A fuzz testing library for Jest, used to test for unexpected edge cases. \ \hline
-@types/jest & \textasciicircum 29.5.14 & TypeScript definition for Jest enables type safety in Jest test cases. \ \hline
-@typescript-eslint/eslint-plugin & \textasciicircum 8.13.0 & ESLint plugin that provides TypeScript-specific linting rules. \ \hline
-aws-sdk-client-mock & \textasciicircum 4.1.0 & A mocking library for the AWS SDK, used in unit tests to mock AWS services like DynamoDB. \ \hline
-eslint & \textasciicircum 9.14.0 & A powerful linter for JavaScript and TypeScript that helps identify and fix coding issues. \ \hline
-eslint-plugin-security-node & \textasciicircum 1.1.4 & An ESLint plugin that identifies potential security vulnerabilities in Node.js code. \ \hline
-jest & \textasciicircum 29.7.0 & A JavaScript testing framework that supports unit tests, integration tests, and snapshot testing. \ \hline
-ts-jest & \textasciicircum 29.2.5 & A Jest transformer allows Jest to run TypeScript code directly. \ \hline
-typescript-eslint & \textasciicircum 8.13.0 & A set of tools that allow ESLint to analyse TypeScript code and enforce best practices. \ \hline
+fast-check & \textasciicircum 3.23.1 & A property-based testing library for generating random test cases and checking properties of your code. \\
+jest-fuzz & \textasciicircum 0.1.2 & A fuzz testing library for Jest, used to test for unexpected edge cases. \\
+\hline
+@types/jest & \textasciicircum 29.5.14 & TypeScript definition for Jest enables type safety in Jest test cases. \\
+\hline
+@typescript-eslint/eslint-plugin & \textasciicircum 8.13.0 & ESLint plugin that provides TypeScript-specific linting rules. \\
+\hline
+aws-sdk-client-mock & \textasciicircum 4.1.0 & A mocking library for the AWS SDK, used in unit tests to mock AWS services like DynamoDB. \\
+\hline
+eslint & \textasciicircum 9.14.0 & A powerful linter for JavaScript and TypeScript that helps identify and fix coding issues. \\
+\hline
+eslint-plugin-security-node & \textasciicircum 1.1.4 & An ESLint plugin that identifies potential security vulnerabilities in Node.js code. \\
+\hline
+jest & \textasciicircum 29.7.0 & A JavaScript testing framework that supports unit tests, integration tests, and snapshot testing. \\
+\hline
+ts-jest & \textasciicircum 29.2.5 & A Jest transformer allows Jest to run TypeScript code directly. \\
+\hline
+typescript-eslint & \textasciicircum 8.13.0 & A set of tools that allow ESLint to analyse TypeScript code and enforce best practices. \\
+\hline
 \end{longtable}
 
 \subsection{Infrastructure as Code}
