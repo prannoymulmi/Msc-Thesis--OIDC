@@ -35,11 +35,13 @@ LocalStack is a tool that allows developers to simulate AWS services locally, ma
 \end{itemize}
 
 \section{Architecture}
-After deciding to use AWS as the cloud provider in Section \ref{sec:cloud_provider}, the application's design is centred around AWS services such as API Gateway, Lambda Servers, and DynamoDB for the database. In this section, we will delve into the chosen services in detail. The deployment of the PKCE (Proof Key for Code Exchange) application for two tenants necessitates a database to store user data. For this project, we have evaluated two different approaches for a multi-tenant setup: one involving a single database with data isolation and another involving multiple databases per tenant (Refer to Figures \ref{fig:deployment_diagram_single} and \ref{fig:deployment_diagram_dual}).
+After deciding to use AWS as the cloud provider in Section \ref{sec:cloud_provider}, the application's design is centred around AWS services such as API Gateway, Lambda Servers, and DynamoDB for the database. In this section, we will delve into the chosen services in detail. The deployment of the PKCE (Proof Key for Code Exchange) application for two tenants necessitates a database to store user data. For this project, we have evaluated two different approaches for a multi-tenant setup: one involving a single database with data isolation and another involving multiple databases per tenant. 
+
+Figure \ref{fig:deployment_diagram_single} illustrates a deployment architecture in which a single database accommodates multiple tenants, storing all associated tenant and user-related data within this centralized system. Conversely, Figure \ref{fig:deployment_diagram_dual} illustrates the utilisation of databases for each tenant, whereby user data is stored in individual tenant databases, and a catalogue database maintains the records of these tenant databases. In this multi-database configuration, user data is segregated by the tenant, while the catalogue database facilitates the organisation of tenant data, thereby ensuring a clear separation of data.
 
 
 
-In \cite{niemela2023implementing}, the advantages and disadvantages of single and multiple databases per tenant are discussed. It argues that the multi-tenant application with multiple databases balances performance and security. This approach allows the databases to scale according to the needs of each tenant. It provides the capability to implement granular security measures such as encrypting specific data, maintaining access controls, and generating clear access logs. These features reinforce the data model's Confidentiality, Integrity, and Availability (CIA) principle. However, this approach also has drawbacks compared to its single database counterpart. Managing multiple databases introduces overhead and increases the likelihood of misconfiguration, as each database operates independently. Despite the additional configuration and maintenance complexity, the approach with multiple databases is a viable solution for the application. The security benefits of using multiple databases are as follows:
+In \cite{niemela2023implementing}, the advantages and disadvantages of single and multiple databases per tenant are discussed. It argues that the multi-tenant application with multiple databases balances performance and security. This approach allows the databases to scale according to the needs of each tenant. It provides the capability to implement granular security measures such as encrypting specific data, maintaining access controls, and generating clear access logs. These features reinforce the data model's Confidentiality, Integrity, and Availability (CIA) principle. However, this approach also has drawbacks compared to its single database counterpart. Managing multiple databases introduces overhead and increases the likelihood of misconfiguration, as each database operates independently. Despite the additional configuration and maintenance complexity, the approach with multiple databases is a viable solution for the application. The security benefits of using the multi-databases are as follows:
 
 \begin{itemize}
     \item \textbf{Isolation of Sensitive Data}: Unlike a single database for a multi-tenant application, the data are isolated from each other entirely. Should a security vulnerability be discovered, the damage will be limited to one data set rather than exposing all sensitive information. 
@@ -53,16 +55,17 @@ In \cite{niemela2023implementing}, the advantages and disadvantages of single an
 \begin{figure}[h!]
 \label{fig:deployment_diagram_single}
 \centering
-\includegraphics[width=\textwidth, height=200px]{pics/deployment_diagram_single.png}
+\includegraphics[width=\textwidth, height=250px]{pics/deployment_diagram_single.pdf}
 \caption{Deployment diagram with Single Database}
 \end{figure}
 
 \begin{figure}[h!]
 \centering
 \label{fig:deployment_diagram_dual}
-\includegraphics[width=\textwidth, height=200px]{pics/deployment_diagram.dual.png}
+\includegraphics[width=\textwidth, height=250px]{pics/deployment_diagram_multi.pdf}
 \caption{Deployment diagram with Multi Database}
 \end{figure}
+
 
 \subsection{Overview of the Deployment Architecture}
 This section discusses the AWS services used to implement the PKCE flow for two tenants with multiple databases (See Figure \ref{fig:deployment_diagram_dual}). The deployment architecture consists of the following main components:
