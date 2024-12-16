@@ -113,6 +113,39 @@
 
 \renewcommand{\thechapter}{\Roman{chapter}}
 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\colorlet{backcolour}{gray!10}
+\definecolor{constcolor}{RGB}{59,130,246} % Blue for 'const'
+\definecolor{exportcolor}{RGB}{168,85,247} % Purple for 'export'
+
+\lstset{
+    emph={const}, emphstyle={\color{constcolor}}, % Blue for const
+    emph={[2]export}, emphstyle={[2]\color{exportcolor}}, % Purple for export
+}
+
+\lstdefinestyle{typescript}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    morekeywords={export,const}, % Add export and const as keywords
+    language=JavaScript % TypeScript is not directly supported, but JavaScript is close enough
+}
+
 \pagestyle{plain}
 \include{abstract}
 \include{preface}

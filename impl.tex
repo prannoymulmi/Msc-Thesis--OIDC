@@ -111,6 +111,8 @@ resource "aws_api_gateway_rest_api" "oidc_api" {
 In Chapter \ref{chap:threat_model}, a range of security implementations have been strategically introduced to address and mitigate several identified threats (Refer to Table \ref{table:risk_assessment}). Each of these measures is designed to strengthen overall security by minimizing vulnerabilities and reducing the potential impact of malicious activities. These proactive steps ensure that critical systems and sensitive data are better protected against evolving cybersecurity risks, ultimately enhancing the resilience and reliability of the infrastructure. 
 
 \begin{longtable}{|p{5cm}|p{10cm}|}
+    \caption{Summary of the Security Implmentations}
+    \label{table:sec_impl}
 \hline
 \rowcolor{grey!15}
 \textbf{Threat} & \textbf{Mitigation} \\
@@ -128,10 +130,8 @@ Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
     \item Implemented Input validation and sanitization using Zod (See Appendix \ref{apendix:input_val})
     \item The code verifier and code challenge has a minimum length of 43 to a maximum of 128, as specified by RFC 7636.
     \item Usage of lint (eslint-plugin-security-node), which checks the code quality and detects vulnerabilities in code.
-    \item Fuzz test that inputs various random strings to detect unusual behaviour of the system.
+    
 \end{itemize}
-\hline
-Denial of Service (DoS) & Apply rate limiting of the lambdas by using reserved concurrency, which ensures no more than the specified number of instances can run at the same time, helping to protect downstream services from being overwhelmed by traffic spikes or malicious activity \citep{lamda_reserved}.\\
 \hline
  Unauthorised Access & Least Privilege Principle is where the lambdas are allowed only specific roles and policies. For example, the authorise lambda has read-write to the database, whereas the token lambda only has write. This is achieved by using IAM policies (Refer to Appendix \ref{apendix:least_privilidge}). Also access logs are saved using Cloudtrail giving a possibility to audit different accesses.\\
 \hline
@@ -174,6 +174,7 @@ Manual tests were conducted on the \textbf{/authorize} endpoint to assess its fu
     \end{figure}
 
     \item \textbf{Authentication Failures:} Tested various failure scenarios to ensure the system handles them securely and as expected:
+    \label{subsec:auth_failure_tests}
     \begin{itemize}
         \item \textbf{Invalid Credentials:} Attempted authentication with incorrect tenant credentials to confirm that the system denies access and provides appropriate error responses.
         
@@ -264,6 +265,95 @@ Manual tests were also conducted on the \textbf{/token} endpoint to verify its f
 
 These tests validated the \textbf{/token} endpoint's ability to securely handle both successful and invalid requests, ensuring proper error handling for edge cases and enforcement of PKCE requirements.
 
+\subsubsection{Timing Safe Function Test}
+\label{sec:timing_test}
+Table \ref{table:sec_impl} emphasises that the timing-safe functions of Argon2id were employed to compare hashes, mitigating the risk of side-channel attacks, specifically timing attacks. To verify the robustness of these functions against information leakage, a test was conducted involving 100 timing measurements for two scenarios: hash comparisons using random, incorrect passwords and comparisons with the correct password. The truncated results of these measurements are presented in Tables \ref{table:non_matching_pass_res} and \ref{table:matching_pass_res}.
+
+The recorded timings show slight variations across runs due to inherent measurement noise. Pearson's $\chi^2$ test (chi-squared) was conducted to assess whether this noise could lead to a side-channel attack. As supported by \cite{chisquare}, this statistical method effectively evaluates if the system's noise is sufficient to prevent timing-related information leakage. The $\chi^2$ test compares the observed timing distribution against an expected random distribution, quantitatively measuring the system's resilience to timing attacks. This approach offers a more rigorous and statistically grounded assessment of the system's security against potential timing-based vulnerabilities.
+
+To perform the $\chi^2$ test, the following null and alternative hypotheses are set:
+\begin{itemize}
+    \item \textbf{Null Hypothesis} - H$0$: $\mu1 = \mu2$ (Where the mean of sample 1 equals the mean of sample 2).
+    \item \textbf{Alternate Hypothesis} - H$1$: $\mu1 \neq \mu2$  (Where two sample means are different).   
+    \item \textbf{Statistical Significance Level} - An Aplpha ($\alpha$) of 5\% or 0.05 is chosen, which, if the p-value is less than this value, the null hypothesis will be rejected. 
+\end{itemize}
+
+Listing \ref{lst:chisqrd} shows the function used to calculate the chi-square and the p-value for the given samples. Using the function below, a \textbf{p-value} of 0.98 is calculated, which leads to the results not rejecting the null hypothesis and, therefore, shows that the chances of information leakage due to timing attacks are low and can mitigate such side-channel attacks.
+
+\newpage
+\begin{lstlisting}[style=typescript,caption=chi-squared calculation ,label=lst:chisqrd]
+const calculateChiSquare = (sample1: number[], sample2: number[]) => {
+    const degreesOfFreedom = sample1.length - 1;
+    const chiSquared = sample1.reduce((sum, obs, i) => {
+        const exp = sample2[i];
+        return sum + Math.pow(obs - exp, 2) / exp;
+    }, 0);
+    const pValue = 1 - jstat.chisquare.cdf(chiSquared, degreesOfFreedom);
+    return {chiSquared, pValue, degreesOfFreedom};
+}
+\end{lstlisting}
+
+\begin{longtable}{|c|c|}
+\caption{Truncated timing samples for the hash comparison for incorrect password}
+\label{table:non_matching_pass_res}
+\hline
+\rowcolor{grey!15}
+\textbf{Index} & \textbf{Values}      \\ \hline
+\endfirsthead
+\hline
+\rowcolor{grey!15}
+\textbf{Index} & \textbf{Values}      \\ \hline
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+0              & 184.1270410000002    \\ \hline
+1              & 161.72745900000018   \\ \hline
+2              & 157.79916699999967   \\ \hline
+3              & 158.16233299999976   \\ \hline
+4              & 152.1837919999998    \\ \hline
+5              & 149.70191599999998   \\ \hline
+6              & 154.48154099999965   \\ \hline
+7              & 150.59158300000036   \\ \hline
+8              & 149.33474999999999   \\ \hline
+9              & 161.6323339999999    \\ \hline
+10             & 161.06804199999988   \\ \hline
+\multicolumn{2}{|c|}{...}             \\ \hline
+\end{longtable}
+
+
+
+\begin{longtable}{|c|c|}
+\caption{Truncated timing samples for the hash comparison for correct password}
+\label{table:matching_pass_res}
+\hline
+\rowcolor{grey!15}
+\textbf{Index} & \textbf{Values}      \\ \hline
+\endfirsthead
+\hline
+\rowcolor{grey!15}
+\textbf{Index} & \textbf{Values}      \\ \hline
+\endhead
+\hline
+\endfoot
+\hline
+\endlastfoot
+0              & 142.1068750000013    \\ \hline
+1              & 150.20716700000048   \\ \hline
+2              & 152.9330000000009    \\ \hline
+3              & 151.93745900000067   \\ \hline
+4              & 148.29395800000202   \\ \hline
+5              & 147.69979199999943   \\ \hline
+6              & 148.17979200000264   \\ \hline
+7              & 149.0918329999986    \\ \hline
+8              & 149.97220899999957   \\ \hline
+9              & 150.53283299999748   \\ \hline
+10             & 150.40620800000033   \\ \hline
+\multicolumn{2}{|c|}{...}             \\ \hline
+\end{longtable}
+
+
 \subsection{Automated Tests And Scans}
 In addition to manual tests, various automated tests and security scans were conducted to ensure the application's robustness, security, and maintainability. The automated testing process included:
 
@@ -295,7 +385,7 @@ In addition to manual tests, various automated tests and security scans were con
     Security scans were employed to identify potential vulnerabilities and maintain best practices:
     \begin{itemize}
         \item \textbf{Code Linting with ESLint:} 
-        ESLint was utlised to identify code smells and ensure the codebase adhered to clean coding principles and established security best practices. Linting is crucial in minimizing the risk of introducing vulnerabilities by enforcing consistent code quality. The eslint-plugin-security-node plugin was used to enhance this process, which proved to be highly effective in detecting common security issues and code smells. Its integration ensured a more robust and secure codebase by proactively addressing potential weaknesses. Figure \ref{fig:lint_results} depicts the results of some code smells detected using the linter. 
+        ESLint was utilised to identify code smells and ensure the codebase adhered to clean coding principles and established security best practices. Linting is crucial in minimizing the risk of introducing vulnerabilities by enforcing consistent code quality. The eslint-plugin-security-node plugin was used to enhance this process, which proved to be highly effective in detecting common security issues and code smells. Its integration ensured a more robust and secure codebase by proactively addressing potential weaknesses. Figure \ref{fig:lint_results} depicts the results of some code smells detected using the linter. 
 
                 \begin{figure}[!htbp]
                      \centering
@@ -319,8 +409,8 @@ In addition to manual tests, various automated tests and security scans were con
                     \label{fig:prowler_results}
                 \end{figure}
 
-        \newpage
-        In addition to the standard security checks, Prowler extends its functionality to compliance auditing. It supports testing against various industry standards, offering organisations a way to assess and strengthen their compliance posture. In this context, Prowler was utlised to perform both cloud infrastructure scans and compliance checks for ISO 27001:2013 (refer to Figure \ref{fig:prowler_iso_results}) and GDPR (refer to Figure \ref{fig:prowler_gdpr_results}). These compliance scans are particularly valuable for organisations that adhere to regulatory requirements or maintain certifications, as they provide a comprehensive view of potential gaps and actionable insights for achieving compliance.
+        
+        In addition to the standard security checks, Prowler extends its functionality to compliance auditing. It supports testing against various industry standards, offering organisations a way to assess and strengthen their compliance posture. In this context, Prowler was utilised to perform both cloud infrastructure scans and compliance checks for ISO 27001:2013 (refer to Figure \ref{fig:prowler_iso_results}) and GDPR (refer to Figure \ref{fig:prowler_gdpr_results}). These compliance scans are particularly valuable for organisations that adhere to regulatory requirements or maintain certifications, as they provide a comprehensive view of potential gaps and actionable insights for achieving compliance.
         
                 \begin{figure}[!htbp]
                      \centering
@@ -341,7 +431,7 @@ In addition to manual tests, various automated tests and security scans were con
                 \end{figure}
         By integrating security scanning with compliance testing, Prowler is a powerful tool for proactively securing cloud environments and aligning with best practices.        
     \end{itemize}
-    \item \textbf{Static Code Analysis with Snyk:} Snyk is utlised in this project as a static analysis tool to detect vulnerabilities, improve code quality, and ensure secure development practices. It complements \texttt{ESLint} by focusing on security flaws in business logic and Infrastructure-as-Code (IaC). While \texttt{ESLint} enforces coding standards and detects bugs in JavaScript, Snyk extends the scope by scanning for vulnerabilities in dependencies, IaC configurations, and container images. This integration ensures both high-quality code and robust security measures. Figure \ref{fig:snyk_results} illustrates the results of Snyk's analysis.
+    \item \textbf{Static Code Analysis with Snyk:} Snyk is utilised in this project as a static analysis tool to detect vulnerabilities, improve code quality, and ensure secure development practices. It complements \texttt{ESLint} by focusing on security flaws in business logic and Infrastructure-as-Code (IaC). While \texttt{ESLint} enforces coding standards and detects bugs in JavaScript, Snyk extends the scope by scanning for vulnerabilities in dependencies, IaC configurations, and container images. This integration ensures both high-quality code and robust security measures. Figure \ref{fig:snyk_results} illustrates the results of Snyk's analysis.
     
 
     \begin{figure}[!htbp]
@@ -353,6 +443,31 @@ In addition to manual tests, various automated tests and security scans were con
                     \label{fig:snyk_results}
                 \end{figure}
 \end{enumerate}
+\subsection{Test Summary}
+\begin{longtable}{|p{5cm}|p{10cm}|}
+\hline
+\rowcolor{grey!15}
+\textbf{Threat} & \textbf{Test} \\
+\hline
+\endhead
+\hline
+\endfoot
+Cloud Misconfigurations &  Figures \ref{fig:prowler_results} and \ref{fig:snyk_results} present test results from Prowler and Snyk that identified several cloud misconfigurations. These tools revealed various configuration improvements that could threaten this application, providing valuable information. \\
+\hline
+Cross-Tenant Data Leakage & Integration tests were conducted using the tenant1 domain name to access user data from tenant 2. The tenant1 domain name limits the access to data only from tenant one. Listing \ref{apendix:cross_tenant_data_integ_test} shows the tests using the client ID of tenant two and using user credentials that belong to tenant 1. These tests both resulted in a denial of the request.\\
+\hline
+Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
+    \item Unit tests were carried out where inputs of length less than 43 and more than 128 were provided. These tests rejected the requests that stood outside this range. For the implementation code, refer to Appendix \ref{apendix:rfc7636_test}.
+    \item Fuzz test that inputs various random strings to detect unusual behaviour of the system. Refer to Appendix \ref{apendix:fuzz_test} to see the implementation of the fuzz tests that use different random inputs on the authorise endpoint.
+\end{itemize}\\
+\hline
+ Unauthorised Access & Manual testing, and unit testing have been conducted where using expired authorisation code, invalid credentials, use of invalid client\_id, and invalid code\_verifier has been tested. During all the tests, access was denied, and neither the authorisation code nor the access token was issued. Refer to the Manual Testing Section \ref{subsec:auth_failure_tests} to see the results for denied access for the mentioned cases.\\
+\hline
+PKCE Downgrade Attack & To test the PKCE Downgrade attack, a manual authorisation request was created without a code\_challenge. During this test, the authorisation server rejected all the requests without hashed code\_challenge or missing code\_verifier. Refer to Figure \ref{fig:authorize_tenant_1_without_code_challenge} where a PKCE Downgrade attack without code\_challenge was executed.\\
+\hline
+Timing Attacks & A test recording the compute time to verify 100 samples of wrong passwords and 100 samples of correct passwords were recorded (Refer to Appendix \ref{apendix:timing_test} for the code). A Pearson’s $X^{2}$ test was then performed to assess leakage detection with the two sample sets. Refer to Section \ref{sec:timing_test} for the statistical test performed and the results.\\
+\hline
+\end{longtable}
 
 \section{Results} 
 
