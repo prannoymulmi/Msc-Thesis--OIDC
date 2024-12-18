@@ -1,5 +1,5 @@
 \newcommand{\abstractsection}{
-    \vspace{-17em}
+    \vspace{-5em}
     \begin{center}
     \huge\textbf{Abstract}
     \end{center}
@@ -8,5 +8,13 @@
 
 \begin{abstract}
 \abstractsection
+OpenID Connect (OIDC) has emerged as a widely adopted protocol for secure authentication and authorisation, offering robust identity management built on the foundation of OAuth 2.0. The evolution of cloud computing has shifted the landscape from self-hosted OpenID providers to cloud-based implementations. These cloud-based OIDC solutions present significant advantages in terms of scalability and cost-efficiency. However, they also confront critical security challenges, including token security, protection of Identity Providers, and concerns related to network vulnerabilities, all of which necessitate comprehensive security measures.
 
+Previous studies have concentrated on the security risks of OIDC and cloud applications in isolation without considering their integration. The combination of OpenID Providers operating within cloud-based environments could introduce unintended threats, potentially leading to data leakage and financial losses. To assess the risks associated with OIDC and cloud technology, the threats were evaluated using STRIDE threat modelling and a risk matrix, highlighting the impacts of identified threats. Mitigation strategies for these threats were developed, followed by implementing a prototype incorporating the security measures in a simulated local version of AWS utilizing LocalStack.
+
+Key findings reveal vulnerabilities associated with cloud misconfiguration, risks of information leakage, and implications of non-compliance with GDPR. The research identifies specific concerns within cloud environments, where the dangers of cloud misconfiguration and non-compliance with GDPR pose significant threats to OpenID Connect protocols operating in the cloud.
+
+
+\noindent \textbf{Keywords}: OpenID Connect, cloud computing, OIDC risks
 \end{abstract}
+

@@ -78,6 +78,8 @@ eslint & \textasciicircum 9.14.0 & A powerful linter for JavaScript and TypeScri
 \hline
 eslint-plugin-security-node & \textasciicircum 1.1.4 & An ESLint plugin that identifies potential security vulnerabilities in Node.js code. \\
 \hline
+jstat & \textasciicircum 1.9.6 & A JavaScript statistics library that can be used for different statistical calculations, like mean, standard deviations, t-test, and chi-squared tests. \\
+\hline
 jest & \textasciicircum 29.7.0 & A JavaScript testing framework that supports unit tests, integration tests, and snapshot testing. \\
 \hline
 ts-jest & \textasciicircum 29.2.5 & A Jest transformer allows Jest to run TypeScript code directly. \\
@@ -278,7 +280,7 @@ To perform the $\chi^2$ test, the following null and alternative hypotheses are 
     \item \textbf{Statistical Significance Level} - An Aplpha ($\alpha$) of 5\% or 0.05 is chosen, which, if the p-value is less than this value, the null hypothesis will be rejected. 
 \end{itemize}
 
-Listing \ref{lst:chisqrd} shows the function used to calculate the chi-square and the p-value for the given samples. Using the function below, a \textbf{p-value} of 0.98 is calculated, which leads to the results not rejecting the null hypothesis and, therefore, shows that the chances of information leakage due to timing attacks are low and can mitigate such side-channel attacks.
+The function presented in Listing \ref{lst:chisqrd} is utilised to compute the chi-square statistic and the corresponding p-value for the provided samples. By applying this function, a p-value of 0.98 is obtained. This result indicates that we do not reject the null hypothesis, suggesting that the likelihood of information leakage due to timing attacks is minimal, thereby offering a means to mitigate such side-channel attacks.
 
 \newpage
 \begin{lstlisting}[style=typescript,caption=chi-squared calculation ,label=lst:chisqrd]
@@ -294,7 +296,7 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 \end{lstlisting}
 
 \begin{longtable}{|c|c|}
-\caption{Truncated timing samples for the hash comparison for incorrect password}
+\caption{Truncated timing samples for the hash comparison for an incorrect password in ms}
 \label{table:non_matching_pass_res}
 \hline
 \rowcolor{grey!15}
@@ -325,7 +327,7 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 
 
 \begin{longtable}{|c|c|}
-\caption{Truncated timing samples for the hash comparison for correct password}
+\caption{Truncated timing samples for the hash comparison for a correct password in ms}
 \label{table:matching_pass_res}
 \hline
 \rowcolor{grey!15}
@@ -443,6 +445,8 @@ In addition to manual tests, various automated tests and security scans were con
                     \label{fig:snyk_results}
                 \end{figure}
 \end{enumerate}
+
+\newpage
 \subsection{Test Summary}
 \begin{longtable}{|p{5cm}|p{10cm}|}
 \hline
