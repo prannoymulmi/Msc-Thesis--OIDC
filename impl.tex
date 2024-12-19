@@ -269,7 +269,7 @@ These tests validated the \textbf{/token} endpoint's ability to securely handle 
 
 \subsubsection{Timing Safe Function Test}
 \label{sec:timing_test}
-Table \ref{table:sec_impl} emphasises that the timing-safe functions of Argon2id were employed to compare hashes, mitigating the risk of side-channel attacks, specifically timing attacks. To verify the robustness of these functions against information leakage, a test was conducted involving 100 timing measurements for two scenarios: hash comparisons using random, incorrect passwords and comparisons with the correct password. The truncated results of these measurements are presented in Tables \ref{table:non_matching_pass_res} and \ref{table:matching_pass_res}.
+Table \ref{table:sec_impl} emphasises that the timing-safe functions of Argon2id were employed to compare hashes, mitigating the risk of side-channel attacks, specifically timing attacks. To verify the robustness of these functions against information leakage, a test was conducted involving 1000 timing measurements for two scenarios: hash comparisons using random, incorrect passwords and comparisons with the correct password. Appendix \ref{apendix:timing_test} presents the code that was executed to collect the timing samples as well as calculate the p-value. The truncated results of these measurements are presented in Tables \ref{table:non_matching_pass_res} and \ref{table:matching_pass_res}.
 
 The recorded timings show slight variations across runs due to inherent measurement noise. Pearson's $\chi^2$ test (chi-squared) was conducted to assess whether this noise could lead to a side-channel attack. As supported by \cite{chisquare}, this statistical method effectively evaluates if the system's noise is sufficient to prevent timing-related information leakage. The $\chi^2$ test compares the observed timing distribution against an expected random distribution, quantitatively measuring the system's resilience to timing attacks. This approach offers a more rigorous and statistically grounded assessment of the system's security against potential timing-based vulnerabilities.
 
@@ -469,7 +469,7 @@ Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
 \hline
 PKCE Downgrade Attack & To test the PKCE Downgrade attack, a manual authorisation request was created without a code\_challenge. During this test, the authorisation server rejected all the requests without hashed code\_challenge or missing code\_verifier. Refer to Figure \ref{fig:authorize_tenant_1_without_code_challenge} where a PKCE Downgrade attack without code\_challenge was executed.\\
 \hline
-Timing Attacks & A test recording the compute time to verify 100 samples of wrong passwords and 100 samples of correct passwords were recorded (Refer to Appendix \ref{apendix:timing_test} for the code). A Pearson’s $X^{2}$ test was then performed to assess leakage detection with the two sample sets. Refer to Section \ref{sec:timing_test} for the statistical test performed and the results.\\
+Timing Attacks & A test recording the compute time to verify 1000 samples of wrong passwords and 1000 samples of correct passwords were recorded. A Pearson’s $X^{2}$ test was then performed to assess leakage detection with the two sample sets. Refer to Section \ref{sec:timing_test} for the statistical test performed and the results.\\
 \hline
 \end{longtable}
 

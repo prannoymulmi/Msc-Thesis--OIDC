@@ -1,20 +1,16 @@
 \newcommand{\abstractsection}{
-    \vspace{-5em}
+    \vspace{-10em}
     \begin{center}
     \huge\textbf{Abstract}
     \end{center}
-    \vspace{1em}
 }
 
 \begin{abstract}
 \abstractsection
-OpenID Connect (OIDC) has emerged as a widely adopted protocol for secure authentication and authorisation, offering robust identity management built on the foundation of OAuth 2.0. The evolution of cloud computing has shifted the landscape from self-hosted OpenID providers to cloud-based implementations. These cloud-based OIDC solutions present significant advantages in terms of scalability and cost-efficiency. However, they also confront critical security challenges, including token security, protection of Identity Providers, and concerns related to network vulnerabilities, all of which necessitate comprehensive security measures.
+OpenID Connect (OIDC), built on OAuth 2.0, is one of the popular protocol for authentication and authorisation in cloud environments. While cloud-based OIDC implementations offer scalability benefits, they face security challenges, including token security and Identity Provider protection. The integration of OIDC with cloud environments presents unique security risks that are evaluated using STRIDE threat modelling and risk matrix analysis. The risk analysis conducts a qualitative analysis on the threats on OIDC and cloud arranging them them in risk levels, taking the CAPEC database as a reference to assess the impact of the risk.
 
-Previous studies have concentrated on the security risks of OIDC and cloud applications in isolation without considering their integration. The combination of OpenID Providers operating within cloud-based environments could introduce unintended threats, potentially leading to data leakage and financial losses. To assess the risks associated with OIDC and cloud technology, the threats were evaluated using STRIDE threat modelling and a risk matrix, highlighting the impacts of identified threats. Mitigation strategies for these threats were developed, followed by implementing a prototype incorporating the security measures in a simulated local version of AWS utilizing LocalStack.
-
-Key findings reveal vulnerabilities associated with cloud misconfiguration, risks of information leakage, and implications of non-compliance with GDPR. The research identifies specific concerns within cloud environments, where the dangers of cloud misconfiguration and non-compliance with GDPR pose significant threats to OpenID Connect protocols operating in the cloud.
-
-
-\noindent \textbf{Keywords}: OpenID Connect, cloud computing, OIDC risks
+The assessment revealed significant vulnerabilities regarding cloud misconfiguration risks, information leakage potential, and GDPR compliance challenges. A prototype implementing security measures was developed using LocalStack to simulate the AWS environment, demonstrating practical mitigation strategies for these identified threats and testing the effectiveness of the mitigations. To validate the effectiveness of the mitigations, manual tests, automatic tests and Person's $\chi^2$  tests were conducted to test out information leakage during hash computation.
+\newline\newline
+\noindent \textbf{Keywords}: OpenID Connect, cloud computing, OIDC risks.
 \end{abstract}
 
