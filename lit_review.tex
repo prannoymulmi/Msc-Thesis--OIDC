@@ -134,12 +134,12 @@ The tokens are stored and handled directly in the client application or within t
 If the client applications are compromised and the tokens are exposed, this could lead to unauthorised access.
 The valuable tokens can be intercepted using different attacks, like Man-in-the-Middle Attacks and Cross-Site Scripting, allowing the valid tokens to be replayed.
 Implicit Flow provides easy access to authentication tokens for client-side applications and has significant security challenges.
-It is crucial for organisations to keep ownership when designing applications employing this flow, proactive steps towards appropriate security measures are needed. Alternatively, opting out for more secure choices is an option.
+It is crucial for organisations to keep ownership when designing applications employing this flow; proactive steps towards appropriate security measures are needed. Alternatively, opting out for more secure choices is an option.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth, height=320px]{pics/implicit_flow.pdf}
-\caption{OIDC Implicit Flow}
+\caption{Sequence Diagram for OIDC Implicit Flow}
 \label{fig:implicit_flow}
 \end{figure}
 
@@ -156,7 +156,7 @@ Given the benefits of this flow, this design is still not without potential risk
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth, height=450px]{pics/authorization_code.pdf}
-\caption{Authorisation Code Flow}
+\caption{Sequence Diagram for Authorisation Code Flow}
 \label{fig:authorisation_flow}
 \end{figure}
 
