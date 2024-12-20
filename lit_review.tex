@@ -138,9 +138,9 @@ It is crucial for organisations to keep ownership when designing applications em
 
 \begin{figure}[h!]
 \centering
-\label{fig:implicit_flow}
 \includegraphics[width=\textwidth, height=320px]{pics/implicit_flow.pdf}
 \caption{OIDC Implicit Flow}
+\label{fig:implicit_flow}
 \end{figure}
 
 \subsection{Authorisation Code Flow}
@@ -155,9 +155,9 @@ Given the benefits of this flow, this design is still not without potential risk
 
 \begin{figure}[h!]
 \centering
-\label{fig:authorisation_flow}
 \includegraphics[width=\textwidth, height=450px]{pics/authorization_code.pdf}
 \caption{Authorisation Code Flow}
+\label{fig:authorisation_flow}
 \end{figure}
 
 \newpage
@@ -167,10 +167,9 @@ Proof Key for Code Exchange (PKCE) flow is an improvement to the authorisation c
 
 
 \begin{figure}[h!]
-
-\label{fig:pkce_flow}
 \includegraphics[height=420px, center]{pics/pkce.pdf}
 \caption{Sequence Diagram for PKCE Code Flow}
+\label{fig:pkce_flow}
 \end{figure}
 
 PKCE mitigates this risk by adding two steps: creating a code verifier and the code challenge.
@@ -315,14 +314,22 @@ Therefore, further analysis of this topic would provide a better understanding o
     \end{itemize}
 \end{comment}
 
-\newpage
 \section{Related Work}
 
-Table \ref{table:further_reading} mentions the primary references that are used in this thesis to understand the current landscape of threats looming in OIDC and cloud computing.  
+The foundation of this research builds upon several significant works in cloud computing security and identity management. \cite{cloud_shared_resp} provides a comprehensive overview of security concerns in multi-cloud environments, with particular emphasis on identity and access management vulnerability management and its mitigation strategies. Whilst this work offers valuable insights for multi-cloud implementations, it notably lacks discussion on misconfiguration issues and their implications, representing a significant risk in cloud computing environments.
+
+\cite{oidc_attacks} presents a detailed security analysis of OpenID Connect implementations. This master's thesis presents a comprehensive security analysis of OIDC implementations, demonstrating analytical depth that effectively addresses security concerns by examining attack vectors in areas such as token-based and OpenID provider vulnerabilities. The research's strength lies in explaining the vulnerabilities with real-life examples. The tests mainly focused on the authorisation code and implicit flow, while they neglected the PKCE flow.
+
+\cite{Mishra2019-uh} contributes a thorough examination of potential security challenges across various cloud models (detailed in Section \ref{sec:cloud_model}). This book chapter provides a detailed presentation of the potential security challenges in the various cloud models. For a comprehensive understanding of these models, please refer to Section \ref{sec:cloud_model}. The chapter addresses traditional network-specific threats like DNS attacks, Cookie Poisoning, and Cross-Site Scripting (XSS). It offers valuable insights into cloud vulnerabilities, enhancing the knowledge of existing cloud threats. The author discusses how to design secure cloud systems using the SecSDN-cloud framework. However,  the chapter does not address the potential downsides of using SecSDN-cloud, such as compatibility issues with popular cloud providers like AWS, scalability concerns, and how these vulnerabilities specifically manifest in modern cloud architectures.
+
+The official OpenID Connect 1.0 documentation \cite{openid_docs} serves as an authoritative reference, comprehensively covering all flows, security considerations, privacy implications, and security best practices. Complementing this, \cite{sec_privacy_cloud} presents the security risks related to privacy issues and the specific technologies in cloud computing to mitigate them. For instance, topics like attribute-based encryption, access control, and multi-tenant setup are discussed and analysed.
+
+These works  provide a strong foundation for understanding the current state of cloud and OIDC security risks while highlighting areas requiring further investigation and development. 
 
 
-
-\begingroup
+\begin{comment}
+Table \ref{table:further_reading} mentions the primary references that are used in this thesis to understand the current landscape of threats looming in OIDC and cloud computing. 
+    \begingroup
 \centering
 \setlength{\tabcolsep}{6.5pt} % Default value: 6pt)
 \begin{longtable}{|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}p{5cm}|>{\raggedright\arraybackslash}p{9cm}|>}
@@ -352,6 +359,8 @@ Table \ref{table:further_reading} mentions the primary references that are used 
 
 \end{longtable}
 \endgroup
+\end{comment}
+
 
 \section{Conclusion}
 The existing body of research needs to address the specific security challenges that cloud environments pose.

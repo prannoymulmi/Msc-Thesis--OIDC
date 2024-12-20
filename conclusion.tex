@@ -2,32 +2,20 @@
 
 This thesis analyses the security risks associated with implementing and using the OIDC protocol in cloud-based applications. Using a structured methodology, including threat modelling, risk assessment, and prototype development, the investigation has highlighted vital vulnerabilities and proposed mitigation strategies to enhance the security of OIDC in cloud environments.
 
-The findings emphasise that OIDC is a robust and widely adopted protocol for authentication and authorisation. However, its security is highly dependent on proper implementation, configuration, and best practices. Several critical risks were identified, including replay attacks, signature manipulation, malicious endpoint exploitation, and PKCE downgrade attacks. Moreover, the shared responsibility model inherent to cloud computing introduces additional challenges, such as misconfigurations in Identity and Access Management (IAM) policies.
+The findings emphasise that OIDC is a robust and widely adopted protocol for authentication and authorisation. However, its security depends on proper implementation, configuration, and best practices. Several critical risks were identified, including replay attacks, signature manipulation, malicious endpoint exploitation, and PKCE downgrade attacks. Moreover, the shared responsibility model inherent to cloud computing introduces additional challenges, such as misconfigurations in Identity and Access Management (IAM) policies.
 
 Security testing further demonstrated that cloud misconfigurations remain a significant concern. Whereas automated security testing tools such as Prowler and Snyk are valuable for identifying vulnerabilities, they are insufficient without expert review and adherence to best practices. Even with well-established protocols and cloud providers, OIDC and AWS, respectively, meticulous knowledge and the right choice of tools are key to reducing vulnerabilities.   
 
 
 \section{Future Work}
 
-\begin{itemize} 
-    
-    \item Although this study mainly focused on user-based tokens and their associated security risks within the OpenID Connect (OIDC) protocol, it is essential to note that OIDC also supports machine-to-machine (M2M) communication, also known as client authentication \citep{openid_docs}. In M2M scenarios, client authentication is crucial, as it involves server-to-server interactions without human intervention. More research on the security risks of M2M communication, especially with cloud integration, would be beneficial in complementing the findings of this study.
+    \paragraph{Machine-to-Machine Communication} Although this study mainly focused on user-based tokens and their associated security risks within the OpenID Connect (OIDC) protocol, it is essential to note that OIDC also supports Machine-to-Machine (M2M) communication, also known as client authentication \citep{openid_docs}. In M2M scenarios, client authentication is crucial, as it involves server-to-server interactions without human intervention. More research on the security risks of M2M communication, especially with cloud integration, would be beneficial in complementing the findings of this study.
 
-    \item Enhancing cyber hygiene and reducing cloud misconfigurations are critical for future exploration. Addressing cloud misconfigurations resulting from human error or oversight can significantly reduce the risk of unauthorised access and data breaches. A study that could provide effective measures against misconfigurations can significantly benefit sensitive data security.
+     \paragraph{Misconfiguration Mitigations} Enhancing cyber hygiene and reducing cloud misconfigurations are critical for future exploration. Addressing cloud misconfigurations resulting from human error or oversight can significantly reduce the risk of unauthorised access and data breaches. A study that could provide effective measures against misconfigurations can significantly benefit sensitive data security.
 
-    \item The prototype contains some limitations, as the cloud environment was simulated using a local stack.
-    Some real-world scenarios could not be tested.
-    For example, testing the domain name resolution to set specific headers to identify tenants was impossible.
-    Also, local machines cannot cope with more load like the cloud, making it untested for a real-life scenario and its scalability.
-    By leveraging AWS's infrastructure, one can test features like auto-scaling and multi-region deployments under actual conditions, offering more accurate insights into performance and scalability.
-    Although deploying on AWS incurs costs, it enables comprehensive testing with real-world data, ensuring that the application can handle production-level demands effectively.
-\end{itemize}
+     \paragraph{Live Cloud Environment} The prototype presented in this work has a limited scope since the cloud environment was simulated using a local stack. Not all real-world scenarios could not be tested. For example, testing the domain name resolution to set specific headers to identify tenants was impossible. Also, local machines cannot cope with more load like the cloud, making it untested for a real-life scenario and its scalability. By leveraging AWS's infrastructure, one can test features like auto-scaling and multi-region deployments under actual conditions, offering more accurate insights into performance and scalability. Although deploying on AWS incurs costs, it enables comprehensive testing with real-world data, ensuring the application can handle production-level demands effectively.
 
-
-
-
-
-
+\newline
 By expanding research into these areas, organisations can better secure their cloud environments and more effectively leverage OIDC for user-based and machine-to-machine communications.
 
 

@@ -103,7 +103,89 @@
 \makeatletter
 \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
 \makeatother
+\usepackage{mdframed}
+\definecolor{keywordblue}{RGB}{0,119,204}
+\definecolor{keywordorange}{RGB}{255,140,0}
+\definecolor{keywordred}{RGB}{220,20,60}
+\usepackage{fancyvrb}
 
+
+% Define custom style
+\mdfdefinestyle{customframe}{
+    backgroundcolor=gray!80,  % 20% gray (lighter)
+    hidealllines=true,        % Optional: hides frame 
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+    font=\ttfamily\small,
+    % Frame settings
+    linecolor=frameborder,
+    linewidth=1pt,
+    backgroundcolor=framebackground,
+}
+
+\mdfdefinestyle{greyframe}{
+    backgroundcolor=gray!10,
+    linewidth=1pt,
+    roundcorner=3pt,
+    innerleftmargin=10pt,
+    innerrightmargin=10pt,
+    innertopmargin=10pt,
+    innerbottommargin=10pt
+}
+
+% Define colors
+\definecolor{keywordblue}{RGB}{0,119,204}
+\definecolor{keywordorange}{RGB}{255,140,0}
+\definecolor{keywordred}{RGB}{220,20,60}
+
+% Define custom Verbatim environment with colored keywords
+\DefineVerbatimEnvironment{ColoredVerbatim}{Verbatim}{
+    commandchars=\\\{\},
+    codes={\catcode`\$=3\catcode`\^=7},
+    defineactive=\def\Request{\textcolor{keywordblue}{\textbf{Request}}}
+                \def\Response{\textcolor{keywordblue}{\textbf{Response}}}
+                \def\curl{\textcolor{keywordorange}{\textbf{curl}}}
+                \def\POST{\textcolor{keywordred}{\textbf{POST}}}
+}
+
+
+% Define colors
+\definecolor{backgroundgrey}{RGB}{245,245,245}
+\definecolor{keywordblue}{RGB}{0,119,204}
+\definecolor{stringred}{RGB}{163,21,21}
+\definecolor{commentgreen}{RGB}{0,128,0}
+\definecolor{urlpurple}{RGB}{127,0,85}
+
+% Define CURL language
+\lstdefinelanguage{curl}{
+    keywords={curl, POST, GET, PUT, DELETE, -H, -d, -X},
+    sensitive=false,
+    morestring=[b]",
+    morestring=[b]',
+    morecomment=[l]{\#},
+}
+
+% Define listing style
+\lstdefinestyle{curlstyle}{
+    language=curl,
+    backgroundcolor=\color{backgroundgrey},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{keywordblue}\bfseries,
+    stringstyle=\color{stringred},
+    commentstyle=\color{commentgreen},
+    breaklines=true,
+    breakatwhitespace=true,
+    keywords={Request, Response, curl, POST},
+    frame=single,
+    rulecolor=\color{gray!30},
+    showstringspaces=false,
+    tabsize=2,
+    captionpos=b,
+    framexleftmargin=5mm,
+    framexrightmargin=5mm,
+    xleftmargin=5mm,
+    xrightmargin=5mm,
+}
 \usepackage{enumerate} % http://ctan.org/pkg/enumerate
 
 %for chapter spaces

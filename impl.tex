@@ -1,275 +1,236 @@
-\chapter{Implementation}
+\chapter{Results and Discussions}
 
-This chapter extends the design presented in Chapter \ref{chap:design}, focusing on implementing the Proof Key for Code Exchange (PKCE) authorisation flow for a dual-tenant environment. Using the multi-database architecture proposed in the design (refer to Figure \ref{fig:deployment_diagram_dual}), this implementation builds a foundational prototype of the OAuth 2.0 Authorisation Code flow with PKCE, adapted for a multi-tenant, serverless infrastructure. By leveraging modern, cloud-native technologies—including Node.js, TypeScript, and LocalStack—this prototype demonstrates a secure, efficient, and scalable user authorisation approach in a serverless multi-tenant application. The implementation focuses on the two critical endpoints: the authorisation endpoint \textbf{/authorize} and the token endpoint \textbf{/token} deployed in a cloud infrastructure, which forms the cornerstone of the OAuth 2.0 PKCE flow. The following sections discuss the implementation details and the tests conducted for the project.
-
-
-\section{Technical Stack}
-The technical stack forms the foundations of any software development project, comprising a carefully selected combination of programming languages, frameworks, libraries, and tools that enable the creation of robust applications. During the prototyping phase, selecting an appropriate technical stack is crucial, as it significantly influences development velocity, code quality, and the project's overall success. Moreover, security considerations are vital in stack selection, as well-established technologies often incorporate proven security practices and help mitigate potential vulnerabilities. To address these requirements and ensure a solid foundation for the prototype, the implementation leverages the following technology stack:
-
-\begin{itemize}
-    \item \textbf{Runtime Environment:} Node.js 18.x
-    \item \textbf{Programming Language:} Javascript with TypeScript 5.6
-    \item \textbf{Cloud Infrastructure:} AWS (simulated locally using LocalStack)
-    \item \textbf{Database:} Amazon DynamoDB
-    \item \textbf{Framework:} Serverless Framework
-    \item \textbf{Infrastructure as Code:} Terraform and Terraform Local for localstack
-
-\end{itemize}
-
-\subsection{Development Dependencies}
-A carefully selected set of dependencies was chosen to develop the prototype, enhancing the project's security, maintainability, testing, operability, logging, and performance. Each dependency was selected for a specific purpose, ensuring the system remains robust, efficient, and scalable throughout the development lifecycle. Table \ref{table:dev_dependencies} lists the dependencies used with its description, and table \ref{table:lint_testing_dependencies} lists the testing and linting dependencies. 
-
-\begin{longtable}{|l|l|p{8cm}|}
-\caption{Development Dependencies}
-\label{table:dev_dependencies}
-\hline
-\rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\ \hline
-\endfirsthead
-\hline
-\rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\ \hline
-\endhead
-\endfoot
-\hline
-\endlastfoot
-argon2 & \textasciicircum 0.41.1 & A password hashing library implementing the Argon2 algorithm, designed for secure password storage. \\ \hline
-axios & \textasciicircum 1.7.7 & A promise-based HTTP client for making HTTP requests in Node.js and browsers. \\ \hline
-esbuild & \textasciicircum 0.24.0 & A fast JavaScript and TypeScript bundler and minified optimized for development and production builds.\\ \hline
-hash-wasm & \textasciicircum 4.11.0 & A fast cryptographic hashing library using WebAssembly for efficiency. \\ \hline
-jsonwebtoken & \textasciicircum 9.0.2 & A library to sign, verify, and decode JSON Web Tokens (JWT), commonly used for authentication and authorisation. \\ \hline
-@types/aws-lambda & \textasciicircum 8.10.145 & TypeScript type definitions for AWS Lambda, providing type support for AWS Lambda functions. \\ \hline
-@types/jsonwebtoken & \textasciicircum 9.0.7 & TypeScript type definitions for jsonwebtoken, helping with type safety when using JWTs in TypeScript code. \\ \hline
-@types/node & \textasciicircum 22.7.7 & TypeScript type definitions for Node.js, providing type support for Node.js APIs in TypeScript projects.\\ \hline
-typescript & \textasciicircum 5.6.3 & The TypeScript programming language, which adds static types to JavaScript to improve developer productivity and code quality.\\ \hline
-uuidv4 & \textasciicircum 6.2.13 & A library to generate UUID (Universally Unique Identifier) version 4, primarily used for creating unique identifiers. \\ \hline
-winston & \textasciicircum 3.15.0 & A flexible and popular logging library for Node.js, supporting multiple log transports. \\ \hline
-winston-cloudwatch & \textasciicircum 6.3.0 & A transport for Winston allows logging to AWS CloudWatch for centralized logging and monitoring. \ \hline
-zod & \textasciicircum 3.23.8 & A TypeScript-first schema validation library for parsing and validating inputs. \\ \hline
-@aws-sdk/client-dynamodb & \textasciicircum 3.675.0 & AWS SDK Client for DynamoDB, used for interacting with Amazon DynamoDB from Node.js applications. \\ \hline
-\end{longtable}
+This chapter presents a comprehensive evaluation and validation of the security implementation mechanisms detailed in Section \ref{sec:sec_impl}. We systematically examine multiple security aspects through various testing procedures, including evaluating authentication mechanisms, conducting OIDC PKCE compliance tests, identifying cloud vulnerabilities, performing password hash compare timing tests, and assessing access control mechanisms. The investigation meticulously documents and analyses the empirical results, revealing the strengths and potential vulnerabilities of the implemented security framework.
 
 
-\begin{longtable}{|l|l|p{8cm}|}
-\caption{Testing and Linting Dependencies}
-\label{table:lint_testing_dependencies}
-\hline
-\rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\
-\endfirsthead
-\hline
-\rowcolor{grey!15}
-\textbf{Dependency} & \textbf{Version} & \textbf{Description} \\
-\endhead
-\endfoot
-\hline
-\endlastfoot
-fast-check & \textasciicircum 3.23.1 & A property-based testing library for generating random test cases and checking properties of your code. \\
-\hline
-jest-fuzz & \textasciicircum 0.1.2 & A fuzz testing library for Jest, used to test for unexpected edge cases. \\
-\hline
-@types/jest & \textasciicircum 29.5.14 & TypeScript definition for Jest enables type safety in Jest test cases. \\
-\hline
-@typescript-eslint/eslint-plugin & \textasciicircum 8.13.0 & ESLint plugin that provides TypeScript-specific linting rules. \\
-\hline
-aws-sdk-client-mock & \textasciicircum 4.1.0 & A mocking library for the AWS SDK, used in unit tests to mock AWS services like DynamoDB. \\
-\hline
-eslint & \textasciicircum 9.14.0 & A powerful linter for JavaScript and TypeScript that helps identify and fix coding issues. \\
-\hline
-eslint-plugin-security-node & \textasciicircum 1.1.4 & An ESLint plugin that identifies potential security vulnerabilities in Node.js code. \\
-\hline
-jstat & \textasciicircum 1.9.6 & A JavaScript statistics library that can be used for different statistical calculations, like mean, standard deviations, t-test, and chi-squared tests. \\
-\hline
-jest & \textasciicircum 29.7.0 & A JavaScript testing framework that supports unit tests, integration tests, and snapshot testing. \\
-\hline
-ts-jest & \textasciicircum 29.2.5 & A Jest transformer allows Jest to run TypeScript code directly. \\
-\hline
-typescript-eslint & \textasciicircum 8.13.0 & A set of tools that allow ESLint to analyse TypeScript code and enforce best practices. \\
-\hline
-\end{longtable}
-
-\subsection{Infrastructure as Code}
-Infrastructure as Code (IaC) is an approach to managing IT infrastructures, like infrastructure or services created by AWS, using configuration and machine-readable definition files \citep{iac}. This method replaces the manual process of creating infrastructure and allows automation to provision different components like databases, servers, and networking components. One of the main advantages of IaC is that it provides consistency in provisioning infrastructure as a code-like script, leading to more reliable deployments. In addition, IaC also helps in faster deployments, and as the infrastructure is written in code, static analysis tools to check vulnerabilities are possible.
-
-IaC is widely used in the industry to practice DevOps and continuously deploy. Many tools, such as AWS CloudFormation, AWS Cloud Development Kit (CDK), Ansible, and Terraform, are available to manage complex infrastructure. For this project, Terraform was chosen due to its status as one of the most widely used IaC tools, backed by a robust community and reusable modules \citep{terraform}.
-
-Additionally, an essential aspect of this project is integrating the IaC tool with LocalStack, a platform that simulates AWS services locally for testing purposes. Terraform's compatibility with LocalStack is well-documented through tflocal, which allows developers to run Terraform configurations against LocalStack environments. This integration enables efficient local development and testing of infrastructure changes without needing access to actual AWS resources, further enhancing productivity and reducing costs during the development cycle. Refer to Listing \ref{lst:terraform_snippet} for an example where terraform is used in the project to create an API gateway resource. Using terraform as IaC, the multi-tenant PKCE design (refer to Figure \ref{fig:deployment_diagram_dual}) is realized and deployed in localstack.
-
-\begin{lstlisting}[caption={Terraform Code Snippet for API Gateway}, label={lst:terraform_snippet}]
-resource "aws_api_gateway_rest_api" "oidc_api" {
-  name        = "oidc-apigw"
-  description = "API Gateway for invoking Lambda"
-  body = templatefile("${path.root}/../configurations/openapi.yml.tpl", {
-    lambda_invoke_arn_authorize = module.pkce_authorize_lambda.aws_lambda_function.arn
-    lambda_invoke_arn_token     = module.pkce_token_lambda.aws_lambda_function.arn
-  })
-  endpoint_configuration {
-    types = ["REGIONAL"]
-  }
-}
-\end{lstlisting}
-
-\section{Security Implementation}
-In Chapter \ref{chap:threat_model}, a range of security implementations have been strategically introduced to address and mitigate several identified threats (Refer to Table \ref{table:risk_assessment}). Each of these measures is designed to strengthen overall security by minimizing vulnerabilities and reducing the potential impact of malicious activities. These proactive steps ensure that critical systems and sensitive data are better protected against evolving cybersecurity risks, ultimately enhancing the resilience and reliability of the infrastructure. 
-
-\begin{longtable}{|p{5cm}|p{10cm}|}
-    \caption{Summary of the Security Implmentations}
-    \label{table:sec_impl}
-\hline
-\rowcolor{grey!15}
-\textbf{Threat} & \textbf{Mitigation} \\
-\hline
-\endhead
-\hline
-\endfoot
-Cloud Misconfigurations & Security monitoring tools like Prowler are used to detect possible misconfigurations in the infrastructure. In addition, these tools are also capable of assisting in achieving compliance with GDPR requirements as they have rules built in them to test the infrastructure.  \\
-\hline
-Credential Theft & The user password is hashed using Argon2id, which is resistant to both side-channel attacks and GPU cracking attacks \citep{argon2id}. (Refer to Appendix \ref{fig:argon2id_hash})  \\
-\hline
-Cross-Tenant Data Leakage & Tenant data are separated using different databases, and the cloud trail is turned on, which allows regular audits to see data access. \\
-\hline
-Code Injection (XSS, SQLi) \& Code Vulnerabilities & \begin{itemize}
-    \item Implemented Input validation and sanitization using Zod (See Appendix \ref{apendix:input_val})
-    \item The code verifier and code challenge has a minimum length of 43 to a maximum of 128, as specified by RFC 7636.
-    \item Usage of lint (eslint-plugin-security-node), which checks the code quality and detects vulnerabilities in code.
-    
-\end{itemize}
-\hline
- Unauthorised Access & Least Privilege Principle is where the lambdas are allowed only specific roles and policies. For example, the authorise lambda has read-write to the database, whereas the token lambda only has write. This is achieved by using IAM policies (Refer to Appendix \ref{apendix:least_privilidge}). Also access logs are saved using Cloudtrail giving a possibility to audit different accesses.\\
-\hline
-PKCE Downgrade Attack & PKCE flows are validated, requests for \textbf{/authorize} without code challenge are not accepted, and code challenge is only accepted in SHA-256 encoded hash. \\
-\hline
-Token Tampering & Use of Signed tokens to avoid tampering with access tokens issued after successful authentication.  \\
-\hline
-Timing Attacks & To mitigate timing attacks, which could lead to the reveal of the code verifier during the token retrieval process, crypto timis safe equality functions are used in critical comparison operations, namely for verifying the code verifier. (Refer to Appendix \ref{apendix:timing_safe_comparions})  \\
-\hline
-\end{longtable}
-
-\section{Testing}
-
-\subsection{Manual Testing}
+\section{Manual Testing}
 As a pre-condition for testing the two PKCE endpoints, a build script (refer to Appendix \ref{apendix:build_and_run_script}) is executed. This build script creates the required infrastructure by running the terraform, like the lambdas and API gateways. In addition to providing the infrastructure, the database will be seeded with two tenants and some users. In this section, manual tests of the two endpoints implemented are documented.
 
 
-\subsubsection{Authorise Endpoint}
+\subsection{Authorise Endpoint}
 Manual tests were conducted on the \textbf{/authorize} endpoint to assess its functionality and security measures. The testing process included the following scenarios:
 
 \begin{enumerate}
-     \item \textbf{Successful Authentication:} Verified that the endpoint correctly processes authentication requests when provided with valid credentials, a valid client ID, and a proper code challenge. Additionally, the test was repeated successfully using \textbf{Tenant 2} to ensure multi-tenant compatibility (Refer to Figures \ref{fig:authorize_tenant_1_success} and \ref{fig:authorize_tenant_2_success}).
-    
-     \begin{figure}[!htbp]
-        \centering
-        {\setlength{\fboxrule}{2pt} % Border thickness
-        \setlength{\fboxsep}{1pt}  % Space between image and border
-        \fbox{\includegraphics[width=\textwidth, height=60]{pics/authorize.png}} % Image with border
-        \caption{Successful user Authorise for tenant1}
-        \label{fig:authorize_tenant_1_success}
-    \end{figure}
+     \item \textbf{Successful Authentication:} Verified that the endpoint correctly processes authentication requests when provided with valid credentials, a valid client ID, and a proper code challenge. Additionally, the test was repeated successfully using \textbf{Tenant 2} to ensure multi-tenant compatibility. Figure \ref{fig:authorize_tenant_1_success} shows the successful authentication of a user in \textit{tenant 1} when all the required parameters and the credentials are correct, and Figure \ref{fig:authorize_tenant_1_wrong_pass} presents a successful authentication with \textit{tenant 2}.
 
-    \begin{figure}[!htbp]
-        \centering
-        {\setlength{\fboxrule}{2pt} % Border thickness
-        \setlength{\fboxsep}{1pt}  % Space between image and border
-        \fbox{\includegraphics[width=\textwidth,height=55]{pics/authorize_tenant2_success.png}} % Image with border
-        \caption{Successful user Authorise for tenant2)}
-        \label{fig:authorize_tenant_2_success}
-    \end{figure}
+\begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/
+authorize\
+-H "Content-Type: application/json" \
+-d '{"username": "user7@example.com","client_id":"tenant1-client-id-1", "password": "test1"}'
 
+Response:{
+"message":"Hello, user7@example.com",
+"authorizationCode":{"S":"22f51d86-c29b-49ef-a594-9916d10a7617"},
+"expiresAt":{"N":"1734690017"}
+}
+    \end{lstlisting}
+    \caption{Successful user Authorise for tenant1}
+    \label{fig:authorize_tenant_1_success}
+\end{figure}
+
+
+\begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant2.local:4566/restapis/o4qbjcrrti/dev/_user_request_/authorize \                                  
+-H "Content-Type: application/json" \
+-d '{"username": "user7@example.com","client_id":"tenant2-client-id-1", "password": "test2", "codeChallenge": "ChX9V18izIUew6V7-DRS4hMRK3H_tlPBQ5E_umRHLNo"}'
+
+Response:{
+"message":"Hello, user7@example.com",
+"authorizationCode":{"S":"79641e2f-2a32-46ef-9e61-263ba620acff"},
+"expiresAt":{"N":"1734693110"}
+}
+    \end{lstlisting}
+    \caption{Successful user Authorise for tenant2}
+    \label{fig:authorize_tenant_2_success}
+\end{figure}
+
+\newpage
     \item \textbf{Authentication Failures:} Tested various failure scenarios to ensure the system handles them securely and as expected:
     \label{subsec:auth_failure_tests}
     \begin{itemize}
-        \item \textbf{Invalid Credentials:} Attempted authentication with incorrect tenant credentials to confirm that the system denies access and provides appropriate error responses.
-        
+        \item \textbf{Invalid Credentials:} Attempted authentication with incorrect tenant credentials to confirm that the system denies access and provides appropriate error responses. Figure \ref{fig:authorize_tenant_1_wrong_pass} illustrates the denial of access that occurs when a user provides a wrong password.
+
         \begin{figure}[!htbp]
-            \centering
-            {\setlength{\fboxrule}{2pt} % Border thickness
-            \setlength{\fboxsep}{1pt}  % Space between image and border
-            \fbox{ \includegraphics[width=\textwidth, height=60]{pics/authorize_wrong_pass.png}} % Image with border
-            \caption{Unsuccessful user Authorise for tenant1 with wrong password}
-            \label{fig:authorize_tenant_1_wrong_pass}
-        \end{figure}
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant2.local:4566/restapis/o4qbjcrrti/dev/_user_request_/authorize \                                  
+-H "Content-Type: application/json" \
+-d '{"username": "user7@example.com","client_id":"tenant2-client-id-1", "password": "wrong_password", "codeChallenge": "ChX9V18izIUew6V7-DRS4hMRK3H_tlPBQ5E_umRHLNo"}'
+
+Response:{
+"message":"Invalid username or password"}
+}
+    \end{lstlisting}
+    \caption{Unsuccessful user Authorise for tenant1 with wrong password}
+    \label{fig:authorize_tenant_1_wrong_pass}
+\end{figure}
+
+        
 
        
-        \item \textbf{Unknown Client ID:} Tested requests with an unregistered or invalid client ID to confirm the endpoint rejects such requests without further processing.
+        \item \textbf{Unknown Client ID:} Tested requests with an unregistered or invalid client ID to confirm the endpoint rejects such requests without further processing. Figure \ref{fig:authorize_tenant_1_unknown_client} depicts the curl request with \textit{tenant 1}
+        and an unknown \textit{client\_id}, and responds with access deined with a corresponding error message.
 
-        \begin{figure}[!htbp]
-            \centering
-            {\setlength{\fboxrule}{2pt} % Border thickness
-             \setlength{\fboxsep}{1pt}  % Space between image and border
-             \fbox{\includegraphics[width=\textwidth,height=60]{pics/authorize_unknown_client.png}} % Image with border
-            \caption{Unsuccessful user Authorise for tenant1 with Unknown Client}
-            \label{fig:authorize_tenant_1_unknown_client}
-        \end{figure}
-            
-        \item \textbf{Missing Code Challenge:} Simulated a PKCE (Proof Key for Code Exchange) downgrade attack by omitting the \texttt{code\_challenge} parameter. This test was designed to ensure that the endpoint enforces PKCE requirements and denies the request if missing the \texttt{code\_challenge}.
-        \begin{figure}[!htbp]
-             \centering
-             {\setlength{\fboxrule}{2pt} % Border thickness
-             \setlength{\fboxsep}{1pt}  % Space between image and border
-             \fbox{\includegraphics[width=\textwidth,height=55]{pics/authorize_without_code_challenge.png}} % Image with border
-            \caption{Unsuccessful user Authorise for the tenant1 without Code Challenge (PKCE Downgrade)}
-            \label{fig:authorize_tenant_1_without_code_challenge}
-        \end{figure}
+\begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/authorize \                                  
+-H "Content-Type: application/json" \
+-d '{"username": "user7@example.com","client_id":"unknown-client-id-1", "password": "test2", "codeChallenge": "ChX9V18izIUew6V7-DRS4hMRK3H_tlPBQ5E_umRHLNo"}'
+
+Response: {"message":"Invalid client ID"}
+    \end{lstlisting}
+    \caption{Unsuccessful user Authorise for tenant1 with Unknown Client}
+    \label{fig:authorize_tenant_1_unknown_client}
+\end{figure}
+
 
     \end{itemize}
 \end{enumerate}
 
 These tests helped validate the robustness of the \textbf{/authorize} endpoint, ensuring it functions correctly under normal conditions while effectively mitigating common security threats.
 
-
-\subsubsection{Token Endpoint}
+\newpage
+\subsection{Token Endpoint}
 Manual tests were also conducted on the \textbf{/token} endpoint to verify its functionality and robustness. The following scenarios were tested:
 
 \begin{enumerate}
-    \item \textbf{Successful Token Retrieval:} Verified that the endpoint successfully issues tokens when provided with a valid authorisation code, client ID, and code verifier. The tokens are signed using an asymmetric key using the RS256 Algorithm (Refer to Figure \ref{fig:token_tenant_1_token_signed}). The private key is generated using the RSA-2048-bit algorithm (refer to Appendix \ref{apendix:create_private_keys}), and the keys are stored securely in the secrets manager, which the token lambda retrieves (Refer to Appendix \ref{apendix:token_signing}).
+    \item \textbf{Successful Token Retrieval:} Verified that the endpoint successfully issues tokens when provided with a valid authorisation code, client ID, and code verifier. The tokens are signed using an asymmetric key using the RS256 Algorithm (Refer to Figure \ref{fig:token_tenant_1_token_signed}). The private key is generated using the RSA-2048-bit algorithm (refer to Appendix \ref{apendix:create_private_keys}), and the keys are stored securely in the secrets manager, which the token lambda retrieves (Refer to Appendix \ref{apendix:token_signing}). Figure \ref{fig:token_tenant_1_success} illustrates a successful retrieval of an access token of a user after authentication.
 
-       \begin{figure}[!htbp]
-             {\setlength{\fboxrule}{2pt} % Border thickness
-             \setlength{\fboxsep}{1pt}  % Space between image and border
-             \fbox{\includegraphics[width=\textwidth,height=50]{pics/token_successful_token.png}} % Image with border
-            \caption{Successful token retrieval for tenant 1}
-            \label{fig:token_tenant_1_success}
-        \end{figure}
-
-    \item \textbf{Expired Authorisation Code:} Attempted to retrieve a token using an expired authorisation code to ensure the endpoint denies the request with an appropriate error response.
-
-\begin{figure}[!htbp]
-             \centering
-             {\setlength{\fboxrule}{2pt} % Border thickness
-             \setlength{\fboxsep}{1pt}  % Space between image and border
-             \fbox{\includegraphics[width=\textwidth,height=50]{pics/token_auth_code_expired.png}} % Image with border
-            \caption{Unsuccessful token retrieval as Authorisation Code expired}
-            \label{fig:token_auth_code_expired}
-        \end{figure}
-        
-    \item \textbf{Missing Code Verifier:} Simulated a scenario where the \texttt{code\_verifier} parameter was omitted during the token exchange. This test ensured that the endpoint rejects the request and enforces PKCE compliance.
-
-    \begin{figure}[!htbp]
-         \centering
-         {\setlength{\fboxrule}{2pt} % Border thickness
-         \setlength{\fboxsep}{1pt}  % Space between image and border
-         \fbox{\includegraphics[width=\textwidth,height=50]{pics/token_without_code_veri.png}} % Image with border
-        \caption{Unsuccessful token retrieval as no Code Verifier Present (PKCE Downgrade)}
-        \label{fig:token_no_code_veri}
-    \end{figure}
-
-    \item \textbf{Missing \texttt{grant\_type}:} Sent a token exchange request without setting  \sloppy \seqsplit{grant\_type=authorization\_code}, confirming that the endpoint validates the presence of required parameters and returns a proper error if the \texttt{grant\_type} is missing or incorrect.
 
         \begin{figure}[!htbp]
-         \centering
-         {\setlength{\fboxrule}{2pt} % Border thickness
-         \setlength{\fboxsep}{1pt}  % Space between image and border
-         \fbox{\includegraphics[width=\textwidth,height=50]{pics/token_missing_grant.png}} % Image with border
-        \caption{Unsuccessful token retrieval as no Grant Type}
-        \label{fig:token_no_grant_type}
-    \end{figure}
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/token\                                      
+-H "Content-Type: application/json" \
+-d '{
+    "username": "user7@example.com","grant_type": "authorization_code","client_id":"tenant1-client-id-1", "authorizationCode": "a24e5543-7ed6-4511-a021-be911004f187", "codeVerifier": "wOV-nI-            
+    QSyesPpyjPpyjkBPx7PCimGUBrxOqKgc8idU
+    NLnzeIkUq1nJI4R2hEyoolgexTqQfAd4hbX8mi
+    7ud0BpQv16u6R9a14fWjXjj65uWDnV-nfI7Ow-YaippAChI
+"}'
+
+Response: {
+    "token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVC
+    J9.eyJ1c2VySWQiOiJ1c2VyLTI2Mjc3LTEyMjc2IiwiaWF0
+    IjoxNzM0NzAwNDg5LCJleHAiOjE3MzQ3MDQwODl9.NMjBNY
+    w4rprZ_irSFv0MKWrIt3KiOtteNeDDvwlv-T2QMpcgIEfdT5
+    Nvc_zjIOotayqiHHtQNBQf_j-Y89z52Sv-076UaQOq5SeEU52
+    voaqUABAQ5QoaaTELmCWMDOovAK9_9fo
+    sF0Am5hMYBZe3S8H0vUKqdSM1Bcu2ONAo40tRCowfK90NHp1q5A
+    2CBuXanbCiVYrzZZ0Bes6y0Xpun6ldu8FnSIzgmzE3sPCGmmRP5E
+    kE1IoW2ViQ4irklUkFWXBZDjoZZua9CoPzcgH0OWD_uL48ZqSiXO
+    PbvO_TcKCZ5ORnHPdeN7PRupllUFaR-M9B4yZtfjujFBHBSi63A"
+}
+    \end{lstlisting}
+    \caption{Successful token retrieval for tenant 1}
+    \label{fig:token_tenant_1_success}
+\end{figure}
+
+\newpage
+    \item \textbf{Expired Authorisation Code:} Attempted to retrieve a token using an expired authorisation code to ensure the endpoint denies the request with an appropriate error response. Figure \ref{fig:token_auth_code_expired} illustrates the denial of authority when the token endpoint is requested with an expired user \texttt{authorisation code}.
+    
+    
+    \begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/token\                                      
+-H "Content-Type: application/json" \
+-d '{
+    "username": "user7@example.com","grant_type": "authorization_code","client_id":"tenant1-client-id-1", "authorizationCode": "a24e5543-7ed6-4511-a021-be911004f187", "codeVerifier": "wOV-nI-            
+    QSyesPpyjPpyjkBPx7PCimGUBrxOqKgc8idU
+    NLnzeIkUq1nJI4R2hEyoolgexTqQfAd4hbX8mi
+    7ud0BpQv16u6R9a14fWjXjj65uWDnV-nfI7Ow-YaippAChI
+"}'
+
+Response: {"message":"Invalid authorization code or code verifier or expired"}
+    \end{lstlisting}
+    \caption{Unsuccessful token retrieval as Authorisation Code expired}
+    \label{fig:token_auth_code_expired}
+\end{figure}
 \end{enumerate}
 
-These tests validated the \textbf{/token} endpoint's ability to securely handle both successful and invalid requests, ensuring proper error handling for edge cases and enforcement of PKCE requirements.
+\noindent These tests validated the \textbf{/token} endpoint's ability to securely handle both successful and invalid requests, ensuring proper error handling for edge cases and enforcement of PKCE requirements.
 
-\subsubsection{Timing Safe Function Test}
+\newpage
+\subsection{PKCE Downgrade Tests}
+\begin{enumerate}
+
+    \item \textbf{Missing Code Verifier:} We conducted a simulation in which we omitted the \texttt{code\_verifier}  parameter during the token exchange process. This test demonstrated that the endpoint rejects the request appropriately, ensuring compliance with PKCE (Proof Key for Code Exchange). In Figure \ref{fig:token_no_code_veri}, we show the PKCE Downgrade attack, demonstrating how the system denies the token request because it lacks the \texttt{code\_verifier}. This request's denial proves that one cannot retrieve the token without the verifier parameter.
+
+        \begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/token\                                      
+-H "Content-Type: application/json" \
+-d '{
+    "username": "user7@example.com","grant_type": "authorization_code","client_id":"tenant1-client-id-1", "authorizationCode": "a24e5543-7ed6-4511-a021-be911004f187"}'
+
+Response: {"message":"Missing 'username', 'authorizationCode', or 'codeVerifier' in request body"}
+    \end{lstlisting}
+    \caption{Unsuccessful token retrieval as no Code Verifier Present (PKCE Downgrade)}
+    \label{fig:token_no_code_veri}
+\end{figure}
+
+    \item \textbf{Missing Code Challenge:} Simulated a PKCE (Proof Key for Code Exchange) downgrade attack by omitting the \texttt{code\_challenge} parameter. This test was designed to ensure that the endpoint enforces PKCE requirements and denies the request if missing the \texttt{code\_challenge}. In Figure \ref{fig:authorize_tenant_1_without_code_challenge}, we show the PKCE Downgrade attack, demonstrating how the system denies the authorise request because it lacks the \texttt{code\_challenge}. 
+
+
+        \begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/authorize \                                  
+-H "Content-Type: application/json" \
+-d '{"username": "user7@example.com","client_id":"tenant1-client-id-1", "password": "test1"}'
+
+Response: {"message":"Invalid request body"}
+    \end{lstlisting}
+    \caption{Unsuccessful user Authorise for the tenant1 without Code Challenge (PKCE Downgrade)}
+    \label{fig:authorize_tenant_1_without_code_challenge}
+\end{figure}
+
+    \newpage
+    \item \textbf{Missing \texttt{grant\_type}:} Sent a token exchange request without setting  \sloppy \seqsplit{grant\_type=authorization\_code}, confirming that the endpoint validates the presence of required parameters and returns a proper error if the \texttt{grant\_type} is missing or incorrect.In Figure \ref{fig:token_no_grant_type}, we show the PKCE Downgrade attack, demonstrating how the system denies the token request because it lacks the \texttt{grant\_type}.
+
+
+                \begin{figure}[!htbp]
+    \centering
+    \begin{lstlisting}[style=curlstyle]
+Request:
+curl -X POST http://tenant1.local:4566/restapis/o4qbjcrrti/dev/_user_request_/token\                                      
+-H "Content-Type: application/json" \
+-d '{
+    "username": "user7@example.com",
+    "client_id":"tenant1-client-id-1", "authorizationCode": "a24e5543-7ed6-4511-a021-be911004f187",
+    "codeVerifier": "wOV-nI-QSyesPpyjPpyjkBPx7PCimGUBrxOqKgc8idUNLnzeIkU
+    q1nJI4R2hEyoolgexTqQfAd4hbX8mi7ud0BpQv16u6R9
+    a14fWjXjj65uWDnV-nfI7Ow-YaippAChI"
+    }'
+
+Response: {"message":"Invalid Grant Type"}
+    \end{lstlisting}
+    \caption{Unsuccessful token retrieval as no Grant Type (PKCE Downgrade)}
+    \label{fig:token_no_grant_type}
+\end{figure}
+\end{enumerate}
+       
+
+
+\subsection{Timing Safe Function Test}
 \label{sec:timing_test}
-Table \ref{table:sec_impl} emphasises that the timing-safe functions of Argon2id were employed to compare hashes, mitigating the risk of side-channel attacks, specifically timing attacks. To verify the robustness of these functions against information leakage, a test was conducted involving 1000 timing measurements for two scenarios: hash comparisons using random, incorrect passwords and comparisons with the correct password. Appendix \ref{apendix:timing_test} presents the code that was executed to collect the timing samples as well as calculate the p-value. The truncated results of these measurements are presented in Tables \ref{table:non_matching_pass_res} and \ref{table:matching_pass_res}.
+Table \ref{table:sec_impl} emphasises that the timing-safe functions of Argon2id were employed to compare hashes, mitigating the risk of side-channel attacks, specifically timing attacks. To verify the robustness of these functions against information leakage, a test was conducted involving 1000 timing measurements for two scenarios: hash comparisons using random, incorrect passwords and comparisons with the correct password. Appendix \ref{apendix:timing_test} presents the code that executes to collect the timing samples and calculate the p-value. The truncated results of these measurements are presented in Tables \ref{table:non_matching_pass_res} and \ref{table:matching_pass_res}.
 
 The recorded timings show slight variations across runs due to inherent measurement noise. Pearson's $\chi^2$ test (chi-squared) was conducted to assess whether this noise could lead to a side-channel attack. As supported by \cite{chisquare}, this statistical method effectively evaluates if the system's noise is sufficient to prevent timing-related information leakage. The $\chi^2$ test compares the observed timing distribution against an expected random distribution, quantitatively measuring the system's resilience to timing attacks. This approach offers a more rigorous and statistically grounded assessment of the system's security against potential timing-based vulnerabilities.
 
@@ -284,8 +245,7 @@ The function presented in Listing \ref{lst:chisqrd} is utilised to compute the c
 By applying this function, a p-value of 0.98 is obtained.
 This result indicates that we do not reject the null hypothesis, suggesting that the likelihood of information leakage due to timing attacks is minimal, thereby offering a means to mitigate such side-channel attacks.
 
-\newpage
-\begin{lstlisting}[style=typescript,caption=chi-squared calculation ,label=lst:chisqrd]
+\begin{lstlisting}[style=typescript,caption=Chi-Squared Function Written in Typescript ,label=lst:chisqrd]
 const calculateChiSquare = (sample1: number[], sample2: number[]) => {
     const degreesOfFreedom = sample1.length - 1;
     const chiSquared = sample1.reduce((sum, obs, i) => {
@@ -298,7 +258,7 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 \end{lstlisting}
 
 \begin{longtable}{|c|c|}
-\caption{Truncated timing samples for the hash comparison for an incorrect password in ms}
+\caption{Truncated Timing Samples for the Hash Comparison for an Incorrect Password (in ms)}
 \label{table:non_matching_pass_res}
 \hline
 \rowcolor{grey!15}
@@ -312,7 +272,7 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 \endfoot
 \hline
 \endlastfoot
-0              & 184.13    \\ \hline
+0              & 162.13    \\ \hline
 1              & 161.73   \\ \hline
 2              & 157.79   \\ \hline
 3              & 158.16   \\ \hline
@@ -329,7 +289,7 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 
 
 \begin{longtable}{|c|c|}
-\caption{Truncated timing samples for the hash comparison for a correct password in ms}
+\caption{Truncated Timing Samples for the Hash Comparison for a Correct Password (in ms)}
 \label{table:matching_pass_res}
 \hline
 \rowcolor{grey!15}
@@ -378,7 +338,7 @@ In addition to manual tests, various automated tests and security scans were con
          {\setlength{\fboxrule}{2pt} % Border thickness
          \setlength{\fboxsep}{1pt}  % Space between image and border
          \fbox{\includegraphics[width=\textwidth, height=200px]{pics/unit_test.png}} % Image with border
-        \caption{Unit Test}
+        \caption{Results of the Unit Test for the PKCE Prototype in Localstack}
         \label{fig:Unit Test}
     \end{figure}
 
@@ -395,7 +355,7 @@ In addition to manual tests, various automated tests and security scans were con
                      \centering
                      {\setlength{\fboxrule}{2pt} % Border thickness
                      \setlength{\fboxsep}{1pt}  % Space between image and border
-                     \fbox{\includegraphics[width=\textwidth, height=200px]{pics/linting.png}} % Image with border
+                     \fbox{\includegraphics[width=\textwidth, height=180px]{pics/linting.png}} % Image with border
                     \caption{Lint results}
                     \label{fig:lint_results}
                 \end{figure}
@@ -458,7 +418,7 @@ In addition to manual tests, various automated tests and security scans were con
 \endhead
 \hline
 \endfoot
-Cloud Misconfigurations &  Figures \ref{fig:prowler_results} and \ref{fig:snyk_results} present test results from Prowler and Snyk that identified several cloud misconfigurations. These tools revealed various configuration improvements that could threaten this application, providing valuable information. \\
+Cloud Misconfigurations &  Figures \ref{fig:prowler_results} and \ref{fig:snyk_results} presents test results from Prowler and Snyk that identify several cloud misconfigurations. These tools revealed various configuration improvements that could threaten this application, providing valuable information. \\
 \hline
 Cross-Tenant Data Leakage & Integration tests were conducted using the tenant1 domain name to access user data from tenant 2. The tenant1 domain name limits the access to data only from tenant one. Listing \ref{apendix:cross_tenant_data_integ_test} shows the tests using the client ID of tenant two and using user credentials that belong to tenant 1. These tests both resulted in a denial of the request.\\
 \hline
@@ -487,12 +447,12 @@ In this analysis, the misconfiguration of cloud services emerged as one of the m
     \item \textbf{Snyk}: Snyk detected \textbf{1 high-severity issue}, \textbf{4 medium-severity vulnerabilities}, and \textbf{1 low-severity issue}. These findings further corroborate the need for a robust approach to managing cloud configuration risks.
 \end{itemize}
 
-\paragraph{Complexity and Scaling Risks}
+\paragraph{Complexity and Scaling Risks}:
 The scans were conducted for only three actively used AWS services: \textbf{DynamoDB}, \textbf{APIGW}, and \textbf{Lambda}, which represent a subset of a typical cloud environment. Despite the limited scope, the results already highlight significant concerns about misconfiguration. As the number of services grows and their interdependencies increase, the complexity of managing cloud configurations will scale significantly. This growth will likely lead to an even greater risk of misconfigurations, amplifying the potential attack surface.
 
 Following the finding, it is necessary to emphasize that \textbf{cloud configurations represent a critical security threat}. This aligns with the assessment outlined in \ref{table:threat_model_assets}, where misconfiguration was identified as one of the top-ranked threats to the cloud environment. Misconfigured resources can lead to data breaches, service disruptions, and compliance violations, underscoring the importance of proactive configuration management and continuous monitoring.
 
-
+\newpage
 \subsection{Security Tools: Useful but Not Sufficient}
 
 Security tools such as \textbf{Prowler} and \textbf{Snyk} provide valuable insights into potential vulnerabilities and misconfigurations within cloud environments. However, while these tools are effective for identifying numerous issues, they cannot be solely relied upon for ensuring a secure setup. Several limitations and shortcomings were observed during the analysis, highlighting the importance of complementing automated tools with reviews from an expert and adherence to security best practices.
