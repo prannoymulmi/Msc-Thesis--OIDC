@@ -7,7 +7,7 @@ Cloud computing is a service model that provides on-demand access to a wide rang
 
 Today, many businesses harness the power of cloud computing to deploy various web applications tailored to small businesses and large corporations. This approach allows customers to opt for an on-demand, pay-as-you-go model, allowing them to scale resources up or down according to their needs without investing in internal infrastructure \citep{cloud_comp_example}.
 
-An example of a company that is utilising cloud computing is Netflix. A popular video streaming service, Netflix leverages Amazon Web Services (AWS) to manage its vast areas, including video storage, transcoding, platform operations, and content delivery \citep{cloud_netflix}. This cloud-based approach allows Netflix to provide high-quality streaming services to millions of viewers worldwide efficiently. There are many areas where cloud computing has its footprint and is growing every year. However, such models pose latency, data security, and network dependency challenges. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
+An example of a company that is heavily utilising cloud computing is Netflix. A popular video streaming service, Netflix leverages Amazon Web Services (AWS) to manage its vast areas, including video storage, transcoding, platform operations, and content delivery \citep{cloud_netflix}. This cloud-based approach allows Netflix to provide high-quality streaming services to millions of viewers worldwide efficiently. There are many areas where cloud computing has its footprint and is growing every year. However, such models pose latency, data security, and network dependency challenges. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
 
 \section{Deployment Models}
 \label{sec:cloud_model}
@@ -68,20 +68,26 @@ Reliability & High if well-managed. & High; providers offer redundancy and failo
 \endgroup
 
 \section{Risks}
-\begin{itemize}
-    \item \textbf{Access Control in the Cloud} - Access control in the cloud is critical to securing the system and sensitive data. However, managing access control has risks, especially when the controls are misconfigured, as the cloud follows a shared responsibility for securing the systems between the customer and the cloud provider \citep{cloud_shared_resp}. Such misconfiguration of identity and access management (IAM) policies, weak authentication practices, and poor management for storing and rotating secret keys can lead to unauthorised access.  
+    \paragraph{Access Control in the Cloud:} Access control in the cloud is critical to securing the system and sensitive data. However, managing access control has risks, especially when the controls are misconfigured, as the cloud follows a shared responsibility for securing the systems between the customer and the cloud provider \citep{cloud_shared_resp}. Such misconfiguration of identity and access management (IAM) policies, weak authentication practices, and poor management for storing and rotating secret keys can lead to unauthorised access.
+     
 
-    \item \textbf{Network Security } - Network security in cloud computing faces unique challenges that can compromise data and service integrity. One of the primary risks is insecure API endpoints, where attackers can exploit vulnerable APIs lacking proper authentication and encryption to gain unauthorised access to cloud resources, leading to data breaches and service disruption. Network security issues have a lot of commonalities with the traditional vulnerabilities, like Denial of Service (DoS), Man-in-the-Middle (MitM) and Virtual Machine (VM), especially with cloud sharing infrastructure where the infrastructure is shared amongst many clients \citep{network_cloud}. If proper measures and configurations are not in place, attackers could move laterally across the cloud to infiltrate many systems and organisations simultaneously. 
     
-    \item \textbf{Regulatory Compliance } - Cloud computing has added complexity as cloud providers tend to be multi-regional, which presents significant challenges to organisations operating across different regions, and the areas are subject to strict requirements for data protection, security controls and data sovereignty. This risk, in particular, is not a security risk but rather a legal one, where failure to comply with local laws and regulations such as HIPAA, GDPR, and PCI DSS could lead to financial and reputational damage \citep{legal_cloud_challenge}.
+    \paragraph{Network Security:} Network security in cloud computing faces unique challenges that can compromise data and service integrity. One of the primary risks is insecure API endpoints, where attackers can exploit vulnerable APIs lacking proper authentication and encryption to gain unauthorised access to cloud resources, leading to data breaches and service disruption. Network security issues have a lot of commonalities with the traditional vulnerabilities, like Denial of Service (DoS), Man-in-the-Middle (MitM) and Virtual Machine (VM), especially with cloud sharing infrastructure where the infrastructure is shared amongst many clients \citep{network_cloud}. If proper measures and configurations are not in place, attackers could move laterally across the cloud to infiltrate many systems and organisations simultaneously. 
+     
+     
+    \paragraph{Regulatory Compliance:} Cloud computing has added complexity as cloud providers tend to be multi-regional, which presents significant challenges to organisations operating across different regions, and the areas are subject to strict requirements for data protection, security controls and data sovereignty. This risk, in particular, is not a security risk but rather a legal one, where failure to comply with local laws and regulations such as HIPAA, GDPR, and PCI DSS could lead to financial and reputational damage \citep{legal_cloud_challenge}.
     
-    \item \textbf{Malware} - Malware injection is a significant threat to cloud computing. Attackers can embed malicious code into legitimate mobile applications, leading to harmful activities such as stealing sensitive data or using cloud computing power for tasks like crypto mining, also known as cryptojacking \citep{cryptojacking}. The interconnected nature of cloud computing means that malware introduced into one device can potentially spread to other devices or services within the same cloud environment. For instance, if a cloud-based application becomes infected, all users accessing that application are at risk of having their data compromised. Once malware is injected, it can persistently attack the mobile device, extract valuable information, and send it back to the attacker, often without the user's knowledge.
+
     
-    \item \textbf{Multi-Tenancy} - Multi-tenancy security risks are very similar to the ones discussed in network security, as in a multi-tenant system, an organisation could use the same physical hardware as in a private deployment model. Such a system can lead to data leakages or unauthorised access if it is improperly configured or there are vulnerabilities in the cloud provider's software. These vulnerabilities can be achieved using a moderate budget, which can be done by any average person using some Virtual Machines. In a study by \cite{multi_tenancy_cloud_risk}, an attacker has a 40\% chance of allocating his VM beside the victims using tactics like side-channel attacks and other methods. The study shows if this risk can be easily exploited if no necessary mitigations are present.
-\end{itemize}
+    \paragraph{Malware:} Malware injection is a significant threat to cloud computing. Attackers can embed malicious code into legitimate mobile applications, leading to harmful activities such as stealing sensitive data or using cloud computing power for tasks like crypto mining, also known as cryptojacking \citep{cryptojacking}. The interconnected nature of cloud computing means that malware introduced into one device can potentially spread to other devices or services within the same cloud environment. For instance, if a cloud-based application becomes infected, all users accessing that application are at risk of having their data compromised. Once malware is injected, it can persistently attack the mobile device, extract valuable information, and send it back to the attacker, often without the user's knowledge.
+
+
+    
+    \paragraph{Multi-Tenancy:} Multi-tenancy security risks are very similar to the ones discussed in network security, as in a multi-tenant system, an organisation could use the same physical hardware as in a private deployment model. Such a system can lead to data leakages or unauthorised access if it is improperly configured or there are vulnerabilities in the cloud provider's software. These vulnerabilities can be achieved using a moderate budget, which can be done by any average person using some Virtual Machines. In a study by \cite{multi_tenancy_cloud_risk}, an attacker has a 40\% chance of allocating his VM beside the victims using tactics like side-channel attacks and other methods. The study shows if this risk can be easily exploited if no necessary mitigations are present.
+
 
 \section{OpenID Connect Protocol}
-OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0 protocol that provides a standardised way of authenticating and authorising users across web applications and apps \citep{oidc_intro}. OpenID Connect enables a secure sign-in experience and simplifies verifying user identities across various applications and platforms. This protocol allows applications to request and receive information about authenticated users from identity providers (IDPs), such as Google, Microsoft, and Facebook. The authentication process involves exchanging different types of tokens, usually in JSON Web Token (JWT) format, a widely adopted industry standard for exchanging information between two parties \citep{jwt}. These JWT tokens are then used as different kinds of tokens, such as ID tokens, access tokens, and refresh tokens that contain claims or information about the user and the permissions they are granted in the application including information about their sessions. Using these tokens, an application can authenticate and authorise users (Access Tokens), identify authenticated users (ID Tokens) and provide a way to re-authenticate automatically without explicit login (Refresh tokens) \citep{oidc_tokens}; refer to Table \ref{table:oauth_terms} for more details. 
+OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0 protocol that provides a standardised way of authenticating and authorising users across web applications and apps \citep{oidc_intro}. OpenID Connect enables a secure sign-in experience and simplifies verifying user identities across various applications and platforms. This protocol allows applications to request and receive information about authenticated users from identity providers (IDPs), such as Google, Microsoft, and Facebook. The authentication process involves exchanging different types of tokens, usually in JSON Web Token (JWT) format, a widely adopted industry standard for exchanging information between two parties \citep{jwt}. These JWT tokens are then used as different kinds of tokens, such as ID tokens, access tokens, and refresh tokens that contain claims or information about the user and the permissions they are granted in the application including information about their sessions. Using these tokens, an application can authenticate and authorise users (Access Tokens), identify authenticated users (ID Tokens) and provide a way to re-authenticate automatically without explicit login (Refresh tokens) \citep{oidc_tokens}; refer to Table \ref{table:oauth_terms} for more details regarding relevant OpenID terms.
 \newpage
 \begingroup
 \centering
@@ -94,8 +100,8 @@ OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0
 \textbf{Term} & \textbf{Description} \\ 
 \hline
 
-\textbf{Client} & The app that wants to access some data \citep{oidc_tokens}. \\ \hline
-\textbf{Resource Server} & The resource that the client wants to access. This is generally an API or an app that contains some data \citep{oidc_tokens}. \\ \hline
+\textbf{Client} & The application that needs access to data \citep{oidc_tokens}. \\ \hline
+\textbf{Resource Server} & The resource that the client wants to access. This is generally an API or an application that contains some data to be retrieved \citep{oidc_tokens}. \\ \hline
 \textbf{Resource Owner} & The data owner on the server \citep{oidc_tokens}. \\ \hline
 \textbf{Authorisation Server} & The main server which issues the tokens after successful authentication \citep{oidc_tokens}.\\ \hline
 \textbf{Grant Type} & This is an authorisation given to the client to access the data on the resource server, which represents the specific permission the client is allowed to have. Grant types include Authorisation Code, Implict, and Client Credentials \citep{adv_api_sec}.  \\ \hline
@@ -106,16 +112,29 @@ OpenID Connect (OIDC) is a prevalent authentication layer based on the OAuth 2.0
 \endgroup
 
 \subsection{Flows}
-OpenID Connect provides a means to authenticate users and allow them to access data using different kinds of tokens. Still, in the real world, various requirements exist for diverse types of application architecture, such as mobile, server-server, and single-page applications. The OpenID Connect protocol is designed with multiple flows that balance security and usability to accommodate designs encompassing different security requirements and technical limitations. For example, some flows prioritise security by not exposing sensitive tokens on the user end. On the other hand, user experience is more of a focus, making it less secure. 
+OpenID Connect provides a means to authenticate users and allow them to access data using different kinds of tokens.
+Still, in the real world, various requirements exist for diverse types of application architecture, such as mobile, server-server, and single-page applications.
+The OpenID Connect protocol is designed with multiple \textit{flows} that balance security and usability to accommodate designs encompassing different security requirements and technical limitations.
+For example, some flows prioritise security by not exposing sensitive tokens on the user end. On the other hand, user experience is more of a focus, making it less secure. 
 \par
-In the coming section, we will discuss these critical flows to understand their advantages and disadvantages. Understanding OIDC flows and their characteristics allows one to choose the most appropriate method for their specific application scenario to balance security, functionality, and user experience.
+In the coming section, we discuss these critical flows to understand their advantages and disadvantages. Understanding OIDC flows and their characteristics allows one to choose the most appropriate method for their specific application scenario to balance security, functionality, and user experience.
 
 
 
 \subsection{Implict Flow}
-Implicit Flow is the most straightforward authentication flow in the OpenID Connect protocol. It is designed to accommodate client-side or single-paged applications (SPAs) running in a user's browser. This flow is primarily intended for scenarios where the client application cannot securely store client secrets, which are sensitive information for client authentication. This limitation is usually valid for web applications, mobile apps, and SPAs. This method directly issues tokens like ID Tokens, Access Tokens, and Refresh Tokens after the user successfully authenticates as part of the response without additional network requests (refer to Figure \ref{fig:implicit_flow} for the flow). Such an authentication process is advantageous as the resource access does not need many steps and reduces latency, as the tokens are available after user authentication. 
+Implicit Flow is the most straightforward authentication flow in the OpenID Connect protocol.
+It is designed to accommodate client-side or single-paged applications (SPAs) running in a user's browser.
+This flow is primarily intended for scenarios where the client application cannot securely store client secrets, which are sensitive information for client authentication.
+This limitation is usually valid for web applications, mobile apps, and SPAs.
+This method directly issues tokens like ID Tokens, Access Tokens, and Refresh Tokens after the user successfully authenticates as part of the response without additional network requests (refer to Figure \ref{fig:implicit_flow} for the flow).
+Such an authentication process is advantageous as the resource access does not need many steps and reduces latency, as the tokens are available after user authentication. 
 
-Despite the benefits of latency and simplicity, Implicit Flow comes with particular security risks. The tokens are stored and handled directly in the client application or within the browser, making them vulnerable to various attacks. If the client applications are compromised and the tokens are exposed, this could lead to unauthorised access. The valuable tokens can be intercepted using different attacks, like Man-in-the-Middle Attacks and Cross-Site Scripting, allowing the valid tokens to be replayed. Implicit Flow provides quick and easy access to authentication tokens for client-side applications and has significant security challenges. It is crucial to feel responsible and take proactive steps to apply appropriate security measures or opt for more secure alternatives.
+Despite the benefits of latency and simplicity, Implicit Flow comes with particular security risks.
+The tokens are stored and handled directly in the client application or within the browser, making them vulnerable to various attacks.
+If the client applications are compromised and the tokens are exposed, this could lead to unauthorised access.
+The valuable tokens can be intercepted using different attacks, like Man-in-the-Middle Attacks and Cross-Site Scripting, allowing the valid tokens to be replayed.
+Implicit Flow provides easy access to authentication tokens for client-side applications and has significant security challenges.
+It is crucial for organisations to keep ownership when designing applications employing this flow, proactive steps towards appropriate security measures are needed. Alternatively, opting out for more secure choices is an option.
 
 \begin{figure}[h!]
 \centering
@@ -125,9 +144,14 @@ Despite the benefits of latency and simplicity, Implicit Flow comes with particu
 \end{figure}
 
 \subsection{Authorisation Code Flow}
-Authorisation Code flow is another commonly used OIDC Flow that clients can use to verify the user's identity. This flow is crafted for applications such as server-to-server communication, which can store secrets, which are then used with the authorisation code, and handle the tokens without exposing them to the user \citep{auth_flow_oidc}. This method is one of the popular ways to implement OpenID Connect, as it provides a good balance between security and user experience and ensures a robust mechanism for authentication and authorisation. Figure \ref{fig:authorisation_flow} depicts the process of authorisation code flow, where a user tries to gain access to the resource after authentication. In contrast to the implicit flow, we can see that an authorisation code with a redirect URL is returned after authentication rather than tokens to the user. Combined with the correct client secret, this code returns the tokens only to the client and not the user. 
+Authorisation Code flow is another commonly used OIDC Flow that clients can use to verify the user's identity.
+This flow is crafted for applications such as server-to-server communication, which can store secrets, which are then used with the authorisation code, and handle the tokens without exposing them to the user \citep{auth_flow_oidc}.
+This method is one of the popular ways to implement OpenID Connect, as it provides a good balance between security and user experience and ensures a robust mechanism for authentication and authorisation.
+Figure \ref{fig:authorisation_flow} depicts the process of authorisation code flow, where a user tries to gain access to the resource after authentication.
+In contrast to the implicit flow, we can see that an authorisation code with a redirect URL is returned after authentication rather than tokens to the user.
+Combined with the correct client secret, this code returns the tokens only to the client and not the user. 
 
-Given the benefits of this flow, this design is still not without potential risks, namely misconfigured URLs, which could let the attacker manipulate the redirect to a malicious site, Cross-Site Request Forgery (CSRF) if the tokens are not appropriately secured, the attacker can trick the user into submitting unintended requests, and also man-in-the-middle attacks, if the users authorisation code is intercepted and also the client secret is know due to other vulnerabilities then the attacker can impersonate as a legitimate user.
+Given the benefits of this flow, this design is still not without potential risks, namely misconfigured URLs, Cross-Site Request Forgery (CSRF) and also man-in-the-middle attacks. 
 
 \begin{figure}[h!]
 \centering
@@ -149,9 +173,21 @@ Proof Key for Code Exchange (PKCE) flow is an improvement to the authorisation c
 \caption{Sequence Diagram for PKCE Code Flow}
 \end{figure}
 
-PKCE mitigates this risk by adding two steps: creating a code verifier and the code challenge. When a client initiates the authorisation request, it generates a random string called the code verifier. This verifier is hashed using a secure method (such as SHA-256) to create the code challenge sent with the authorisation request. The original code verifier must be provided when the client requests the access token. The authorisation server hashes this verifier and compares it with the original code challenge. If they match, the server issues the access token. This method ensures that the access token cannot be obtained without the authorisation code and the original code verifier. Figure \ref{fig:pkce_flow} depicts the sequence of events and requests that occur during the PKCE flow, which gives an overview of the steps needed to implement this process.
+PKCE mitigates this risk by adding two steps: creating a code verifier and the code challenge.
+When a client initiates the authorisation request, it generates a random string called the code verifier.
+This verifier is hashed using a secure method (such as SHA-256) to create the code challenge sent with the authorisation request.
+The original code verifier must be provided when the client requests the access token.
+The authorisation server hashes this verifier and compares it with the original code challenge.
+If they match, the server issues the access token.
+This method ensures that the access token cannot be obtained without the authorisation code and the original code verifier.
+Figure \ref{fig:pkce_flow} depicts the sequence of events and requests that occur during the PKCE flow, which gives an overview of the steps needed to implement this process.
 
-Like the other flows, PKCE also has potential risks, especially when the implementation of this method is not done correctly. The code verifier is an integral part of this process, and if the attacker can access it, it would make this flow vulnerable. The attackers have a few ways to obtain or even guess the code verifier. Since the code verifier has to be sent to the server and an insecure transmission is used, the code verifier can be intercepted. In addition, using random generators that are cryptographically secure can make the code guessable. On the one hand, the client has to implement all the steps correctly; on the other hand, the authorisation server also needs to validate the code, and if this is not done perfectly, then attackers could bypass PKCE.   
+Like the other flows, PKCE also has potential risks, especially when the implementation of this method is not done correctly.
+The code verifier is an integral part of this process, and if the attacker can access it, it would make this flow vulnerable.
+The attackers have a few ways to obtain or even guess the code verifier.
+Since the code verifier has to be sent to the server and an insecure transmission is used, the code verifier can be intercepted.
+In addition, using random generators that are cryptographically secure can make the code guessable.
+On the one hand, the client has to implement all the steps correctly; on the other hand, the authorisation server also needs to validate the code, and if this is not done perfectly, then attackers could bypass PKCE.
 
 
 \begingroup
@@ -185,27 +221,32 @@ Like the other flows, PKCE also has potential risks, especially when the impleme
 
 \section{OIDC Security Risks}
 
-The flows mentioned above are some industry-standard methods in OpenID Connect that carry out authentication and authorisation in different applications. While it shares some common vulnerabilities with other protocols, such as Man-in-the-Middle (MitM) attacks, Denial of Service (DoS), and Cross-Site Scripting (XSS), this section focuses on security risks that are particularly relevant to OpenID Connect. We will explore threats like Replay Attacks, Signature Manipulation, Malicious Endpoint Attacks, and PKCE Downgrade Attacks \citep{oidc_attacks}. 
+The flows mentioned above are some industry-standard methods in OpenID Connect that carry out authentication and authorisation in different applications.
+While it shares some common vulnerabilities with other protocols, such as MitM, DoS, and XSS attacks, this section focuses on security risks that are particularly relevant to OIDC.
+We explore threats like Replay Attacks, Signature Manipulation, Malicious Endpoint Attacks, and PKCE Downgrade Attacks \citep{oidc_attacks}. 
 
-\begin{itemize}
-    \item \textbf{Replay Attacks} - Replay attack in OpenID Connect can be executed when an attacker successfully intercepts valid tokens like the authentication, refresh and ID tokens or gets hold of the authorisation code or code verifier. In this case of fraudulent access, the attacker could impersonate a user. However, OIDC has mechanisms to protect itself from such access; in particular, a claim called the nonce must be transmitted during request, and the client must check the nonce during each \citep{oidc_attacks}. \newline
+    \paragraph{Replay Attacks:} Replay attack in OpenID Connect can be executed when an attacker successfully intercepts valid tokens like the authentication, refresh and ID tokens or gets hold of the authorisation code or code verifier. In this case of fraudulent access, the attacker could impersonate a user. However, OIDC has mechanisms to protect itself from such access; in particular, a claim called the nonce must be transmitted during request, and the client must check the nonce during each request \citep{oidc_attacks}. 
 
-    \textbf{Countermeasure}: Replay attacks can be mitigated using a cryptographically random number called a nonce. The client can add nonces as a one-time parameter to the authentication request. As the request comes to the authorisation server, it can ensure that the request and the tokens are fresh and are not replayed because of an interception \citep{oidc_attacks}.
+    \paragraph{Countermeasure:} Replay attacks can be mitigated using a cryptographically random number called a nonce. The client can add nonces as a one-time parameter to the authentication request. As the request comes to the authorisation server, it can ensure that the request and the tokens are fresh and are not replayed because of an interception \citep{oidc_attacks}.
     
-    \item \textbf{Signature Manipulation} - Signature manipulation attack targets the tokens in OIDC, namely the access token, refresh token and ID tokens. \cite{oidc_attacks} mentions a case when an attacker can create tokens with a "none" algorithm, given the server handles it, allowing it to tamper the token. The tampered token would allow an attacker to commit identity spoofing and elevate their privilege to gain higher access, causing data loss and integrity risks.\newline
+    \paragraph{Signature Manipulation:} Signature manipulation attack targets the tokens in OIDC, namely the access token, refresh token and ID tokens. \cite{oidc_attacks} mentions a case when an attacker can create tokens with a "none" algorithm, given the server handles it, allowing it to tamper the token. The tampered token would allow an attacker to commit identity spoofing and elevate their privilege to gain higher access, causing data loss and integrity risks.
 
-    \textbf{Countermeasure}: Signature manipulation can be mitigated by signing tokens, namely access tokens, ID tokens, and refresh tokens with a cryptographically 
+    \paragraph{Countermeasure:} Signature manipulation can be mitigated by signing tokens, namely access tokens, ID tokens, and refresh tokens with a cryptographically 
     secure algorithm such as RS256 or a symmetric key algorithm like HS256 \citep{signed_token}. Using the signed tokens can prevent manipulating them to gain unauthorised access, as the issuer can validate them using the secret key.
     
-    \item \textbf{Malicious Endpoint Attacks} - OpenID Connect is designed to operate using various endpoints that enable the crucial parts of authentication and authorisation processes. Table \ref{table:outh_endpoints} presents some critical endpoints used in the context of OpenID Connect. The \textbf{/.well-known} is of interest to malicious attacks, as this endpoint is dynamic, which the clients use for the authentication process, containing vital configurations, namely supported scopes, endpoint, claims, jwks public key URL, authorisation endpoint, and Issuer \citep{oidc_attacks}. An attacker could tamper with the discovery document to alter the endpoint URLs to redirect the client to a malicious server and gain unauthorised access. This attack can be achieved in two ways: tampering, where the discovery endpoint is tampered with, and poisoning the cache with malicious values.\newline
+    \paragraph{Malicious Endpoint Attacks:} OpenID Connect is designed to operate using various endpoints that enable the crucial parts of authentication and authorisation processes.
+    Table \ref{table:outh_endpoints} presents some critical endpoints used in the context of OpenID Connect.
+    The \textbf{\textit{/.well-known}} is of interest to malicious attacks, as this endpoint is dynamic, which the clients use for the authentication process, containing vital configurations, namely supported scopes, endpoint, claims, jwks public key URL, authorisation endpoint, and Issuer \citep{oidc_attacks}.
+    An attacker could tamper with the discovery document to alter the endpoint URLs to redirect the client to a malicious server and gain unauthorised access.
+    This attack can be achieved in two ways: tampering, where the discovery endpoint is tampered with, and poisoning the cache with malicious values.
 
-    \textbf{Countermeasure}: Implementing OpenPubKey, utilising user-managed cryptographic signing keys, offers a robust solution to mitigate trust dependencies in traditional OpenID Provider (OP) authentication frameworks.  It functions by modifying OIDC on the client side to create what is known as a PK Token, a unique form of ID Token that cryptographically binds a user's OpenID Connect identity to their public key (PKu)\citep{openpub_key}. This method enables secure messaging using signed identities to build trust and protect against potentially compromised OpenID Providers.
+    \paragraph{Countermeasure:} Implementing OpenPubKey, utilising user-managed cryptographic signing keys, offers a robust solution to mitigate trust dependencies in traditional OpenID Provider (OP) authentication frameworks.  It functions by modifying OIDC on the client side to create what is known as a PK Token, a unique form of ID Token that cryptographically binds a user's OpenID Connect identity to their public key (PKu)\citep{openpub_key}. This method enables secure messaging using signed identities to build trust and protect against potentially compromised OpenID Providers.
 
 
-    \item \textbf{PKCE Downgrade Attacks} - PKCE (refer to Section \ref{sec:pkce_flow}) is a flow developed to protect native applications from interception attacks \citep{pkce}. This flow adds several security layers or requests (refer to Figure \ref{fig:pkce_flow}) to achieve a secure authentication method for applications that cannot handle storing critical secret keys. Despite these measures, PKCE is still vulnerable to many attacks if no protection measures are taken. For example, in the PKCE Downgrade Attack, where the attacker tries to remove the \textbf{code\_challenge} and the authorising server does not validate it \citep{oidc_attacks}.\newline
+    \paragraph{PKCE Downgrade Attacks:} PKCE (refer to Section \ref{sec:pkce_flow}) is a flow developed to protect native applications from interception attacks \citep{pkce}. This flow adds several security layers or requests (refer to Figure \ref{fig:pkce_flow}) to achieve a secure authentication method for applications that cannot handle storing critical secret keys. Despite these measures, PKCE is still vulnerable to many attacks if no protection measures are taken. For example, in the PKCE Downgrade Attack, where the attacker tries to remove the \textbf{code\_challenge} and the authorising server does not validate it \citep{oidc_attacks}.
 
-    \textbf{Countermeasure}: The OpenID Provider must ensure that when the PKCE flow is activated for the client, the \textbf{code\_challenge} is included in the authentication request and the \textbf{code\_verifier} is present in the token request \citep{oidc_attacks}. Moreover, for applications that handle sensitive data, the option for Plaintext mode, where the code\_challenge is sent in plain text, should be disabled. Not allowing the clients to skip the PKCE flows by verifying the presence of code\_verifier and code\_challenge can prevent PKCE Downgrade attacks. \newline
-\end{itemize}
+    \paragraph{Countermeasure:} The OpenID Provider must ensure that when the PKCE flow is activated for the client, the \textbf{code\_challenge} is included in the authentication request and the \textbf{code\_verifier} is present in the token request \citep{oidc_attacks}. Moreover, for applications that handle sensitive data, the option for Plaintext mode, where the code\_challenge is sent in plain text, should be disabled. Not allowing the clients to skip the PKCE flows by verifying the presence of code\_verifier and code\_challenge can prevent PKCE Downgrade attacks. \newline
+
 
     
     % OIDC ENDPOINT TABLE BEGIN
@@ -248,9 +289,18 @@ The flows mentioned above are some industry-standard methods in OpenID Connect t
 
 While existing research provides valuable insights into the security of OIDC and Cloud applications separately, more studies need to be conducted specifically to address the security risks of OIDC in cloud environments. 
 
-Cloud environments often host multiple tenants on shared infrastructure, increasing the risk of data leakage and unauthorised access between tenants. Although authors like \cite{multi_tenancy_cloud_risk} and \cite{cloud_shared_resp} have focused on multi-tenancy for cloud computing but not in conjunction with OpenID Connect. OpenID Connect Protocol can also be configured to allow multi-tenancy; for example, a company owns two sub-companies, A and B, but does not want to spend money duplicating the infrastructure. In this case, the tenant's data should be logically isolated. In such cases, ensuring logical isolation of each tenant's data becomes critical to prevent cross-tenant access. Each subsidiary must maintain distinct access controls and role-based permissions to protect against unauthorised data access, even though they share the same underlying resources. 
+Cloud environments often host multiple tenants on shared infrastructure, increasing the risk of data leakage and unauthorised access between tenants.
+Authors like \cite{multi_tenancy_cloud_risk} and \cite{cloud_shared_resp} have focused on multi-tenancy for cloud computing, but not in conjunction with OpenID Connect.
+OpenID Connect Protocol can also be configured to allow multi-tenancy; for example, a company owns two sub-companies, A and B, but does not want to spend money duplicating the infrastructure.
+In this case, the tenant's data should be logically isolated.
+In such cases, ensuring logical isolation of each tenant's data becomes critical to prevent cross-tenant access.
+Each subsidiary must maintain distinct access controls and role-based permissions to protect against unauthorised data access, even though they share the same underlying resources. 
 
-The existing research can be complemented by analysing the risks that OpenID Connect protocols bring when also used in a multi-tenant environment. Understanding the risks involved in multi-tenancy with OIDC would also give a broader picture of the possible security risks and the implication of data protection laws like the General Data Protection Regulation (GDPR) EU's data privacy law \citep{gdpr} when security breaches in such environment occur. In addition, \citep{oidc_attacks} highlights how attackers gain access to sensitive data using replay attacks and OIDC misconfiguration. The attack surfaces increase drastically when multiple tenants share the same Identity Provider. Therefore, further analysis of this topic would provide a better understanding of the multi-tenancy of OIDC in the cloud, the regulatory implications when there is data loss and the various other attacks that revolve around the issue.
+The existing research can be complemented by analysing the risks that OpenID Connect protocols bring when also used in a multi-tenant environment.
+Understanding the risks involved in multi-tenancy with OIDC would also give a broader overview of the possible security risks and the implication of data protection laws like the General Data Protection Regulation (GDPR) EU's data privacy law \citep{gdpr} when security breaches in such environment occur.
+In addition, \citep{oidc_attacks} highlights how attackers gain access to sensitive data using replay attacks and OIDC misconfiguration.
+The attack surfaces increase drastically when multiple tenants share the same Identity Provider.
+Therefore, further analysis of this topic would provide a better understanding of the multi-tenancy of OIDC in the cloud, the regulatory implications when there is data loss and the various other attacks that revolve around the issue.
 
 \begin{comment}
     \subsection {O}
@@ -304,9 +354,18 @@ Table \ref{table:further_reading} mentions the primary references that are used 
 \endgroup
 
 \section{Conclusion}
-The existing body of research needs to address the specific security challenges that cloud environments pose. While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the cloud, is not fully addressed. In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants. Such breaches would undermine the confidentiality and integrity of the tenants, which have severe economic and reputation consequences for the company.\par
+The existing body of research needs to address the specific security challenges that cloud environments pose.
+While both OIDC and cloud environments have been studied extensively in isolation, their combination in particular scenarios, such as multi-tenancy with OpenID Connect in the cloud, is not fully addressed.
+In multi-tenant environments, the threats become more severe, as a successful attack could potentially compromise data across multiple tenants.
+Such breaches would undermine the confidentiality and integrity of the tenants, with severe economic consequences to all stakeholders.\par
 
-Furthermore, the regulatory implications of such breaches cannot be ignored, especially in regions like the EU, where the GDPR directive plays a crucial role in data protection. Similar to the GDPR, comparable laws impose stringent requirements on an organisation. In the event of a security breach, there will be significant penalties. Compliance with data protection laws is challenging in cloud environments and OIDC protocol. Focusing on the identified gaps and proposed areas for future research can significantly enhance the security of OIDC in cloud applications. This will protect sensitive user data and bolster the trust and reliability of cloud-based services. In addition to trust, it would also provide us with an understanding of the regulatory implications of failing to comply with the laws.
+Furthermore, the regulatory implications of such breaches cannot be ignored, especially in regions like the EU, where the GDPR directive plays a crucial role in data protection.
+Similar to the GDPR, comparable laws impose stringent requirements on an organisation.
+In the event of a security breach, there will be significant penalties.
+Compliance with data protection laws is challenging in cloud environments and OIDC protocol.
+Focusing on the identified gaps and proposed areas for future research can significantly enhance the security of OIDC in cloud applications.
+This will protect sensitive user data and bolster the trust and reliability of cloud-based services.
+In addition to trust, it would also provide us with an understanding of the regulatory implications of failing to comply with the laws.
 
 
 

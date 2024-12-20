@@ -1,14 +1,23 @@
-\chapter{Chapter: Threat Modelling}
+\chapter{Threat Modelling}
 \label{chap:threat_model}
-Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}. This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied. Similarly, threat modelling will also be conducted for this project, where an authentication server using OIDC protocol is operated in a cloud environment. The approach that this project will apply to threat modelling is based on Shostack's Four Question Framework \citep{shostack}. The questions focus on the project objectives, what could go wrong there, what mitigations could be applied, and whether it can be improved. Using Shostacks questions in conjunction with the OWASP threat modelling process, the application can be analysed using OIDC in the cloud \citep{owasp_threat_model}. The objective of threat modelling is to identify as many possible risks present in the Open ID Connect application running on a cloud. Furthermore, the modelling will be cloud agnostic, meaning these identified mitigations can be applied anywhere, irrespective of the cloud provider.
+Threat modelling is an act of security analysis which aids in discovering potential vulnerabilities in an application or a system before they become threats \citep{threat_model_intro}.
+This exercise is a crucial step in the Software Development Life Cycle (SDLC), as it helps detect the possible flaws in the system, and suitable mitigation can be applied.
+Therefore, we conduct threat modelling for a scenario, where an authentication server using OIDC protocol is operated in a cloud environment.
+We favor Shostack's Four Question Framework \citep{shostack} to guide the threat modelling in this work.
+The questions focus on the project objectives, namely what could go wrong, what mitigations are appropriate and what can be improved.
+Using Shostacks questions in conjunction with the OWASP threat modelling process, the application can be analysed using OIDC in the cloud \citep{owasp_threat_model}.
+The objective of threat modelling is to identify as many possible risks present in the Open ID Connect application running on a cloud.
+Furthermore, the modelling is cloud agnostic, meaning these identified mitigations can be applied anywhere, irrespective of the cloud provider.
 
 \section{Application Information}
-To answer the first question from Shostacks's Four questions, \textit{what are we working on}, this section will describe the application and the different dependencies that this application contains.
-\newline
+To answer the first question from Shostacks's Four questions, \textit{what are we working on ?}, this section describes the application and the different dependencies that this application contains.
+\newpage
 \begin{itemize}
     \item \textbf{Application Name:} Multi-tenant App
     \item \textbf{Application Version:} v1.0
-    \item \textbf{Description:} This generic authentication and authorisation application utilises OIDC protocols PKCE flow (refer to Figure \ref{fig:pkce_flow}) in a public cloud environment. This application will be based on multi-tenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application. This general API would provide the capabilities mentioned in Table \ref{table:threat_model_entry_points}.
+    \item \textbf{Description:} This generic authentication and authorisation application utilises OIDC protocols PKCE flow (refer to Figure \ref{fig:pkce_flow}) in a public cloud environment.
+    This application is based on multi-tenant capability, where the users cannot access each other's resources even though they share the same infrastructure and application.
+    This general API would provide the capabilities mentioned in Table \ref{table:threat_model_entry_points}.
   \end{itemize}
 
 \subsection{Entry Points}
@@ -29,23 +38,23 @@ To answer the first question from Shostacks's Four questions, \textit{what are w
 \hline
 \endlastfoot
 
-/authorize & Entry point for user authentication by the Authrorisation server.  & 
-- client\_id: The client ID of the application \newline 
-- redirect\_uri: URI where the response will be sent \newline
-- scope: Scopes for requested authentication (e.g., OpenID, email) \newline 
-- response\_type: Indicates the desired authorisation flow (e.g., code) \citep{openid_docs} & 
+/authorize & Entry point for user authentication by the Authorisation server.  & 
+- \textit{client\_id}: The client ID of the application \newline 
+- \textit{redirect\_uri}: URI where the response will be sent \newline
+- \textit{scope}: Scopes for requested authentication (e.g., OpenID, email) \newline 
+- \textit{response\_type}: Indicates the desired authorisation flow (e.g., code) \citep{openid_docs} & 
 - The authorisation code is to be exchanged for tokens. \newline 
 - Error in case of invalid request \\
 \hline
 
 /token & Entry point for exchanging authorisation code for tokens (access token, ID token, refresh token). & 
-- grant\_type: "authorization\_code" \newline 
-- code: Authorisation code received from /authorize \newline
-- redirect\_uri: Must match the original redirect URI used in /login \newline 
-- client\_id: The client ID of the application
-- code\_verifier: Code used to validate code\_challenge \citep{openid_docs}& 
-- access\_token: Token for accessing protected resources \newline 
-- id\_token: Token containing user identity information \newline 
+- \textit{grant\_type}: "authorization\_code" \newline 
+- \textit{code}: Authorisation code received from /authorize \newline
+- \textit{redirect\_uri}: Must match the original redirect URI used in /login \newline 
+- \textit{client\_id}: The client ID of the application
+- \textit{code\_verifier}: Code used to validate code\_challenge \citep{openid_docs}& 
+- \textit{access\_token}: Token for accessing protected resources \newline 
+- \textit{id\_token}: Token containing user identity information \newline 
 - Error in case of invalid request \\
 \hline
 
@@ -84,15 +93,22 @@ API Endpoints & Points of interaction where the application exposes functionalit
 
 
 \section{STRIDE Model}
-Using the given entry points and assets that the application uses, a level zero Data Flow Diagram (DFD) (refer to Figure \ref{fig:dfd_app}) is created. This diagram provides an overview of the system's significant processes, data flow, and credential stores. With the help of Figure \ref{fig:dfd_app}, an abstract view of the entire system shows the processes and their relationships that can be used in established threat modelling techniques, namely STRIDE \citep{dfd_stride}. STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}. The letters in the acronym are Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege. The threat categories will be analysed during the threat modelling \citep{stride}. Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model. This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
+Using the given entry points and assets that the application uses, a level zero Data Flow Diagram (refer to Figure \ref{fig:dfd_app_fig}) is created.
+This diagram provides an overview of the system's significant processes, data flow, and credential stores.
+This abstraction of the system proceses can be explicitly used for threat modelling, e.g., STRIDE \citep{dfd_stride}.
+STRIDE is a threat modelling framework used to classify security threats developed by Microsoft \citep{stride_usage}.
+The letters in the acronym are Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege.
+The threat categories are analysed during the threat modelling \citep{stride}.
+Using the DFD, a STRIDE threat modelling is carried out, which provides an analysis of some threats in the given context of this model.
+This threat modelling framework is chosen because it allows for a systematic and structured approach to identify threats in different areas denoted by the acronym and is easy to apply.
 
 
 
 \begin{figure}[h!]
 \centering
-\label{fig:dfd_app}
-\includegraphics[width=\textwidth, height=320px]{pics/DFD_APP.png}
+\includegraphics[width=\textwidth]{pics/DFD_APP.pdf}
 \caption{Data Flow Diagram Level 0 OIDC App}
+\label{fig:dfd_app_fig}
 \end{figure}
 
 
@@ -229,12 +245,12 @@ The first step in this risk assessment process is to define the scope of the ISM
 \subsection{Methodology}
 One of the benefits of using risk assessment from the ISO/IEC 27000 group is that it does not prescribe a specific methodology for quantitative or qualitative analysis. In contrast to FAIR, which is a quantitative method, qualitative, quantitative, or a mix of both can be applied here. 
 
-The assessment of this project is based on subjective judgment or qualitative analysis rather than quantitative analysis due to the complexity and nature of the risks. For instance, risks identified during threat modelling, such as data isolation, cloud misconfiguration, and shared resource vulnerabilities, are difficult to quantify because they involve unknown factors. Using subjective analysis simplifies the decision-making process and is faster to conduct. To assess the risks meaningfully, the Common Attack Pattern Enumeration and Classification (CAPEC) is used as a reference. CAPEC provides a comprehensive database for the technical exploits used by adversaries and focuses on application security. CAPEC categorizes the general likelihood and severity into five levels, ranging from very low to very high. These levels are then converted to a number from 1-5 for each to determine the risk level for a specific threat (CAPEC). (See Figure \ref{fig:ris_assessment_method}). 
+The assessment of this project is based on qualitative analysis rather than quantitative analysis due to the complexity and nature of the risks. For instance, risks identified during threat modelling, such as data isolation, cloud misconfiguration, and shared resource vulnerabilities, are difficult to quantify because they involve unknown factors. Using subjective analysis simplifies the decision-making process and is faster to conduct. To assess the risks meaningfully, the Common Attack Pattern Enumeration and Classification (CAPEC) is used as a reference. CAPEC provides a comprehensive database for the technical exploits used by adversaries and focuses on application security. CAPEC categorizes the general likelihood and severity into five levels, ranging from very low to very high. These levels are then converted to a number from 1-5 for each to determine the risk level for a specific threat (CAPEC). Figure \ref{fig:ris_assessment_method} depicts the process of ranking severity and liklihood, using CAPEC and create a risk matrix as a structured report of threats and their risk level. 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth]{pics/risk_assessment_method.png}
-\caption{Risk Assessment Methodology}\label{fig:ris_assessment_method}
+\includegraphics[width=\textwidth]{pics/risk_assessment_method.pdf}
+\caption{Rank the severity and likelihood using a qualitative scale (1-5)}\label{fig:ris_assessment_method}
 \end{figure}
 
 \newpage
@@ -263,10 +279,10 @@ The assessment of this project is based on subjective judgment or qualitative an
 
     
 \subsection{Limitations}  
-Although ISO/IEC 20071:2022 is an internationally recognized standard for risk assessment, the framework and scope of this project have some limitations. The limitations of using this methodology for this project are listed below:
+Although ISO/IEC 20071:2022 is an internationally recognized standard for risk assessment, the framework and scope of this project have some limitations which we list below in regards to our methodology:
 
 \begin{itemize}
-    \item The complexity of full implementation requires assessing organizational, human, physical, and technological controls as per ISO/IEC 20071:2022. However, since this is merely a prototype, only technological controls are being considered, limiting this framework's effectiveness.
+    \item The complexity of full implementation requires assessing organisational, human, physical, and technological controls as per ISO/IEC 20071:2022. However, since this is merely a prototype, only technological controls are being considered, limiting this framework's effectiveness.
     
     \item The data used from CAPEC to derive the likelihood and impact is a generic value and can differ from the actual case, which could cause some deviation from the analysis.
     
@@ -280,12 +296,17 @@ Although ISO/IEC 20071:2022 is an internationally recognized standard for risk a
 
 \end{itemize}
 
-\subsection{Analysis}
- The analysis section is one of the most critical components, forming the backbone of the research findings. It consists of data on the threats that affect the OIDC application in a cloud environment. The data for the analysis are gathered using various methods, e.g., research papers, journals, and theses. To answer the research question (See \ref{sec:objectives}) mentioned in Chapter 1, the different technical threats and risks that occur due to non-compliance to regulations are analysed. As the methodology mentions, the collected threats are compared against the CAPEC database and are qualitatively assessed. Table \ref{table:risk_assessment} shows the threats analysed, and the risk level is ordered from highest to lowest. 
+\subsection{Qualitative Analysis of Risks}
+ This section is core to the contributions of this work and forms the backbone of the research findings.
+ It consists of data on the threats that affect the OIDC application in a cloud environment.
+ Several research papers, journals and theses studied in this work form the basis of the qualitative assessment of each threat.
+ To answer the research question (refer to Section \ref{sec:objectives}) mentioned in Chapter 1, the different technical threats and risks that occur due to non-compliance to regulations are analysed.
+ As the methodology mentions, the collected threats are compared against the CAPEC database and are qualitatively assessed.
+ Table \ref{table:risk_assessment} shows the threats quantified, and the risk level is ordered from highest to lowest. 
 
 \definecolor{ForestGreen}{rgb}{0.13, 0.55, 0.13}
 
-\begin{longtable}{|p{4cm}|p{2cm}|p{2cm}|p{2cm}|p{3cm}|}
+\begin{longtable}{|>{\raggedright}p{4cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{3cm}|}
 \caption{Table: Risk Assessment}
 \label{table:risk_assessment}
 \hline
@@ -309,7 +330,7 @@ Cloud Misconfigurations & 4 & 5 & \cellcolor{red!90} 20 & - \\
 \hline
 Phishing & 4 & 5 & \cellcolor{red!90} 20 & CAPEC-98  \\
 \hline
-Man-in-the-Middle (MITM) & 4 & 5 & \cellcolor{red!90} 20 &  CAPEC-94\\
+MitM & 4 & 5 & \cellcolor{red!90} 20 &  CAPEC-94\\
 \hline
 Credential Stuffing & 4 & 4 & \cellcolor{red!60} 16 & CAPEC-600 \\
 \hline
@@ -332,12 +353,16 @@ Cross-tenant data Leakage & 1 & 4 &  \cellcolor{ForestGreen} 4 & CAPEC-546 \\
 \hline
 
 \end{longtable}
- In total, 12 threats were analysed and ranked according to their risk level. Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level vs the count. This analysis identified three very high, two high, four moderate, two low and one very low risk. The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organisation. The high and high risks must be mitigated before the application is published. 
+ \noindent In total, 12 threats are analysed and ranked according to their risk level.
+ Figure \ref{fig:Risk Level Counts} depicts a bar chart showing the risk level distribution of the analysed threats.
+ This analysis identifies three very high, two high, four moderate, two low and one very low risk.
+ The mitigations for these threats have already been mentioned in Sub-Section \ref{subsec:stride}; however, this section highlights the level of risk each threat poses to an organisation.
+ The high and high risks must be mitigated before the application is published. 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{pics/risk_level_vs_count.pdf}
-\caption{Risk Assessment Methodology}\label{fig:Risk Level Counts}
+\caption{Distribution of Risk levels}\label{fig:Risk Level Counts}
 \end{figure}
 
 \subsection{Non-Compliance Risk}
@@ -363,7 +388,7 @@ Operating an OIDC application in the cloud carries a high risk if it does not co
 
 \section{Conclusion}
 
-Conducting a thorough risk assessment for an OIDC application deployed in the cloud is crucial to identify potential security vulnerabilities and ensure GDPR compliance. OIDC applications handle sensitive personal data during user authentication and authorisation, making them susceptible to threats such as cloud misconfigurations, phishing, man-in-the-middle (MITM) attacks, token tampering, and cross-tenant data leakage. These threats can significantly impact personal data's confidentiality, integrity, and availability. 
+Conducting a thorough risk assessment for an OIDC application deployed in the cloud is crucial to identify potential security vulnerabilities and ensure GDPR compliance. OIDC applications handle sensitive personal data during user authentication and authorisation, making them susceptible to threats such as cloud misconfigurations, phishing, MitM attacks, token tampering, and cross-tenant data leakage. These threats can significantly impact personal data's confidentiality, integrity, and availability. 
 
 Therefore, using the threat modelling results, we identified the threats and their mitigations, and the qualitative risk analysis helped us rank these threats according to their risk level. By prioritizing threats based on their perceived risk, we can increase efficiency. In addition to the threats, not complying with GDPR will result in significant financial costs for the organisation, making it a high-risk factor. As a result, high-risk threat mitigations must be applied to GDPR measures to ensure regulatory adherence. 
 

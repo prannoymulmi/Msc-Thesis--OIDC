@@ -280,7 +280,9 @@ To perform the $\chi^2$ test, the following null and alternative hypotheses are 
     \item \textbf{Statistical Significance Level} - An Alpha ($\alpha$) of 5\% or 0.05 is chosen, which, if the p-value is less than this value, the null hypothesis will be rejected. 
 \end{itemize}
 
-The function presented in Listing \ref{lst:chisqrd} is utilised to compute the chi-square statistic and the corresponding p-value for the provided samples. By applying this function, a p-value of 0.98 is obtained. This result indicates that we do not reject the null hypothesis, suggesting that the likelihood of information leakage due to timing attacks is minimal, thereby offering a means to mitigate such side-channel attacks.
+The function presented in Listing \ref{lst:chisqrd} is utilised to compute the chi-square statistic and the corresponding p-value for the provided samples.
+By applying this function, a p-value of 0.98 is obtained.
+This result indicates that we do not reject the null hypothesis, suggesting that the likelihood of information leakage due to timing attacks is minimal, thereby offering a means to mitigate such side-channel attacks.
 
 \newpage
 \begin{lstlisting}[style=typescript,caption=chi-squared calculation ,label=lst:chisqrd]
@@ -310,17 +312,17 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 \endfoot
 \hline
 \endlastfoot
-0              & 184.1270410000002    \\ \hline
-1              & 161.72745900000018   \\ \hline
-2              & 157.79916699999967   \\ \hline
-3              & 158.16233299999976   \\ \hline
-4              & 152.1837919999998    \\ \hline
-5              & 149.70191599999998   \\ \hline
-6              & 154.48154099999965   \\ \hline
-7              & 150.59158300000036   \\ \hline
-8              & 149.33474999999999   \\ \hline
-9              & 161.6323339999999    \\ \hline
-10             & 161.06804199999988   \\ \hline
+0              & 184.13    \\ \hline
+1              & 161.73   \\ \hline
+2              & 157.79   \\ \hline
+3              & 158.16   \\ \hline
+4              & 152.18    \\ \hline
+5              & 149.70   \\ \hline
+6              & 154.48   \\ \hline
+7              & 150.59   \\ \hline
+8              & 149.33   \\ \hline
+9              & 161.63    \\ \hline
+10             & 161.07   \\ \hline
 \multicolumn{2}{|c|}{...}             \\ \hline
 \end{longtable}
 
@@ -341,17 +343,17 @@ const calculateChiSquare = (sample1: number[], sample2: number[]) => {
 \endfoot
 \hline
 \endlastfoot
-0              & 142.1068750000013    \\ \hline
-1              & 150.20716700000048   \\ \hline
-2              & 152.9330000000009    \\ \hline
-3              & 151.93745900000067   \\ \hline
-4              & 148.29395800000202   \\ \hline
-5              & 147.69979199999943   \\ \hline
-6              & 148.17979200000264   \\ \hline
-7              & 149.0918329999986    \\ \hline
-8              & 149.97220899999957   \\ \hline
-9              & 150.53283299999748   \\ \hline
-10             & 150.40620800000033   \\ \hline
+0              & 142.11    \\ \hline
+1              & 150.21   \\ \hline
+2              & 152.93    \\ \hline
+3              & 151.94   \\ \hline
+4              & 148.29   \\ \hline
+5              & 147.69   \\ \hline
+6              & 148.18   \\ \hline
+7              & 149.09    \\ \hline
+8              & 149.97   \\ \hline
+9              & 150.53   \\ \hline
+10             & 150.41   \\ \hline
 \multicolumn{2}{|c|}{...}             \\ \hline
 \end{longtable}
 
