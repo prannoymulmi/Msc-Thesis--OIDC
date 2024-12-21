@@ -3,11 +3,11 @@
 This chapter aims to critically analyse the existing literature and related work on cloud computing and OpenID Connect (OIDC) protocols, focusing on identifying security risks and highlighting gaps in current research. The chapter will provide a foundation for understanding the complexities and challenges of securing cloud applications using OIDC by examining these areas. It will also offer an overview of cloud computing and OIDC to contextualise their interrelated roles in modern technology environments.
 
 \section{Overview of Cloud Computing}
-Cloud computing is a service model that provides on-demand access to a wide range of computing resources via the internet, including servers, storage, databases, networking, software, and analytics \citep{rashid2019cloud}. These services are designed to be easily manageable and deployable, often requiring minimal effort from the user. For example, users can quickly launch servers using a web browser through Cloud Service Providers (CSPs) such as AWS, Google Cloud and Microsoft Azure. 
+Cloud computing is a service model that provides on-demand access to a wide range of computing resources via the internet, including servers, storage, databases, networking, software, and analytics \citep{rashid2019cloud}. These services are designed to be easily manageable and deployable, often requiring minimal effort from the user. For example, users can quickly launch servers using a web browser through Cloud Service Providers (CSPs) such as Google Cloud (GCP), Amazon Web Services (AWS) and Microsoft Azure. 
 
 Today, many businesses harness the power of cloud computing to deploy various web applications tailored to small businesses and large corporations. This approach allows customers to opt for an on-demand, pay-as-you-go model, allowing them to scale resources up or down according to their needs without investing in internal infrastructure \citep{cloud_comp_example}.
 
-An example of a company that is heavily utilising cloud computing is Netflix. A popular video streaming service, Netflix leverages Amazon Web Services (AWS) to manage its vast areas, including video storage, transcoding, platform operations, and content delivery \citep{cloud_netflix}. This cloud-based approach allows Netflix to provide high-quality streaming services to millions of viewers worldwide efficiently. There are many areas where cloud computing has its footprint and is growing every year. However, such models pose latency, data security, and network dependency challenges. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
+An example of a company that is heavily utilising cloud computing is Netflix. A popular video streaming service, Netflix leverages AWS to manage its vast areas, including video storage, transcoding, platform operations, and content delivery \citep{cloud_netflix}. This cloud-based approach allows Netflix to provide high-quality streaming services to millions of viewers worldwide efficiently. There are many areas where cloud computing has its footprint and is growing every year. However, such models pose latency, data security, and network dependency challenges. Addressing these issues requires robust network infrastructure, efficient data encryption, and effective management strategies to ensure privacy and reliability.
 
 \section{Deployment Models}
 \label{sec:cloud_model}
@@ -56,7 +56,7 @@ Compliance & Easier to meet specific regulatory requirements due to dedicated re
 \hline
 Scalability & Limited by physical resources; scaling can be expensive. & Highly scalable; can quickly adjust resources based on demand. & Highly scalable; combines public cloud's scalability with private cloud’s control. & Limited scalability; constrained by shared resources within the community. \\
 \hline
-Ownership & Owned and operated by the organisation or a third party dedicated to the organisation. & Owned and operated by the cloud service provider. & Ownership is shared between private and public components. & Owned and operated by the community or a third party dedicated to the community. \\
+Ownership & Owned and operated by the organisation or a third party dedicated to the organisation. & Operated by CSPs at their data centers. & Ownership is shared between private and public components. & Owned and operated by participating organisations or is dedicated to the community. \\
 \hline
 Use Cases & Suitable for sensitive data and mission-critical applications. & Ideal for general-purpose applications, web hosting, and businesses with variable needs. & Good for organisations needing a mix of private and public resources, such as data privacy and scalable resources. & Best for organisations with common interests or regulatory requirements, such as government agencies or academic institutions. \\
 \hline
@@ -132,7 +132,7 @@ Such an authentication process is advantageous as the resource access does not n
 Despite the benefits of latency and simplicity, Implicit Flow comes with particular security risks.
 The tokens are stored and handled directly in the client application or within the browser, making them vulnerable to various attacks.
 If the client applications are compromised and the tokens are exposed, this could lead to unauthorised access.
-The valuable tokens can be intercepted using different attacks, like Man-in-the-Middle Attacks and Cross-Site Scripting, allowing the valid tokens to be replayed.
+The valuable tokens can be intercepted using different attacks, like MitM and XSS attacks, allowing the valid tokens to be replayed.
 Implicit Flow provides easy access to authentication tokens for client-side applications and has significant security challenges.
 It is crucial for organisations to keep ownership when designing applications employing this flow; proactive steps towards appropriate security measures are needed. Alternatively, opting out for more secure choices is an option.
 
@@ -151,7 +151,7 @@ Figure \ref{fig:authorisation_flow} depicts the process of authorisation code fl
 In contrast to the implicit flow, we can see that an authorisation code with a redirect URL is returned after authentication rather than tokens to the user.
 Combined with the correct client secret, this code returns the tokens only to the client and not the user. 
 
-Given the benefits of this flow, this design is still not without potential risks, namely misconfigured URLs, Cross-Site Request Forgery (CSRF) and also man-in-the-middle attacks. 
+Given the benefits of this flow, this design is still not without potential risks, namely misconfigured URLs, Cross-Site Request Forgery (CSRF) and also MitM attacks. 
 
 \begin{figure}[h!]
 \centering
@@ -211,7 +211,7 @@ On the one hand, the client has to implement all the steps correctly; on the oth
 \textbf{Flow Type} & Direct token retrieval from the authorisation server. & Two-step process: The authorisation code is retrieved first and then exchanged for an access token. & It is the same as Authorisation Code Flow but adds a code verifier and code challenge for enhanced security. \\ \hline
 \textbf{Security Level} & Lower security; tokens are exposed,  stored client side, making them vulnerable to interception. & More secure than Implicit Flow; tokens are kept server-side and not exposed. & Highest security; mitigates the risk of authorisation code interception by adding PKCE parameters. \\ \hline
 \textbf{Recommended for} & Single-page applications or web applications that cannot store secrets securely. & Web and mobile applications with a secure backend. & Public clients, including SPAs and mobile apps, require enhanced security. \\ \hline
-\textbf{Tokens Exposed in URL} & Yes, the access token is exposed in the URL fragment. & No, only the authorisation code is in the URL and exchanged server-side. & No, only the authorisation code is in the URL, with PKCE parameters providing additional security. \\ \hline
+\textbf{Tokens Exposed} & Yes, tokens are exposed in the URL, cookies, or client's local storage. & No, tokens are exchanged server-side. & No, it is the same as the authorisation code, but with PKCE parameters providing additional security. \\ \hline
 \textbf{Exchange of Authorisation Code} & Not applicable; token is issued directly. & Yes, via a secure server-side request. & Yes, with the inclusion of a code verifier to ensure integrity. \\ \hline
 \textbf{Vulnerability to Attacks} & Prone to interception attacks and token leakage. & Less vulnerable; however, the code could still be intercepted if not protected. & Minimises risks, including code interception, through PKCE parameters. \\ \hline
 \textbf{Token Storage} & Tokens are typically stored in browser storage, which may not be secure. & Tokens can be securely stored server-side. & Same as Authorisation Code Flow; tokens are typically stored securely server-side. \\ \hline
@@ -288,7 +288,7 @@ We explore threats like Replay Attacks, Signature Manipulation, Malicious Endpoi
 
 While existing research provides valuable insights into the security of OIDC and Cloud applications separately, more studies need to be conducted specifically to address the security risks of OIDC in cloud environments. 
 
-Cloud environments often host multiple tenants on shared infrastructure, increasing the risk of data leakage and unauthorised access between tenants.
+Cloud environments typically share infrastructure, increasing the risk of data leakage and unauthorised access between tenants.
 Authors like \cite{multi_tenancy_cloud_risk} and \cite{cloud_shared_resp} have focused on multi-tenancy for cloud computing, but not in conjunction with OpenID Connect.
 OpenID Connect Protocol can also be configured to allow multi-tenancy; for example, a company owns two sub-companies, A and B, but does not want to spend money duplicating the infrastructure.
 In this case, the tenant's data should be logically isolated.

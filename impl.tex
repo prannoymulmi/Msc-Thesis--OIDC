@@ -202,7 +202,7 @@ Response: {"message":"Invalid request body"}
 \end{figure}
 
     \newpage
-    \item \textbf{Missing \texttt{grant\_type}:} Sent a token exchange request without setting  \sloppy \seqsplit{grant\_type=authorization\_code}, confirming that the endpoint validates the presence of required parameters and returns a proper error if the \texttt{grant\_type} is missing or incorrect.In Figure \ref{fig:token_no_grant_type}, we show the PKCE Downgrade attack, demonstrating how the system denies the token request because it lacks the \texttt{grant\_type}.
+    \item \textbf{Missing Grant Type:} Sent a token exchange request without setting  \sloppy \seqsplit{grant\_type=authorization\_code}, confirming that the endpoint validates the presence of required parameters and returns a proper error if the \texttt{grant\_type} is missing or incorrect.In Figure \ref{fig:token_no_grant_type}, we show the PKCE Downgrade attack, demonstrating how the system denies the token request because it lacks the \texttt{grant\_type}.
 
 
                 \begin{figure}[!htbp]

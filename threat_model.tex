@@ -76,7 +76,7 @@ To answer the first question from Shostacks's Four questions, \textit{what are w
 \endhead
 
 % Assets for PKCE App in Cloud with Multiple Tenants
-OAuth Tokens & Used to authorise access to resources on behalf of the user. \\
+OAuth Tokens & Used to authorise access to resources for the user. \\
 \hline
 User Credentials & Sensitive information (e.g., usernames, passwords) used to authenticate users; protection. \\
 \hline
@@ -228,7 +228,7 @@ This threat modelling framework is chosen because it allows for a systematic and
 \section{Risk Assessment}
 Risk assessment is integral to keeping a system safe as it helps identify, analyse and evaluate the potential risks that could negatively impact an organisation. Cyber breaches have an enormous impact on an organisations value and reputation; for example, in 2024 \citep{ibm} estimated the average cost of a cyberattack on a company in the US is about 4.88M USD. In addition, such data breaches also could cost firms penalties due to non-compliance, especially in the EU. Organisations face hefty fines of up to 10 Million Euros or 2\% of their worldwide revenue under GDPR Article 83 \citep{gdpr_fine}. Therefore, carrying out a risk assessment helps understand the impact of these risks and determine how to manage and address the potential issues before they occur. 
 
-In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a recognized standard for establishing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being analysed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
+In the cybersecurity space, there are several well-known risk assessment frameworks like Factor Analysis of Information Risk [FAIR], Operationally Critical Threat Asset and Vulnerability Evaluation [OCTAVE], NIST Cybersecurity Framework, and ISO/IEC 27001 \citep{cybersec_risk_frameworks}. Each of these frameworks has its strengths and weaknesses; for example, FAIR considers the frequency of attacks and provides valuable information regarding financial losses \citep{fair_bn}, and OCTAVE and NIST also have their advantages. However, the framework ISO/IEC 27001:2022 is chosen for this project, as this standard focuses exclusively on information security risk management and offers guidance on identifying, accessing, and information systems \citep{iso}. Choosing ISO 27001:2022 provides a significant advantage in its alignment with the ISO/IEC 27000 family, a popular framework for assessing an Information Security Management System (ISMS). In addition to its compatibility with ISO 27001:2013, this assessment method provides flexibility in adapting to different industries and their sizes. \cite{iso_2700:2022} also states that ISO/IEC 27001:2022 slightly improved to ISO/IEC 27001:2013, consisting of additional protection to cloud computing services, which is also being analysed in this assessment. Following this framework, the following sections will define the scope, methodology, limitations, analysis, and non-compliance risks following local laws like GDPR. 
 
 
 \subsection{Scope}
@@ -271,8 +271,8 @@ The assessment of this project is based on qualitative analysis rather than quan
            \item \textbf{1-5}: Very Low Risk = Requires minimal attention.
            \item \textbf{5-10}: Low Risk = Requires minimal attention.
            \item \textbf{10-15}: Medium Risk = Needs monitoring and potentially preventive measures.
-           \item \textbf{15-20}: High Risk = Immediate action required to mitigate the risk.
-           \item \textbf{20-25}: Very High Risk = Immediate action required to mitigate the risk.
+           \item \textbf{15-20}: High Risk = Risk needs to be mitigated immediately.
+           \item \textbf{20-25}: Very High Risk = Risk needs to be mitigated immediately.
 
        \end{itemize}
     \end{itemize}
